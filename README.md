@@ -82,3 +82,4 @@ npm run db:push    # Push schema to MongoDB
 npm run db:studio  # Open Prisma Studio
 ```
 # Qr-resturant
+# Qr-resturant
