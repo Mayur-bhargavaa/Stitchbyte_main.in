@@ -182,9 +182,10 @@ export default function MerchantClient({
   useEffect(() => {
     const generateQrImages = async () => {
       const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
       const codes = await Promise.all(
         restaurant.tables.map(async (table) => {
-          const url = `${baseUrl}/menu/${restaurant.slug}/${table.token}`;
+          const url = `${baseUrl}${basePath}/menu/${restaurant.slug}/${table.token}`;
           const dataUrl = await QRCode.toDataURL(url, {
             width: 200,
             margin: 2,
