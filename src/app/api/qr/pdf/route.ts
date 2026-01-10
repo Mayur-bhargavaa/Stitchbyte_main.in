@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     const appUrl = process.env.APP_URL || "http://localhost:3000";
 
     for (const table of tables) {
-      const menuUrl = `${appUrl}/menu/${restaurant.slug}/${table.token}`;
+      const menuUrl = `${appUrl}/restaurant/menu/${restaurant.slug}/${table.token}`;
 
       // Generate QR as PNG buffer
       const qrDataUrl = await QRCode.toDataURL(menuUrl, {
