@@ -125,7 +125,7 @@ export default function EditRestaurantPage() {
         throw new Error(data.error || "Failed to save");
       }
 
-      router.push(`/admin/restaurants/${id}`);
+      router.push(`/restaurant/admin/restaurants/${id}`);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -182,7 +182,7 @@ export default function EditRestaurantPage() {
       <header className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link href={`/admin/restaurants/${id}`} className="p-2 hover:bg-gray-100 rounded-lg">
+            <Link href={`/restaurant/admin/restaurants/${id}`} className="p-2 hover:bg-gray-100 rounded-lg">
               <ArrowLeft className="w-5 h-5 text-black" />
             </Link>
             <div className="flex items-center gap-3">

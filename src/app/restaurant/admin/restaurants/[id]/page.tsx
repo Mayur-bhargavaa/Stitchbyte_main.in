@@ -99,7 +99,7 @@ export default async function RestaurantDetailPage({
               </span>
             )}
             <Link
-              href={`/admin/restaurants/${id}/edit`}
+              href={`/restaurant/admin/restaurants/${id}/edit`}
               className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg"
             >
               <Edit className="w-4 h-4" />
@@ -231,7 +231,7 @@ export default async function RestaurantDetailPage({
                 <span className="text-sm text-black">View Customer Menu</span>
               </a>
               <Link
-                href={`/admin/restaurants/${id}/edit`}
+                href={`/restaurant/admin/restaurants/${id}/edit`}
                 className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
               >
                 <Edit className="w-5 h-5 text-green-600" />

@@ -165,13 +165,13 @@ export default async function RestaurantsPage() {
               {/* Actions */}
               <div className="p-4 border-t flex gap-2">
                 <Link
-                  href={`/admin/restaurants/${restaurant.id}`}
+                  href={`/restaurant/admin/restaurants/${restaurant.id}`}
                   className="flex-1 flex items-center justify-center gap-1 py-2 text-sm bg-gray-100 text-black rounded-lg hover:bg-gray-200 transition"
                 >
                   <Eye className="w-4 h-4" /> View
                 </Link>
                 <Link
-                  href={`/admin/restaurants/${restaurant.id}/edit`}
+                  href={`/restaurant/admin/restaurants/${restaurant.id}/edit`}
                   className="flex-1 flex items-center justify-center gap-1 py-2 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition"
                 >
                   <Edit className="w-4 h-4" /> Edit
