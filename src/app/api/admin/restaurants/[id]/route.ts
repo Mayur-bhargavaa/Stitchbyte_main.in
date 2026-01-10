@@ -157,7 +157,7 @@ export async function DELETE(
       await tx.order.deleteMany({ where: { restaurantId: id } });
 
       // Delete menu items
-      await tx.item.deleteMany({ where: { restaurantId: id } });
+      await tx.menuItem.deleteMany({ where: { restaurantId: id } });
 
       // Delete categories
       await tx.category.deleteMany({ where: { restaurantId: id } });
