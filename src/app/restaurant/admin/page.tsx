@@ -43,28 +43,28 @@ export default async function AdminDashboard() {
       value: restaurantCount,
       icon: Building2,
       color: "bg-blue-500",
-      href: "/admin/restaurants",
+      href: "/restaurant/admin/restaurants",
     },
     {
       label: "Total Orders",
       value: orderCount,
       icon: ShoppingCart,
       color: "bg-green-500",
-      href: "/admin/orders",
+      href: "/restaurant/admin/orders",
     },
     {
       label: "Total Revenue",
       value: `₹${(totalRevenue._sum.total || 0).toLocaleString()}`,
       icon: DollarSign,
       color: "bg-yellow-500",
-      href: "/admin/revenue",
+      href: "/restaurant/admin/revenue",
     },
     {
       label: "Users",
       value: userCount,
       icon: Users,
       color: "bg-purple-500",
-      href: "/admin/users",
+      href: "/restaurant/admin/users",
     },
   ];
 
