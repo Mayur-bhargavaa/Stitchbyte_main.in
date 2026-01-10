@@ -418,7 +418,7 @@ export default function ProfileClient({ user, restaurant }: Props) {
           <div className="grid grid-cols-2 gap-4">
             {user.role === "ADMIN" && (
               <button
-                onClick={() => router.push("/admin")}
+                onClick={() => router.push("/restaurant/admin")}
                 className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
               >
                 <Shield className="w-6 h-6 text-purple-600" />
@@ -427,7 +427,7 @@ export default function ProfileClient({ user, restaurant }: Props) {
             )}
             {user.role === "MERCHANT" && (
               <button
-                onClick={() => router.push("/merchant")}
+                onClick={() => router.push("/restaurant/merchant")}
                 className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
               >
                 <Store className="w-6 h-6 text-blue-600" />
