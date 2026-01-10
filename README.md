@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QR-Based Restaurant Ordering Platform
+
+A modern, full-stack QR-driven restaurant ordering system built with Next.js, Prisma, and MongoDB.
+
+## Features
+
+### Three User Roles
+
+- **Admin**: Platform-wide analytics, restaurant management, revenue insights
+- **Merchant**: QR code generation, menu management, live order feed, stock control
+- **Customer**: Scan QR → browse menu → add to cart → checkout → pay
+
+### Core Functionality
+
+- ✅ Table-specific QR code generation with PDF download
+- ✅ Beautiful mobile-first menu with categories & dietary indicators
+- ✅ Real-time order management with status updates
+- ✅ Customer data capture (phone, email) with marketing consent
+- ✅ Online payment & Pay at Counter options
+- ✅ Coupon/discount support
+- ✅ Role-based access control
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Database**: MongoDB (via Prisma ORM)
+- **Auth**: NextAuth v5
+- **UI**: Tailwind CSS + Lucide Icons
+- **QR/PDF**: qrcode + pdfkit
 
 ## Getting Started
 
-First, run the development server:
+### Installation
+
+```bash
+cd qr-restaurant
+npm install
+```
+
+### Database Setup
+
+```bash
+# Push schema to MongoDB
+npx prisma db push
+
+# Seed demo data
+npm run seed
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role     | Email                  | Password    |
+|----------|------------------------|-------------|
+| Admin    | admin@example.com      | admin123    |
+| Merchant | merchant@example.com   | merchant123 |
 
-## Learn More
+## Key Routes
 
-To learn more about Next.js, take a look at the following resources:
+| Route                           | Description              |
+|---------------------------------|--------------------------|
+| `/`                             | Landing page             |
+| `/signin`                       | Sign in page             |
+| `/admin`                        | Admin dashboard          |
+| `/merchant`                     | Merchant dashboard       |
+| `/menu/[slug]/[token]`          | Customer menu (QR scan)  |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev        # Development server
+npm run build      # Production build
+npm run seed       # Seed database
+npm run db:push    # Push schema to MongoDB
+npm run db:studio  # Open Prisma Studio
+```
+# Qr-resturant
