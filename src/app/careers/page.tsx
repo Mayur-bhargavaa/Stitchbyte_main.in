@@ -14,6 +14,7 @@ import {
     Coffee,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 interface Job {
     _id: string;
@@ -89,33 +90,7 @@ export default function CareersPage() {
             {/* Content */}
             <div className="relative z-10">
                 {/* Navigation */}
-                <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                    <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                        <div className="flex items-center gap-1">
-                            <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Prebuilt
-                            </Link>
-                            <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Customized
-                            </Link>
-                            <Link href="/" className="px-3 py-1 flex items-center">
-                                <Image
-                                    src="/logo-stitchbyte.png"
-                                    alt="StitchByte"
-                                    width={120}
-                                    height={32}
-                                    className="h-8 w-auto"
-                                />
-                            </Link>
-                            <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                About Us
-                            </Link>
-                            <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Contact Us
-                            </Link>
-                        </div>
-                    </nav>
-                </header>
+                <Navbar />
 
                 {/* Hero Section */}
                 <section className="max-w-4xl mx-auto px-6 pt-32 pb-16 text-center">

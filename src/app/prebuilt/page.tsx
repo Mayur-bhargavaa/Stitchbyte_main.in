@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import {
     ArrowRight,
     Smartphone,
@@ -119,33 +119,7 @@ export default function PrebuiltPage() {
     return (
         <div className="min-h-screen bg-white text-gray-900">
             {/* Navigation */}
-            <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                    <div className="flex items-center gap-1">
-                        <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-900 bg-gray-100 rounded-full font-medium">
-                            Prebuilt
-                        </Link>
-                        <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                            Customized
-                        </Link>
-                        <Link href="/" className="px-3 py-1 flex items-center">
-                            <Image
-                                src="/logo-stitchbyte.png"
-                                alt="StitchByte"
-                                width={120}
-                                height={32}
-                                className="h-8 w-auto"
-                            />
-                        </Link>
-                        <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                            About Us
-                        </Link>
-                        <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                            Contact Us
-                        </Link>
-                    </div>
-                </nav>
-            </header>
+            <Navbar />
 
             {/* Hero Section - White Theme with Modern Grid */}
             <section className="relative min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden">
@@ -224,7 +198,14 @@ export default function PrebuiltPage() {
                     {/* Stats */}
                     <div className="flex flex-wrap justify-center gap-8 sm:gap-16 mt-16 pt-8 border-t border-gray-100">
                         <div className="text-center">
-                            <p className="text-3xl sm:text-4xl font-bold text-gray-900">{products.length || 6}+</p>
+                            <p className="text-3xl sm:text-4xl font-bold text-gray-900">
+                                {loading ? (
+                                    <span className="animate-pulse">...</span>
+                                ) : (
+                                    products.length
+                                )}
+                                +
+                            </p>
                             <p className="text-sm text-gray-500 mt-1">Product Categories</p>
                         </div>
                         <div className="text-center">
@@ -260,7 +241,13 @@ export default function PrebuiltPage() {
                             SaaS Products
                         </span>
                         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                            Explore Our {products.length || 6} Categories
+                            Explore Our{' '}
+                            {loading ? (
+                                <span className="animate-pulse inline-block w-8 h-8 bg-gray-200 rounded-lg translate-y-1"></span>
+                            ) : (
+                                products.length
+                            )}{' '}
+                            Categories
                         </h2>
                         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
                             Choose from our range of ready-to-deploy solutions designed for different industries
@@ -310,14 +297,14 @@ export default function PrebuiltPage() {
                                                 <p className="text-white font-bold text-lg mb-6">{product.shortDescription}</p>
 
                                                 {/* Preview Area */}
-                                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 min-h-[200px] flex items-center justify-center">
-                                                    <div className="grid grid-cols-4 gap-3">
+                                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 sm:p-6 min-h-[180px] sm:min-h-[200px] flex items-center justify-center">
+                                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full">
                                                         {product.highlights && product.highlights.map((highlight) => {
                                                             const IconComponent = getIcon(highlight.icon);
                                                             return (
-                                                                <div key={highlight.label} className="bg-white/30 backdrop-blur-sm rounded-xl p-3 text-center">
-                                                                    <IconComponent className="w-6 h-6 text-white mx-auto mb-1" />
-                                                                    <span className="text-xs text-white/90">{highlight.label}</span>
+                                                                <div key={highlight.label} className="bg-white/30 backdrop-blur-sm rounded-xl p-2 sm:p-3 text-center">
+                                                                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white mx-auto mb-1" />
+                                                                    <span className="text-[10px] sm:text-xs text-white/90 leading-tight block">{highlight.label}</span>
                                                                 </div>
                                                             );
                                                         })}
@@ -365,6 +352,79 @@ export default function PrebuiltPage() {
                                     </div>
                                 );
                             })}
+                        </div>
+                    )}
+
+                    {/* Empty State - when no products */}
+                    {!loading && !error && products.length === 0 && (
+                        <div className="py-20">
+                            {/* Animated Empty State */}
+                            <div className="relative max-w-md mx-auto">
+                                {/* Floating animated icons */}
+                                <div className="relative h-48 flex items-center justify-center">
+                                    {/* Central pulsing circle */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-32 h-32 bg-gray-100 rounded-full animate-pulse" />
+                                        <div className="absolute w-24 h-24 bg-gray-200 rounded-full animate-ping opacity-20" />
+                                    </div>
+
+                                    {/* Floating cards */}
+                                    <div className="absolute top-0 left-1/4 w-16 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '0ms', animationDuration: '2s' }}>
+                                        <div className="p-2">
+                                            <div className="w-8 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-6 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute top-4 right-1/4 w-14 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '300ms', animationDuration: '2.5s' }}>
+                                        <div className="p-2">
+                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-4 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute bottom-4 left-1/3 w-12 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.2s' }}>
+                                        <div className="p-2">
+                                            <div className="w-5 h-1.5 bg-gray-200 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute bottom-0 right-1/3 w-14 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '900ms', animationDuration: '1.8s' }}>
+                                        <div className="p-2">
+                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-8 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    {/* Center icon */}
+                                    <div className="relative z-10 w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center shadow-xl">
+                                        <Sparkles className="w-8 h-8 text-white animate-pulse" />
+                                    </div>
+                                </div>
+
+                                {/* Text content */}
+                                <div className="text-center mt-8">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Products Yet</h3>
+                                    <p className="text-gray-500 mb-6">We're working on amazing prebuilt solutions. Check back soon!</p>
+
+                                    {/* Animated progress bar */}
+                                    <div className="w-48 h-1.5 bg-gray-100 rounded-full mx-auto overflow-hidden">
+                                        <div className="h-full bg-gray-900 rounded-full" style={{
+                                            animation: 'loading-bar 2s ease-in-out infinite'
+                                        }} />
+                                    </div>
+                                    <p className="text-xs text-gray-400 mt-3">Coming soon...</p>
+                                </div>
+                            </div>
+
+                            {/* CSS for loading bar animation */}
+                            <style jsx>{`
+                                @keyframes loading-bar {
+                                    0% { width: 0%; margin-left: 0; }
+                                    50% { width: 60%; margin-left: 20%; }
+                                    100% { width: 0%; margin-left: 100%; }
+                                }
+                            `}</style>
                         </div>
                     )}
                 </div>

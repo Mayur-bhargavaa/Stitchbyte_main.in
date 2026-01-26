@@ -27,6 +27,7 @@ import {
     AlertCircle,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 interface Education {
     qualification: string;
@@ -284,15 +285,7 @@ export default function ApplyPage() {
                 />
 
                 <div className="relative z-10">
-                    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                        <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                            <div className="flex items-center gap-1">
-                                <Link href="/" className="px-3 py-1 flex items-center">
-                                    <Image src="/logo-stitchbyte.png" alt="StitchByte" width={120} height={32} className="h-8 w-auto" />
-                                </Link>
-                            </div>
-                        </nav>
-                    </header>
+                    <Navbar />
 
                     <div className="min-h-screen flex items-center justify-center px-6">
                         <div className="max-w-xl text-center">
@@ -357,27 +350,7 @@ export default function ApplyPage() {
 
             <div className="relative z-10">
                 {/* Navigation */}
-                <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                    <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                        <div className="flex items-center gap-1">
-                            <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Prebuilt
-                            </Link>
-                            <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Customized
-                            </Link>
-                            <Link href="/" className="px-3 py-1 flex items-center">
-                                <Image src="/logo-stitchbyte.png" alt="StitchByte" width={120} height={32} className="h-8 w-auto" />
-                            </Link>
-                            <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                About Us
-                            </Link>
-                            <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Contact Us
-                            </Link>
-                        </div>
-                    </nav>
-                </header>
+                <Navbar />
 
                 {/* Header */}
                 <section className="pt-32 pb-8">
@@ -395,8 +368,46 @@ export default function ApplyPage() {
 
                 {/* Progress Steps */}
                 <section className="pb-8">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="flex items-center justify-between">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                        {/* Mobile: Current step indicator */}
+                        <div className="sm:hidden mb-4 text-center">
+                            <span className="text-sm text-gray-500">Step {currentStep} of {steps.length}</span>
+                            <h3 className="font-semibold text-gray-900">{steps[currentStep - 1]?.title}</h3>
+                        </div>
+
+                        {/* Progress bar for mobile */}
+                        <div className="sm:hidden mb-6">
+                            <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-gray-900 rounded-full transition-all duration-300"
+                                    style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }}
+                                />
+                            </div>
+                            <div className="flex justify-between mt-2">
+                                {steps.map((step) => (
+                                    <button
+                                        key={step.id}
+                                        onClick={() => goToStep(step.id)}
+                                        disabled={step.id > currentStep}
+                                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${step.id < currentStep
+                                            ? 'bg-gray-900 text-white'
+                                            : step.id === currentStep
+                                                ? 'bg-gray-900 text-white ring-2 ring-gray-300'
+                                                : 'bg-gray-100 text-gray-400'
+                                            } ${step.id > currentStep ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                                    >
+                                        {step.id < currentStep ? (
+                                            <Check className="w-4 h-4" />
+                                        ) : (
+                                            <step.icon className="w-4 h-4" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Desktop: Full progress steps */}
+                        <div className="hidden sm:flex items-center justify-between">
                             {steps.map((step, index) => (
                                 <div key={step.id} className="flex items-center">
                                     <button
@@ -405,25 +416,25 @@ export default function ApplyPage() {
                                         className={`flex flex-col items-center gap-2 transition-all ${step.id > currentStep ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
                                             }`}
                                     >
-                                        <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${step.id < currentStep
+                                        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all ${step.id < currentStep
                                             ? 'bg-gray-900 text-white'
                                             : step.id === currentStep
                                                 ? 'bg-gray-900 text-white ring-4 ring-gray-200'
                                                 : 'bg-gray-100 text-gray-400'
                                             }`}>
                                             {step.id < currentStep ? (
-                                                <Check className="w-5 h-5" />
+                                                <Check className="w-4 h-4 md:w-5 md:h-5" />
                                             ) : (
-                                                <step.icon className="w-5 h-5" />
+                                                <step.icon className="w-4 h-4 md:w-5 md:h-5" />
                                             )}
                                         </div>
-                                        <span className={`text-xs font-medium hidden sm:block ${step.id <= currentStep ? 'text-gray-900' : 'text-gray-400'
+                                        <span className={`text-xs font-medium ${step.id <= currentStep ? 'text-gray-900' : 'text-gray-400'
                                             }`}>
                                             {step.title}
                                         </span>
                                     </button>
                                     {index < steps.length - 1 && (
-                                        <div className={`w-8 sm:w-16 h-1 mx-2 rounded ${step.id < currentStep ? 'bg-gray-900' : 'bg-gray-200'
+                                        <div className={`w-8 md:w-16 h-1 mx-1 md:mx-2 rounded ${step.id < currentStep ? 'bg-gray-900' : 'bg-gray-200'
                                             }`} />
                                     )}
                                 </div>

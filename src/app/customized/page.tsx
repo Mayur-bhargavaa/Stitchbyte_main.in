@@ -9,6 +9,7 @@ import {
     Loader2,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 interface Project {
     id: string;
@@ -65,33 +66,7 @@ export default function CustomizedPage() {
             {/* Content */}
             <div className="relative z-10">
                 {/* Navigation */}
-                <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                    <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                        <div className="flex items-center gap-1">
-                            <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Prebuilt
-                            </Link>
-                            <Link href="/customized" className="px-4 py-2 text-sm text-gray-900 bg-gray-100 rounded-full font-medium">
-                                Customized
-                            </Link>
-                            <Link href="/" className="px-3 py-1 flex items-center">
-                                <Image
-                                    src="/logo-stitchbyte.png"
-                                    alt="StitchByte"
-                                    width={120}
-                                    height={32}
-                                    className="h-8 w-auto"
-                                />
-                            </Link>
-                            <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                About Us
-                            </Link>
-                            <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                Contact Us
-                            </Link>
-                        </div>
-                    </nav>
-                </header>
+                <Navbar />
 
                 {/* Hero Section - White Theme with Modern Grid */}
                 <section className="relative min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden">
@@ -222,21 +197,21 @@ export default function CustomizedPage() {
                                 >
                                     {/* Project Image */}
                                     <div className="w-full md:w-1/2">
-                                        <div className="bg-gray-100 rounded-2xl p-6 aspect-[4/3] flex items-center justify-center overflow-hidden">
+                                        <div className="bg-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-6 aspect-[4/3] flex items-center justify-center overflow-hidden">
                                             {project.image && project.image !== '/projects/lal-sweets.png' ? (
                                                 <Image
                                                     src={project.image}
                                                     alt={project.title}
                                                     width={600}
                                                     height={450}
-                                                    className="w-full h-full object-cover rounded-xl"
+                                                    className="w-full h-full object-cover rounded-lg sm:rounded-xl"
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).style.display = 'none';
                                                     }}
                                                 />
                                             ) : (
-                                                <div className="bg-white rounded-xl shadow-lg p-4 w-full h-full flex items-center justify-center text-gray-400">
-                                                    <span className="text-sm">Project Screenshot</span>
+                                                <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 w-full h-full flex items-center justify-center text-gray-400">
+                                                    <span className="text-xs sm:text-sm">Project Screenshot</span>
                                                 </div>
                                             )}
                                         </div>
@@ -293,8 +268,76 @@ export default function CustomizedPage() {
                     )}
 
                     {!loading && !error && projects.length === 0 && (
-                        <div className="text-center py-16">
-                            <p className="text-gray-500">No projects in this category yet. Check back soon!</p>
+                        <div className="py-20">
+                            {/* Animated Empty State */}
+                            <div className="relative max-w-md mx-auto">
+                                {/* Floating animated icons */}
+                                <div className="relative h-48 flex items-center justify-center">
+                                    {/* Central pulsing circle */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-32 h-32 bg-gray-100 rounded-full animate-pulse" />
+                                        <div className="absolute w-24 h-24 bg-gray-200 rounded-full animate-ping opacity-20" />
+                                    </div>
+
+                                    {/* Floating cards */}
+                                    <div className="absolute top-0 left-1/4 w-16 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '0ms', animationDuration: '2s' }}>
+                                        <div className="p-2">
+                                            <div className="w-8 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-6 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute top-4 right-1/4 w-14 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '300ms', animationDuration: '2.5s' }}>
+                                        <div className="p-2">
+                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-4 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute bottom-4 left-1/3 w-12 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.2s' }}>
+                                        <div className="p-2">
+                                            <div className="w-5 h-1.5 bg-gray-200 rounded" />
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute bottom-0 right-1/3 w-14 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '900ms', animationDuration: '1.8s' }}>
+                                        <div className="p-2">
+                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
+                                            <div className="w-8 h-1 bg-gray-100 rounded" />
+                                        </div>
+                                    </div>
+
+                                    {/* Center icon */}
+                                    <div className="relative z-10 w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center shadow-xl">
+                                        <svg className="w-8 h-8 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Text content */}
+                                <div className="text-center mt-8">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Projects Yet</h3>
+                                    <p className="text-gray-500 mb-6">We're working on amazing {activeTab} projects. Check back soon!</p>
+
+                                    {/* Animated progress bar */}
+                                    <div className="w-48 h-1.5 bg-gray-100 rounded-full mx-auto overflow-hidden">
+                                        <div className="h-full bg-gray-900 rounded-full animate-loading-bar" style={{
+                                            animation: 'loading-bar 2s ease-in-out infinite'
+                                        }} />
+                                    </div>
+                                    <p className="text-xs text-gray-400 mt-3">Coming soon...</p>
+                                </div>
+                            </div>
+
+                            {/* CSS for loading bar animation */}
+                            <style jsx>{`
+                                @keyframes loading-bar {
+                                    0% { width: 0%; margin-left: 0; }
+                                    50% { width: 60%; margin-left: 20%; }
+                                    100% { width: 0%; margin-left: 100%; }
+                                }
+                            `}</style>
                         </div>
                     )}
                 </section>

@@ -197,9 +197,17 @@ export default function Chatbot() {
 
     return (
         <>
+            {/* Mobile Backdrop - closes chat when clicking outside */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black/20 z-40 sm:hidden"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
             {/* Chat Window */}
             {isOpen && (
-                <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-fade-in">
+                <div className="fixed bottom-24 right-4 left-4 sm:left-auto sm:right-6 z-50 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-fade-in">
                     {/* Header */}
                     <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">

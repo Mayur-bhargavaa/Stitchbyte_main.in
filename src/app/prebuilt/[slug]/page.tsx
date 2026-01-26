@@ -316,24 +316,25 @@ export default function ProductDetailPage() {
     return (
         <div className="min-h-screen bg-white text-gray-900">
             {/* Navigation */}
-            <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                    <div className="flex items-center gap-1">
-                        <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center gap-1">
+            <header className="fixed top-4 sm:top-6 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 z-50">
+                <nav className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 sm:px-3 py-2 shadow-lg shadow-black/5">
+                    <div className="flex items-center justify-between sm:justify-center gap-1 sm:gap-2">
+                        <Link href="/prebuilt" className="px-2 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors flex items-center gap-1">
                             <ChevronLeft className="w-4 h-4" />
-                            Back
+                            <span className="hidden sm:inline">Back</span>
                         </Link>
-                        <Link href="/" className="px-3 py-1 flex items-center">
+                        <Link href="/" className="px-2 sm:px-3 py-1 flex items-center">
                             <Image
                                 src="/logo-stitchbyte.png"
                                 alt="StitchByte"
                                 width={120}
                                 height={32}
-                                className="h-8 w-auto"
+                                className="h-6 sm:h-8 w-auto"
                             />
                         </Link>
-                        <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                            Contact Us
+                        <Link href="/contact" className="px-2 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+                            <span className="hidden sm:inline">Contact Us</span>
+                            <span className="sm:hidden">Contact</span>
                         </Link>
                     </div>
                 </nav>

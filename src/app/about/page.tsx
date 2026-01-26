@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import {
     Users,
@@ -16,8 +15,7 @@ import {
     Globe,
     Code2,
     Palette,
-    Menu,
-    X,
+
     CheckCircle2,
     Award,
     TrendingUp,
@@ -25,9 +23,9 @@ import {
     Sparkles,
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 export default function AboutPage() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
@@ -69,75 +67,7 @@ export default function AboutPage() {
             {/* Content */}
             <div className="relative z-10">
                 {/* Navigation */}
-                <header className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6">
-                    {/* Mobile Nav */}
-                    <nav className="md:hidden bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-3 shadow-lg shadow-black/5 flex items-center justify-between">
-                        <Link href="/" className="flex items-center">
-                            <Image
-                                src="/logo-stitchbyte.png"
-                                alt="StitchByte"
-                                width={100}
-                                height={28}
-                                className="h-7 w-auto"
-                            />
-                        </Link>
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                        >
-                            {mobileMenuOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
-                        </button>
-                    </nav>
-
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex justify-center">
-                        <div className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-                            <div className="flex items-center gap-1">
-                                <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                    Prebuilt
-                                </Link>
-                                <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                    Customized
-                                </Link>
-                                <Link href="/" className="px-3 py-1 flex items-center">
-                                    <Image
-                                        src="/logo-stitchbyte.png"
-                                        alt="StitchByte"
-                                        width={120}
-                                        height={32}
-                                        className="h-8 w-auto"
-                                    />
-                                </Link>
-                                <Link href="/about" className="px-4 py-2 text-sm text-gray-900 bg-gray-100 rounded-full font-medium">
-                                    About Us
-                                </Link>
-                                <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                                    Contact Us
-                                </Link>
-                            </div>
-                        </div>
-                    </nav>
-
-                    {/* Mobile Menu Overlay */}
-                    {mobileMenuOpen && (
-                        <div className="md:hidden fixed inset-0 top-16 bg-white/95 backdrop-blur-xl z-40 animate-fade-in">
-                            <div className="flex flex-col items-center justify-center h-full gap-6 -mt-16">
-                                <Link href="/prebuilt" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                                    Prebuilt
-                                </Link>
-                                <Link href="/customized" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                                    Customized
-                                </Link>
-                                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                                    About Us
-                                </Link>
-                                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                                    Contact Us
-                                </Link>
-                            </div>
-                        </div>
-                    )}
-                </header>
+                <Navbar />
 
                 {/* Hero Section */}
                 <section className="relative min-h-[80vh] flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden">

@@ -24,8 +24,7 @@ import {
   ChevronDown,
   Instagram,
   MessageCircle,
-  Menu,
-  X,
+
   CreditCard,
   Truck,
   Store,
@@ -39,6 +38,7 @@ import {
   LucideIcon
 } from "lucide-react";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 // Icon mapping for dynamic rendering from MongoDB
 const iconMap: Record<string, LucideIcon> = {
@@ -134,7 +134,7 @@ function FAQItem({ question, answer, isOpen, onClick }: { question: string; answ
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -191,91 +191,7 @@ export default function LandingPage() {
       {/* Content */}
       <div className="relative z-10">
         {/* Navigation */}
-        <header className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6">
-          {/* Mobile Nav */}
-          <nav className="md:hidden bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-3 shadow-lg shadow-black/5 flex items-center justify-between">
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/logo-stitchbyte.png"
-                alt="StitchByte"
-                width={100}
-                height={28}
-                className="h-7 w-auto"
-              />
-            </Link>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
-            </button>
-          </nav>
-
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex justify-center">
-            <div className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
-              <div className="flex items-center gap-1">
-                <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                  Prebuilt
-                </Link>
-                <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                  Customized
-                </Link>
-                <Link href="/" className="px-3 py-1 flex items-center">
-                  <Image
-                    src="/logo-stitchbyte.png"
-                    alt="StitchByte"
-                    width={120}
-                    height={32}
-                    className="h-8 w-auto"
-                  />
-                </Link>
-                <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                  About Us
-                </Link>
-                <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                  Contact Us
-                </Link>
-              </div>
-            </div>
-          </nav>
-
-          {/* Mobile Menu Overlay */}
-          {mobileMenuOpen && (
-            <div className="md:hidden fixed inset-0 top-16 bg-white/95 backdrop-blur-xl z-40 animate-fade-in">
-              <div className="flex flex-col items-center justify-center h-full gap-6 -mt-16">
-                <Link
-                  href="/prebuilt"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  Prebuilt
-                </Link>
-                <Link
-                  href="/customized"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  Customized
-                </Link>
-                <Link
-                  href="/about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </div>
-            </div>
-          )}
-        </header>
+        <Navbar />
 
         {/* Hero Section - White Theme with Modern Grid */}
         <section className="relative min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden">
