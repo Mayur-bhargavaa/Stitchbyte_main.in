@@ -71,8 +71,8 @@ export default function ContactPage() {
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/stitchbyte", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/company/stitchbyte", label: "LinkedIn" },
-    { icon: Twitter, href: "https://twitter.com/stitchbyte", label: "Twitter" },
+    { icon: Linkedin, href: "https://linkedin.com/company/stitchbyte1", label: "LinkedIn" },
+    { icon: Instagram, href: "https://www.instagram.com/stitchbyte.in/", label: "Instagram" },
   ];
 
   const features = [
