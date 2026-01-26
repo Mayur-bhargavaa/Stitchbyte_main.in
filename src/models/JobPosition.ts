@@ -59,11 +59,10 @@ const JobPositionSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Generate slug from title before saving
-JobPositionSchema.pre('save', function (next) {
+JobPositionSchema.pre('save', async function () {
     if (!this.slug && this.title) {
         this.slug = this.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
-    next();
 });
 
 export default mongoose.models.JobPosition || mongoose.model('JobPosition', JobPositionSchema);
