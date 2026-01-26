@@ -1,7 +1,7 @@
 {
-  "name": "QR Restaurant - Smart Ordering",
-  "short_name": "QR Restaurant",
-  "description": "Smart QR-Based Restaurant Ordering Platform",
+  "name": "Stitchbyte - Your Digital Solutions Partner",
+  "short_name": "Stitchbyte",
+  "description": "Stitchbyte - Your Digital Solutions Partner",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -57,7 +57,11 @@
       "purpose": "maskable any"
     }
   ],
-  "categories": ["food", "business", "productivity"],
+  "categories": [
+    "food",
+    "business",
+    "productivity"
+  ],
   "screenshots": [],
   "prefer_related_applications": false
 }

@@ -1,14 +1,17 @@
+"use client";
+
 import Link from "next/link";
-import { 
-  UtensilsCrossed, 
-  ShoppingCart, 
-  Briefcase, 
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import {
+  UtensilsCrossed,
+  ShoppingCart,
+  Briefcase,
   FileText,
   Zap,
   Shield,
   Smartphone,
   ArrowRight,
-  ExternalLink,
   Github,
   Mail,
   QrCode,
@@ -17,431 +20,786 @@ import {
   Clock,
   Sparkles,
   Layers,
-  Globe
+  Globe,
+  ChevronDown,
+  Instagram,
+  MessageCircle,
+  Menu,
+  X,
+  CreditCard,
+  Truck,
+  Store,
+  Bell,
+  GraduationCap,
+  Stethoscope,
+  Home,
+  Calendar,
+  Building,
+  Loader2,
+  LucideIcon
 } from "lucide-react";
+import Footer from "@/components/Footer";
 
-// Define all your apps here
-const apps = [
+// Icon mapping for dynamic rendering from MongoDB
+const iconMap: Record<string, LucideIcon> = {
+  Smartphone,
+  Globe,
+  Users,
+  BarChart3,
+  CreditCard,
+  Truck,
+  Store,
+  QrCode,
+  Bell,
+  FileText,
+  Layers,
+  GraduationCap,
+  Stethoscope,
+  Home,
+  Calendar,
+  Building,
+  Sparkles,
+  UtensilsCrossed,
+  ShoppingCart,
+  Briefcase,
+  Clock,
+  Shield,
+  Zap
+};
+
+// Helper function to get icon component
+const getIcon = (iconName: string): LucideIcon => {
+  return iconMap[iconName] || Smartphone;
+};
+
+// Interface for MongoDB product data
+interface ProductHighlight {
+  icon: string;
+  label: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  tagline: string;
+  shortDescription: string;
+  gradient: string;
+  highlights: ProductHighlight[];
+  comingSoon?: boolean;
+}
+
+const faqs = [
   {
-    id: "restaurant",
-    name: "QR Restaurant",
-    description: "Complete QR-based restaurant ordering system with real-time updates and analytics.",
-    href: "/restaurant",
-    icon: UtensilsCrossed,
-    gradient: "from-orange-500 via-rose-500 to-pink-600",
-    shadowColor: "shadow-orange-500/30",
-    features: [
-      { icon: QrCode, label: "QR Ordering" },
-      { icon: Clock, label: "Real-time" },
-      { icon: BarChart3, label: "Analytics" },
-      { icon: Users, label: "Multi-user" },
-    ],
-    status: "Live",
+    question: "How long does it take to deliver a pre-built application or website?",
+    answer: "Our pre-built solutions are typically ready for deployment within 24-48 hours. For custom integrations, the timeline extends to 1-2 weeks depending on complexity."
   },
   {
-    id: "ecommerce",
-    name: "E-Commerce Store",
-    description: "Modern e-commerce platform with seamless checkout and inventory management.",
-    href: "#",
-    icon: ShoppingCart,
-    gradient: "from-blue-500 via-cyan-500 to-teal-500",
-    shadowColor: "shadow-blue-500/30",
-    features: [
-      { icon: ShoppingCart, label: "Cart" },
-      { icon: Shield, label: "Payments" },
-      { icon: BarChart3, label: "Analytics" },
-      { icon: Globe, label: "Global" },
-    ],
-    status: "Coming Soon",
+    question: "Do you provide the complete source code after development?",
+    answer: "Yes, absolutely! You receive full ownership of the source code, including all assets, documentation, and deployment scripts."
   },
   {
-    id: "portfolio",
-    name: "Portfolio Builder",
-    description: "Create stunning portfolios with drag-and-drop builder and custom domains.",
-    href: "#",
-    icon: Briefcase,
-    gradient: "from-emerald-500 via-green-500 to-lime-500",
-    shadowColor: "shadow-emerald-500/30",
-    features: [
-      { icon: Layers, label: "Templates" },
-      { icon: Sparkles, label: "Themes" },
-      { icon: Globe, label: "Domains" },
-      { icon: BarChart3, label: "Stats" },
-    ],
-    status: "Coming Soon",
+    question: "What's the difference between a pre-built and a custom development project?",
+    answer: "Pre-built projects use our existing templates and can be quickly customized. Custom development is built from scratch according to your unique specifications."
   },
   {
-    id: "blog",
-    name: "Blog Platform",
-    description: "Full-featured blogging with AI assistance, SEO tools, and monetization.",
-    href: "#",
-    icon: FileText,
-    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
-    shadowColor: "shadow-violet-500/30",
-    features: [
-      { icon: Sparkles, label: "AI Writer" },
-      { icon: Shield, label: "SEO" },
-      { icon: Users, label: "Comments" },
-      { icon: BarChart3, label: "Revenue" },
-    ],
-    status: "Coming Soon",
+    question: "Do you provide maintenance and support after delivery?",
+    answer: "Yes, we offer various support packages including bug fixes, feature updates, and 24/7 technical support options."
   },
+  {
+    question: "What technologies do you use for development?",
+    answer: "We use modern technologies including Next.js, React, TypeScript, Tailwind CSS, and various databases like PostgreSQL and MongoDB."
+  }
 ];
 
-const stats = [
-  { value: "4+", label: "Demo Apps" },
-  { value: "100%", label: "Open Source" },
-  { value: "24/7", label: "Available" },
-  { value: "∞", label: "Possibilities" },
-];
+// FAQ Accordion Component
+function FAQItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
+  return (
+    <div className="border-b border-gray-200">
+      <button
+        onClick={onClick}
+        className="w-full py-5 flex items-start gap-4 text-left hover:bg-gray-50 transition-colors"
+      >
+        <div className="w-1 h-6 bg-gray-900 rounded-full flex-shrink-0 mt-0.5" />
+        <span className="flex-1 text-gray-900 font-medium pr-8">{question}</span>
+        <ChevronDown className={`w-5 h-5 text-gray-900 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="pb-5 pl-5 pr-8 text-gray-700 leading-relaxed">
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch products from MongoDB
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/products');
+        const data = await response.json();
+
+        if (response.ok && data.products) {
+          // Limit to first 4 products for home page
+          setProducts(data.products.slice(0, 4));
+        } else {
+          setError(data.error || "Failed to load products");
+        }
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setError("Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white selection:bg-purple-500/30">
-      {/* Animated Mesh Gradient Background */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent" />
-        <div className="absolute top-[-50%] left-[-20%] w-[70%] h-[100%] bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-30%] right-[-10%] w-[50%] h-[80%] bg-gradient-to-l from-cyan-600/15 via-blue-600/15 to-indigo-600/15 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-[20%] right-[10%] w-[30%] h-[40%] bg-gradient-to-b from-pink-600/10 to-orange-600/10 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
-        {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjAyIiBkPSJNMCAwaDYwdjYwSDB6Ii8+PHBhdGggZD0iTTYwIDBIMHY2MCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utb3BhY2l0eT0iLjAyIi8+PC9nPjwvc3ZnPg==')] opacity-50" />
-      </div>
+    <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
+      {/* Global Grid Background - Same as Prebuilt */}
+      <div
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px'
+        }}
+      />
+      <div
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: '240px 240px'
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header */}
-        <header className="border-b border-white/5 backdrop-blur-2xl bg-black/20 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity" />
-                <div className="relative w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-white" />
-                </div>
-              </div>
-              <div>
-                <h1 className="font-bold text-lg tracking-tight">StitchByte</h1>
-                <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">Demo Platform</p>
+        {/* Navigation */}
+        <header className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6">
+          {/* Mobile Nav */}
+          <nav className="md:hidden bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-3 shadow-lg shadow-black/5 flex items-center justify-between">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo-stitchbyte.png"
+                alt="StitchByte"
+                width={100}
+                height={28}
+                className="h-7 w-auto"
+              />
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
+            </button>
+          </nav>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex justify-center">
+            <div className="bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full px-2 py-2 shadow-lg shadow-black/5">
+              <div className="flex items-center gap-1">
+                <Link href="/prebuilt" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+                  Prebuilt
+                </Link>
+                <Link href="/customized" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+                  Customized
+                </Link>
+                <Link href="/" className="px-3 py-1 flex items-center">
+                  <Image
+                    src="/logo-stitchbyte.png"
+                    alt="StitchByte"
+                    width={120}
+                    height={32}
+                    className="h-8 w-auto"
+                  />
+                </Link>
+                <Link href="/about" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+                  About Us
+                </Link>
+                <Link href="/contact" className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+                  Contact Us
+                </Link>
               </div>
             </div>
-            <nav className="flex items-center gap-3">
-              <a 
-                href="https://stitchbyte.in" 
-                target="_blank" 
-                rel="noopener" 
-                className="hidden sm:flex text-sm text-gray-400 hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/5 items-center gap-1.5"
-              >
-                <Globe className="w-4 h-4" />
-                Website
-              </a>
-              <a 
-                href="https://github.com/stitchbyte" 
-                target="_blank"
-                className="hidden sm:flex text-sm text-gray-400 hover:text-white transition-colors px-4 py-2 rounded-full hover:bg-white/5 items-center gap-1.5"
-              >
-                <Github className="w-4 h-4" />
-                GitHub
-              </a>
-              <Link 
-                href="/contact" 
-                className="text-sm px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium hover:shadow-lg hover:shadow-purple-500/25 transition-all hover:-translate-y-0.5 flex items-center gap-2"
-              >
-                <Mail className="w-4 h-4" />
-                <span className="hidden sm:inline">Contact</span>
-              </Link>
-            </nav>
-          </div>
+          </nav>
+
+          {/* Mobile Menu Overlay */}
+          {mobileMenuOpen && (
+            <div className="md:hidden fixed inset-0 top-16 bg-white/95 backdrop-blur-xl z-40 animate-fade-in">
+              <div className="flex flex-col items-center justify-center h-full gap-6 -mt-16">
+                <Link
+                  href="/prebuilt"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                >
+                  Prebuilt
+                </Link>
+                <Link
+                  href="/customized"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                >
+                  Customized
+                </Link>
+                <Link
+                  href="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                >
+                  About Us
+                </Link>
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-2xl font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+          )}
         </header>
 
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-6 pt-20 pb-32">
-          <div className="text-center max-w-4xl mx-auto">
+        {/* Hero Section - White Theme with Modern Grid */}
+        <section className="relative min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden">
+          {/* Modern Grid Background */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }}
+          />
+
+          {/* Larger Grid Overlay */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
+              `,
+              backgroundSize: '240px 240px'
+            }}
+          />
+
+          {/* Decorative Corner Elements */}
+          <div className="absolute top-20 left-10 w-40 h-40">
+            <div className="w-full h-full border border-gray-200 rounded-3xl rotate-12 opacity-40" />
+            <div className="absolute top-4 left-4 w-full h-full border border-gray-300 rounded-3xl rotate-12 opacity-30" />
+          </div>
+          <div className="absolute bottom-32 right-10 w-32 h-32">
+            <div className="w-full h-full border border-gray-200 rounded-full opacity-40" />
+            <div className="absolute top-3 left-3 w-full h-full border border-gray-300 rounded-full opacity-30" />
+          </div>
+          <div className="absolute top-1/3 right-20 w-4 h-4 bg-gray-900 rounded-full opacity-20" />
+          <div className="absolute top-1/2 left-16 w-3 h-3 bg-gray-900 rounded-full opacity-15" />
+          <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-gray-900 rounded-full opacity-10" />
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center max-w-5xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-full text-sm mb-8 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            <div className="mb-8 animate-fade-in">
+              <span className="inline-flex items-center gap-2 px-5 py-2 bg-white/80 backdrop-blur-sm text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-lg">
+                <Sparkles className="w-4 h-4 text-orange-500" />
+                Your Digital Partner for Startup Success
               </span>
-              <span className="text-green-400 font-medium">Live Demo Environment</span>
-            </div>
-            
-            {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[0.9] tracking-tight">
-              <span className="block text-white">Build.</span>
-              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Explore.
-              </span>
-              <span className="block text-white">Deploy.</span>
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Discover production-ready applications built with cutting-edge 
-              technology. Real functionality. Beautiful design. Open source.
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-20">
-              <a 
-                href="#apps" 
-                className="group relative px-8 py-4 bg-white text-black font-semibold rounded-full hover:shadow-2xl hover:shadow-white/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Apps 
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </a>
-              <a 
-                href="https://github.com/stitchbyte" 
-                target="_blank" 
-                rel="noopener" 
-                className="px-8 py-4 border border-white/10 bg-white/5 backdrop-blur-sm rounded-full hover:bg-white/10 hover:border-white/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 font-medium"
-              >
-                <Github className="w-5 h-5" />
-                Star on GitHub
-              </a>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {stats.map((stat, i) => (
-                <div key={i} className="text-center p-4">
-                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
+            {/* Floating Feature Icons */}
+            <div className="flex items-center justify-center gap-4 sm:gap-8 mb-12">
+              {/* Left Icon - Code/Development */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
+                <div className="relative w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-violet-100 to-purple-100 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform cursor-pointer border-4 border-white">
+                  <Layers className="w-8 h-8 sm:w-10 sm:h-10 text-violet-500" />
                 </div>
+              </div>
+
+              {/* Center Icon - Startup/Growth - Larger */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
+                <div className="relative w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform cursor-pointer border-4 border-white">
+                  <Zap className="w-12 h-12 sm:w-14 sm:h-14 text-emerald-500" />
+                </div>
+              </div>
+
+              {/* Right Icon - Globe/Web */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
+                <div className="relative w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform cursor-pointer border-4 border-white">
+                  <Globe className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500" />
+                </div>
+              </div>
+            </div>
+
+            {/* Main Headline - Large & Bold */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
+              <span className="block text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                From Idea to Execution —
+              </span>
+              <span className="block text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                Launch with <span className="relative inline-block">
+                  <span className="relative z-10">StitchByte</span>
+                  <span className="absolute bottom-2 left-0 right-0 h-4 bg-gradient-to-r from-emerald-200 to-teal-200 -z-10 rounded" />
+                </span>
+              </span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mb-12 leading-relaxed">
+              We turn your ideas into reality. From prebuilt solutions to custom development,
+              launch your digital product faster than ever before.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
+              <a
+                href="#apps"
+                className="group px-10 py-5 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 transform flex items-center gap-3"
+              >
+                Let&apos;s Explore
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <Link
+                href="/contact"
+                className="px-10 py-5 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all shadow-lg flex items-center gap-3"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+            <a href="#apps" className="flex flex-col items-center text-gray-400 hover:text-gray-600 transition-colors">
+              <span className="text-xs mb-2">Scroll to explore</span>
+              <ChevronDown className="w-5 h-5" />
+            </a>
+          </div>
+        </section>
+
+        {/* Motivational Quotes Marquee Section */}
+        <section className="py-8 overflow-hidden bg-gradient-to-b from-transparent to-slate-50/50">
+          <div className="relative">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {['From Idea to Execution', 'Build Your Dream', 'Launch with Confidence', 'Scale Your Business', 'Go Digital Today', 'Innovation First', 'Your Vision, Our Code'].map((quote, i) => (
+                <span key={i} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
+                  ✦ {quote}
+                </span>
+              ))}
+              {['From Idea to Execution', 'Build Your Dream', 'Launch with Confidence', 'Scale Your Business', 'Go Digital Today', 'Innovation First', 'Your Vision, Our Code'].map((quote, i) => (
+                <span key={`dup-${i}`} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
+                  ✦ {quote}
+                </span>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Apps Grid */}
-        <section id="apps" className="max-w-7xl mx-auto px-6 py-20">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-xs text-purple-400 mb-4">
-              <Sparkles className="w-3 h-3" />
-              APPLICATIONS
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Choose Your Demo</h2>
-            <p className="text-gray-400 max-w-xl mx-auto text-lg">
-              Each app is fully functional and ready to explore
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {apps.map((app) => {
-              const IconComponent = app.icon;
-              const isLive = app.status === "Live";
-              return (
-                <div
-                  key={app.id}
-                  className={`group relative rounded-3xl transition-all duration-500 ${
-                    isLive ? "hover:-translate-y-2" : "opacity-50"
-                  }`}
-                >
-                  {/* Card glow */}
-                  {isLive && (
-                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${app.gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-all duration-500`} />
-                  )}
-                  
-                  {/* Card */}
-                  <div className="relative h-full bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl p-8 overflow-hidden">
-                    {/* Subtle inner glow */}
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${app.gradient} opacity-10 blur-3xl`} />
-                    
-                    {/* Content */}
-                    <div className="relative">
-                      {/* Header */}
-                      <div className="flex items-start gap-5 mb-6">
-                        <div className={`relative flex-shrink-0`}>
-                          <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} rounded-2xl blur-lg opacity-50`} />
-                          <div className={`relative w-16 h-16 bg-gradient-to-br ${app.gradient} rounded-2xl flex items-center justify-center ${app.shadowColor} shadow-xl`}>
-                            <IconComponent className="w-8 h-8 text-white" />
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="text-2xl font-bold text-white truncate">{app.name}</h3>
-                          </div>
-                          <span className={`inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full font-medium ${
-                            isLive 
-                              ? "bg-green-500/20 text-green-400 border border-green-500/30" 
-                              : "bg-gray-500/20 text-gray-400 border border-gray-500/30"
-                          }`}>
-                            {isLive && (
-                              <span className="relative flex h-1.5 w-1.5">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400"></span>
-                              </span>
-                            )}
-                            {app.status}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {/* Description */}
-                      <p className="text-gray-400 mb-6 leading-relaxed">{app.description}</p>
-                      
-                      {/* Features */}
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {app.features.map((feature) => {
-                          const FeatureIcon = feature.icon;
-                          return (
-                            <div 
-                              key={feature.label} 
-                              className="flex items-center gap-2 text-xs px-3 py-2 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors"
-                            >
-                              <FeatureIcon className="w-3.5 h-3.5 text-gray-400" />
-                              <span className="text-gray-300">{feature.label}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      
-                      {/* Action Button */}
-                      {isLive ? (
-                        <Link
-                          href={app.href}
-                          className={`group/btn relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r ${app.gradient} rounded-2xl font-semibold text-white overflow-hidden transition-all hover:shadow-xl ${app.shadowColor}`}
-                        >
-                          <span className="relative z-10 flex items-center gap-2">
-                            Launch App
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                          </span>
-                          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform" />
-                        </Link>
-                      ) : (
-                        <button
-                          disabled
-                          className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 rounded-2xl font-semibold text-gray-500 cursor-not-allowed border border-white/5"
-                        >
-                          <Clock className="w-4 h-4" />
-                          Coming Soon
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20">
-          <div className="relative">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-[3rem] blur-3xl" />
-            
-            <div className="relative bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 rounded-[2rem] p-12 md:p-16 overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              
-              <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-xs text-blue-400 mb-4">
-                  <Shield className="w-3 h-3" />
-                  WHY CHOOSE US
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold">Built for the Future</h2>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-                {[
-                  {
-                    icon: Zap,
-                    title: "Lightning Fast",
-                    description: "Optimized for performance with edge deployment and smart caching.",
-                    gradient: "from-yellow-500 to-orange-500",
-                  },
-                  {
-                    icon: Shield,
-                    title: "Enterprise Security",
-                    description: "Bank-grade encryption, OAuth 2.0, and role-based access control.",
-                    gradient: "from-green-500 to-emerald-500",
-                  },
-                  {
-                    icon: Smartphone,
-                    title: "Mobile First",
-                    description: "Responsive design that works flawlessly on any device or screen size.",
-                    gradient: "from-purple-500 to-pink-500",
-                  },
-                ].map((feature, i) => (
-                  <div key={i} className="text-center group">
-                    <div className="relative inline-flex mb-6">
-                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-2xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity`} />
-                      <div className={`relative w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center shadow-lg`}>
-                        <feature.icon className="w-7 h-7 text-white" />
-                      </div>
-                    </div>
-                    <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{feature.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="max-w-7xl mx-auto px-6 py-20">
-          <div className="relative text-center py-20">
-            {/* Glow */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-[500px] h-[500px] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-[100px]" />
-            </div>
-            
-            <div className="relative">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-                Ready to Explore?
+        {/* Apps Grid - Modern Black & White Theme */}
+        <section id="apps" className="relative py-24 overflow-hidden bg-white">
+          <div className="relative max-w-6xl mx-auto px-6">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
+                Our Products
+              </span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                Streamline Business with
               </h2>
-              <p className="text-xl text-gray-400 mb-10 max-w-xl mx-auto">
-                Dive into our demo apps and see what&apos;s possible with modern web development.
-              </p>
-              <a 
-                href="#apps" 
-                className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/30 transition-all hover:-translate-y-1"
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                our Flexible Options
+              </h2>
+            </div>
+
+            {/* Loading State */}
+            {loading && (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
+              </div>
+            )}
+
+            {/* Error State */}
+            {error && !loading && (
+              <div className="text-center py-20">
+                <p className="text-gray-500">{error}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
+
+            {/* App Cards Grid */}
+            {!loading && !error && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {products.map((product: Product, index: number) => {
+                  const IconComponent = product.highlights?.[0]?.icon
+                    ? getIcon(product.highlights[0].icon)
+                    : Smartphone;
+                  const isLive = !product.comingSoon;
+
+                  return (
+                    <div
+                      key={product.id}
+                      className={`group relative bg-white rounded-3xl border border-gray-200 overflow-hidden transition-all duration-300 ${isLive ? "hover:shadow-2xl hover:border-gray-300 hover:-translate-y-1" : "opacity-60"
+                        }`}
+                    >
+                      {/* Card Header */}
+                      <div className="relative p-6 pb-0">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-900 transition-colors">
+                              <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900">{product.name}</h3>
+                              <p className="text-sm text-gray-500">by StitchByte</p>
+                            </div>
+                          </div>
+                          {isLive ? (
+                            <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-full">
+                              <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                              </span>
+                              Live
+                            </span>
+                          ) : (
+                            <span className="px-3 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full border border-gray-200">
+                              Coming Soon
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Preview Area */}
+                      <div className="px-6 pb-6">
+                        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
+                          <p className="text-gray-600 text-sm leading-relaxed mb-4">{product.shortDescription || product.tagline}</p>
+
+                          {/* Feature Tags */}
+                          <div className="flex flex-wrap gap-2">
+                            {product.highlights?.slice(0, 4).map((highlight: ProductHighlight, i: number) => (
+                              <span
+                                key={highlight.label}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 border border-gray-200"
+                              >
+                                <span className="w-4 h-4 bg-gray-100 rounded flex items-center justify-center text-[10px] text-gray-500">
+                                  {String(i + 1).padStart(2, '0')}
+                                </span>
+                                {highlight.label}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Action Button */}
+                        {isLive ? (
+                          <Link
+                            href={`/prebuilt/${product.id}`}
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
+                          >
+                            Explore Now
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                          </Link>
+                        ) : (
+                          <button
+                            disabled
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-100 text-gray-400 rounded-xl font-medium cursor-not-allowed border border-gray-200"
+                          >
+                            <Clock className="w-4 h-4" />
+                            Coming Soon
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* View All Button */}
+            <div className="text-center mt-12">
+              <Link
+                href="/prebuilt"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-medium rounded-full border-2 border-gray-200 hover:border-gray-900 transition-all"
               >
-                <Sparkles className="w-5 h-5" />
-                Get Started Now
-              </a>
+                View All Products
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6 py-12">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-white" />
+        {/* Why Choose Us Section - Futuredesks Style */}
+        <section id="features" className="relative py-24 lg:py-32 bg-white overflow-hidden">
+          {/* Subtle Background Pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0,0,0) 1px, transparent 0)`,
+              backgroundSize: '32px 32px'
+            }}
+          />
+
+          <div className="relative max-w-7xl mx-auto px-6">
+            {/* Section Header */}
+            <div className="text-center mb-16 lg:mb-20">
+              <span className="inline-block px-5 py-2 bg-gray-50 text-gray-600 text-sm font-medium rounded-full border border-gray-200 mb-6">
+                Why Us
+              </span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                Why Choose StitchByte?
+              </h2>
+              <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                We make launching your digital products easy. Perfect for developers and entrepreneurs,
+                it&apos;s customizable, scalable, and hassle-free.
+              </p>
+            </div>
+
+            {/* Three Column Layout: Features - Mockup - Features */}
+            <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center">
+
+              {/* Left Features Column */}
+              <div className="space-y-10 lg:space-y-12">
+                {/* Feature 1 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-emerald-200 group-hover:bg-emerald-50 transition-all">
+                    <BarChart3 className="w-6 h-6 text-gray-600 group-hover:text-emerald-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Real-Time Analytics</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Analyze results based on location to tailor your business performance and market reach.
+                  </p>
                 </div>
-                <div>
-                  <span className="font-semibold">StitchByte</span>
-                  <span className="text-gray-500 text-sm ml-2">© 2026</span>
+
+                {/* Feature 2 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-violet-200 group-hover:bg-violet-50 transition-all">
+                    <Layers className="w-6 h-6 text-gray-600 group-hover:text-violet-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Specially Built for Business</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Engineered specifically for your industry, ensuring a smooth and relevant user experience.
+                  </p>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-cyan-200 group-hover:bg-cyan-50 transition-all">
+                    <CreditCard className="w-6 h-6 text-gray-600 group-hover:text-cyan-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Versatile Payment Options</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Integrates multiple payment gateways for secure and varied transaction choices.
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                {[
-                  { icon: Globe, href: "https://stitchbyte.in", label: "Website" },
-                  { icon: Github, href: "https://github.com/stitchbyte", label: "GitHub" },
-                  { icon: Mail, href: "mailto:contact@stitchbyte.in", label: "Email" },
-                ].map((link) => (
-                  <a 
-                    key={link.label}
-                    href={link.href}
-                    className="p-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                    title={link.label}
-                  >
-                    <link.icon className="w-5 h-5" />
-                  </a>
+
+              {/* Center Mockup Area */}
+              <div className="relative hidden lg:flex items-center justify-center">
+                {/* Main Dashboard Mockup */}
+                <div className="relative">
+                  {/* Background Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 to-cyan-200/30 rounded-3xl blur-3xl scale-110" />
+
+                  {/* Main Card */}
+                  <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-transform duration-500">
+                    <div className="w-72 h-80 bg-gradient-to-br from-gray-50 to-white rounded-xl overflow-hidden">
+                      {/* Dashboard Header */}
+                      <div className="bg-gray-900 p-3 flex items-center gap-2">
+                        <div className="flex gap-1.5">
+                          <div className="w-2.5 h-2.5 bg-red-400 rounded-full" />
+                          <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full" />
+                          <div className="w-2.5 h-2.5 bg-green-400 rounded-full" />
+                        </div>
+                        <div className="flex-1 bg-gray-700 rounded h-4 mx-4" />
+                      </div>
+
+                      {/* Dashboard Content */}
+                      <div className="p-4 space-y-3">
+                        <div className="flex gap-2">
+                          <div className="w-1/3 h-16 bg-emerald-100 rounded-lg" />
+                          <div className="w-1/3 h-16 bg-violet-100 rounded-lg" />
+                          <div className="w-1/3 h-16 bg-amber-100 rounded-lg" />
+                        </div>
+                        <div className="h-24 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-lg border border-gray-100" />
+                        <div className="flex gap-2">
+                          <div className="flex-1 h-8 bg-gray-100 rounded" />
+                          <div className="w-20 h-8 bg-gray-900 rounded" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Floating Element - Top Left */}
+                  <div className="absolute -top-6 -left-8 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform -rotate-6 hover:rotate-0 transition-transform">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <Zap className="w-4 h-4 text-emerald-600" />
+                      </div>
+                      <span className="text-xs font-medium text-gray-700">Fast Deploy</span>
+                    </div>
+                  </div>
+
+                  {/* Floating Element - Top Right */}
+                  <div className="absolute -top-4 -right-6 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform rotate-6 hover:rotate-0 transition-transform">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+                        <Shield className="w-4 h-4 text-violet-600" />
+                      </div>
+                      <span className="text-xs font-medium text-gray-700">Secure</span>
+                    </div>
+                  </div>
+
+                  {/* Floating Element - Bottom Left */}
+                  <div className="absolute -bottom-4 -left-6 bg-gray-900 rounded-xl shadow-lg p-3 transform rotate-3 hover:rotate-0 transition-transform">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-emerald-400">&lt;/&gt;</span>
+                      <span className="text-xs font-medium text-white">Code</span>
+                    </div>
+                  </div>
+
+                  {/* Floating Element - Bottom Right */}
+                  <div className="absolute -bottom-6 -right-8 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform -rotate-3 hover:rotate-0 transition-transform">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
+                        <Globe className="w-4 h-4 text-cyan-600" />
+                      </div>
+                      <span className="text-xs font-medium text-gray-700">Global</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Features Column */}
+              <div className="space-y-10 lg:space-y-12">
+                {/* Feature 4 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-amber-200 group-hover:bg-amber-50 transition-all">
+                    <Smartphone className="w-6 h-6 text-gray-600 group-hover:text-amber-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">All-Inclusive Platform</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Offers a complete package with mobile and web apps, plus an admin panel for total control.
+                  </p>
+                </div>
+
+                {/* Feature 5 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-rose-200 group-hover:bg-rose-50 transition-all">
+                    <Shield className="w-6 h-6 text-gray-600 group-hover:text-rose-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Enhanced Security Features</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Provides secure access with multi-login options to protect user and store information.
+                  </p>
+                </div>
+
+                {/* Feature 6 */}
+                <div className="group">
+                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-indigo-200 group-hover:bg-indigo-50 transition-all">
+                    <Layers className="w-6 h-6 text-gray-600 group-hover:text-indigo-600 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Broad Product Categories</h3>
+                  <p className="text-gray-500 leading-relaxed text-[15px]">
+                    Categorize products into various sections for a streamlined browsing and shopping experience.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile: Show features in 2-column grid */}
+            <div className="lg:hidden mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {/* Mobile Mockup */}
+              <div className="sm:col-span-2 flex justify-center mb-8">
+                <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 p-3">
+                  <div className="w-64 h-48 bg-gradient-to-br from-gray-50 to-white rounded-xl overflow-hidden">
+                    <div className="bg-gray-900 p-2 flex items-center gap-2">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 bg-red-400 rounded-full" />
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full" />
+                        <div className="w-2 h-2 bg-green-400 rounded-full" />
+                      </div>
+                    </div>
+                    <div className="p-3 space-y-2">
+                      <div className="flex gap-2">
+                        <div className="w-1/3 h-10 bg-emerald-100 rounded" />
+                        <div className="w-1/3 h-10 bg-violet-100 rounded" />
+                        <div className="w-1/3 h-10 bg-amber-100 rounded" />
+                      </div>
+                      <div className="h-16 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded border border-gray-100" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section id="faq" className="relative py-24 bg-white">
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: `linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)`,
+              backgroundSize: '60px 60px'
+            }}
+          />
+
+          <div className="relative max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-16">
+              {/* Left - Title */}
+              <div>
+                <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
+                  Frequently Asked
+                  <br />
+                  Questions
+                </h2>
+              </div>
+
+              {/* Right - FAQ Items */}
+              <div>
+                {faqs.map((faq, index) => (
+                  <FAQItem
+                    key={index}
+                    question={faq.question}
+                    answer={faq.answer}
+                    isOpen={openFaq === index}
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  />
                 ))}
               </div>
             </div>
           </div>
-        </footer>
+        </section>
+
+        {/* Shared Footer Component */}
+        <Footer />
       </div>
     </div>
   );

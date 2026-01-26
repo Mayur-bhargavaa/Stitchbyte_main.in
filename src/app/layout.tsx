@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PWARegister } from "@/components/pwa-register";
+import Chatbot from "@/components/Chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,13 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QR Restaurant - Smart Ordering",
-  description: "Smart QR-Based Restaurant Ordering Platform",
+  title: "Stitchbyte - Your Digital Solutions Partner",
+  description: "Stitchbyte - Your Digital Solutions Partner",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.ico",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "QR Restaurant",
+    title: "Stitchbyte - Your Digital Solutions Partner",
   },
   formatDetection: {
     telephone: true,
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -51,7 +54,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <PWARegister />
+        <Chatbot />
       </body>
     </html>
   );

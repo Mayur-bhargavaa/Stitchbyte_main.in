@@ -1,5 +1,5 @@
 {
-  "name": "qr-restaurant",
+  "name": "stitchbyte",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,10 @@
     "cloudinary": "^2.8.0",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
+    "fuse.js": "^7.1.0",
     "lucide-react": "^0.562.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.5",
     "next": "16.1.1",
     "next-auth": "^5.0.0-beta.30",
     "pdf-lib": "^1.17.1",
