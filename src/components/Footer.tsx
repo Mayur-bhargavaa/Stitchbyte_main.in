@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Facebook, Github, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -23,6 +24,22 @@ export default function Footer() {
                             <button className="px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors whitespace-nowrap">
                                 Subscribe
                             </button>
+                        </div>
+
+                        {/* Social Icons */}
+                        <div className="flex items-center gap-4 mt-8">
+                            <a href="https://www.facebook.com/profile.php?id=61563772072392" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                                <Facebook className="w-5 h-5" />
+                            </a>
+                            <a href="https://github.com/Mayur-bhargavaa" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                                <Github className="w-5 h-5" />
+                            </a>
+                            <a href="https://www.instagram.com/stitchbyte.in/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                                <Instagram className="w-5 h-5" />
+                            </a>
+                            <a href="https://www.linkedin.com/in/vinita-bhargava-46a533390/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                                <Linkedin className="w-5 h-5" />
+                            </a>
                         </div>
                     </div>
 
@@ -67,6 +84,11 @@ export default function Footer() {
                                 <li>
                                     <Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                                         Blogs
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/careers" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
+                                        Careers
                                     </Link>
                                 </li>
                                 <li>

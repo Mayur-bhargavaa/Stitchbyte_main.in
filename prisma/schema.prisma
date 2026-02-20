@@ -179,3 +179,29 @@ model Setting {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ==================== BLOG ====================
+model Blog {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String    @unique
+  excerpt     String?
+  content     String
+  
+  coverImage  String?
+  pdfUrl      String?
+  pdfName     String?
+
+  author      String    @default("StitchByte Team")
+  category    String    @default("General")
+  readTime    String    @default("5 min read")
+  
+  status      String    @default("draft")
+  tags        String[]
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("blogs")
+}
