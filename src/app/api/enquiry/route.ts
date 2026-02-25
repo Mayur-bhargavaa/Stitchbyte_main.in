@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { name, phone, email, brand, message, productId, productName } = body;
+        const { name, phone, email, brand, message, productId, productName, tracking } = body;
 
         // Validate required fields
         if (!name || !phone) {
@@ -27,6 +27,13 @@ export async function POST(request: NextRequest) {
             message: message || null,
             productId: productId || null,
             productName: productName || null,
+            utmSource: tracking?.utmSource || null,
+            utmMedium: tracking?.utmMedium || null,
+            utmCampaign: tracking?.utmCampaign || null,
+            utmTerm: tracking?.utmTerm || null,
+            utmContent: tracking?.utmContent || null,
+            referrer: tracking?.referrer || null,
+            landingPage: tracking?.landingPage || null,
             status: "new",
             createdAt: new Date(),
             updatedAt: new Date()

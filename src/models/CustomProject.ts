@@ -8,6 +8,7 @@ export interface ICustomProject extends Document {
     image: string;
     features: string[];
     link: string;
+    videoUrl?: string;
     category: 'websites' | 'applications';
     technologies: string[];
     clientName?: string;
@@ -27,6 +28,7 @@ const CustomProjectSchema = new Schema<ICustomProject>(
         image: { type: String, required: true },
         features: { type: [String], required: true },
         link: { type: String },
+        videoUrl: { type: String },
         category: { type: String, enum: ['websites', 'applications'], required: true },
         technologies: { type: [String], default: [] },
         clientName: { type: String },

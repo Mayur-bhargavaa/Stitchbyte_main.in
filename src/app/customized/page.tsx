@@ -245,21 +245,19 @@ export default function CustomizedPage() {
                                             ))}
                                         </div>
                                         {project.link && project.link !== '#' && (
-                                            <a
-                                                href={project.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                            <Link
+                                                href={`/customized/${project.slug}`}
                                                 className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
                                             >
-                                                View Website
-                                                <ExternalLink className="w-4 h-4" />
-                                            </a>
+                                                View Details
+                                                <ArrowRight className="w-4 h-4" />
+                                            </Link>
                                         )}
                                         {(!project.link || project.link === '#') && (
-                                            <button className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors">
-                                                View Website
-                                                <ExternalLink className="w-4 h-4" />
-                                            </button>
+                                            <Link href={`/customized/${project.slug}`} className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors">
+                                                View Details
+                                                <ArrowRight className="w-4 h-4" />
+                                            </Link>
                                         )}
                                     </div>
                                 </div>
