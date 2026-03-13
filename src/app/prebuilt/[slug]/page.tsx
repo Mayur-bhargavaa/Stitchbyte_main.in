@@ -118,6 +118,7 @@ interface ProductData {
     heroTitle: string;
     heroDescription: string;
     price: string;
+    originalPrice?: string;
     priceNote: string;
     color: string;
     gradient: string;
@@ -376,6 +377,10 @@ export default function ProductDetailPage() {
                     {/* Price */}
                     <div className="mb-8">
                         <p className="text-gray-500 text-sm mb-2">Software worth Lakhs at just</p>
+                        {product.originalPrice && (
+                            <p className="text-2xl sm:text-3xl font-black italic tracking-tight text-gray-400 line-through decoration-2 decoration-gray-400/80">{product.originalPrice}/-</p>
+                        )}
+                        <p className="text-gray-500 text-xs uppercase tracking-wider mt-2">Starting from</p>
                         <p className="text-5xl font-bold text-gray-900">{product.price}/-</p>
                         <p className="text-sm text-gray-500 mt-2">{product.priceNote}</p>
                     </div>

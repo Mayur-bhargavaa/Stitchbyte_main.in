@@ -64,6 +64,8 @@ interface Product {
     name: string;
     tagline: string;
     shortDescription: string;
+    price?: string;
+    originalPrice?: string;
     gradient: string;
     highlights: ProductHighlight[];
     comingSoon?: boolean;

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Chatbot from "@/components/Chatbot";
+import ChatbotVisibility from "@/components/ChatbotVisibility";
 import TrackingProvider from "@/components/TrackingProvider";
 import { Suspense } from "react";
 
@@ -56,7 +56,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Chatbot />
+        <ChatbotVisibility />
         <Suspense fallback={null}>
           <TrackingProvider />
         </Suspense>
