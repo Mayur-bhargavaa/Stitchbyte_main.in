@@ -1,0 +1,6 @@
+<svg width="400" height="160" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="160" rx="20" fill="#F3F4F6"/>
+  <rect x="26" y="26" width="348" height="108" rx="14" fill="white" stroke="#E5E7EB"/>
+  <text x="200" y="85" text-anchor="middle" fill="#111827" font-family="Arial, sans-serif" font-size="26" font-weight="700">Brand Two</text>
+  <text x="200" y="110" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="14">Replace with your logo</text>
+</svg>

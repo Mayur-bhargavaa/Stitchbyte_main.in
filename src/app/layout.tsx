@@ -16,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Stitchbyte - Your Digital Solutions Partner",
-  description: "Stitchbyte - Your Digital Solutions Partner",
+  title: "Stitchbyte | SEO, Digital Presence, Web Development & UX/UI",
+  description:
+    "Stitchbyte helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences.",
   manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stitchbyte - Your Digital Solutions Partner",
+    title: "Stitchbyte | SEO, Web Development & UX/UI",
   },
   formatDetection: {
     telephone: true,

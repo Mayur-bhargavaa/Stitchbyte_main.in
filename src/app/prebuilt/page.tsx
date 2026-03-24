@@ -74,7 +74,7 @@ interface Product {
 }
 
 // Marquee text items
-const marqueeItems = ["Develop it Once", "Develop it from Best", "Skip the Wait", "Go Digital Faster"];
+const marqueeItems = ["Launch Faster", "SEO-Ready Foundation", "Build Trust Online", "Convert More Users"];
 
 export default function PrebuiltPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -112,9 +112,9 @@ export default function PrebuiltPage() {
             return product.offerings.slice(0, 3).map(o => o.description);
         }
         return [
-            `Launch your ${product.name.toLowerCase()} with a ready-to-use solution — built to scale operations effortlessly.`,
-            `Experience next-gen automation with smart features, helping you grow faster with less effort.`,
-            `Enjoy complete control with integrated apps and admin panel — all from one powerful platform.`
+            `Launch your ${product.name.toLowerCase()} with a ready-to-use solution built for speed, trust, and growth.`,
+            `Start with an SEO-friendly structure and conversion-focused experience to improve digital visibility.`,
+            `Manage everything from one platform with integrated apps and admin controls for better user journeys.`
         ];
     };
 
@@ -167,18 +167,18 @@ export default function PrebuiltPage() {
                     {/* Badge */}
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-8 border border-gray-200">
                         <Sparkles className="w-4 h-4" />
-                        Ready-to-Deploy Solutions
+                        Ready-to-Deploy Marketing + Product Solutions
                     </span>
 
                     <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
                         Prebuilt Saas Software for
                         <br />
-                        <span className="text-gray-900">Startups</span>
+                        <span className="text-gray-900">Growth-Focused Brands</span>
                     </h1>
 
                     <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-12">
-                        Skip the long wait and high costs. Our prebuilt platforms help you go
-                        digital faster without compromising on quality.
+                        Skip long timelines and launch with confidence. Our prebuilt platforms combine
+                        web quality, SEO readiness, and user-friendly UX/UI to help you grow faster.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -212,11 +212,11 @@ export default function PrebuiltPage() {
                         </div>
                         <div className="text-center">
                             <p className="text-3xl sm:text-4xl font-bold text-gray-900">24h - 48h</p>
-                            <p className="text-sm text-gray-500 mt-1">Quick Deployment</p>
+                            <p className="text-sm text-gray-500 mt-1">Fast Go-to-Market</p>
                         </div>
                         <div className="text-center">
                             <p className="text-3xl sm:text-4xl font-bold text-gray-900">100%</p>
-                            <p className="text-sm text-gray-500 mt-1">Source Code</p>
+                            <p className="text-sm text-gray-500 mt-1">Source Code Ownership</p>
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@ export default function PrebuiltPage() {
                             Categories
                         </h2>
                         <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-                            Choose from our range of ready-to-deploy solutions designed for different industries
+                            Choose ready-to-deploy solutions designed to attract, engage, and convert users across industries.
                         </p>
                     </div>
 
@@ -346,7 +346,7 @@ export default function PrebuiltPage() {
                                                     href={`/prebuilt/${product.id}`}
                                                     className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
                                                 >
-                                                    Check this out
+                                                    Explore Solution
                                                     <ArrowRight className="w-4 h-4" />
                                                 </Link>
                                             )}

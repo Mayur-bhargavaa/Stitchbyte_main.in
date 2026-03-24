@@ -1,0 +1,11 @@
+<svg width="520" height="280" viewBox="0 0 520 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="280" rx="20" fill="#F9FAFB"/>
+  <rect x="24" y="24" width="472" height="232" rx="14" fill="white" stroke="#E5E7EB"/>
+  <circle cx="72" cy="72" r="22" fill="#E5E7EB"/>
+  <rect x="108" y="58" width="170" height="12" rx="6" fill="#111827"/>
+  <rect x="108" y="78" width="110" height="10" rx="5" fill="#9CA3AF"/>
+  <rect x="48" y="118" width="424" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="48" y="136" width="392" height="10" rx="5" fill="#D1D5DB"/>
+  <rect x="48" y="154" width="346" height="10" rx="5" fill="#D1D5DB"/>
+  <text x="48" y="208" fill="#374151" font-family="Arial, sans-serif" font-size="14">Client Review Image 2</text>
+</svg>

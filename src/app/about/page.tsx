@@ -91,8 +91,8 @@ export default function AboutPage() {
                         </h1>
 
                         <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12">
-                            At StitchByte, we believe technology isn&apos;t just about code — it&apos;s about creating possibilities,
-                            building trust, and driving growth. We&apos;re a passionate team turning ideas into powerful digital products.
+                            At StitchByte, we believe digital success is more than just code — it&apos;s SEO visibility, strong brand presence,
+                            reliable web development, and intuitive UX/UI. We&apos;re a focused team helping businesses grow with clarity.
                         </p>
 
                         {/* Stats Row */}
@@ -125,17 +125,17 @@ export default function AboutPage() {
                                         <div className="col-span-2 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white">
                                             <Users2 className="w-10 h-10 mb-4 text-emerald-400" />
                                             <div className="text-2xl font-bold mb-1">Creative Team</div>
-                                            <p className="text-gray-400 text-sm">Developers, Designers & Strategists</p>
+                                            <p className="text-gray-400 text-sm">SEO, Developers, Designers & Strategists</p>
                                         </div>
                                         <div className="bg-emerald-50 rounded-2xl p-5 border border-emerald-100">
                                             <Code2 className="w-8 h-8 text-emerald-600 mb-3" />
-                                            <div className="font-semibold text-gray-900">Clean Code</div>
-                                            <p className="text-xs text-gray-500 mt-1">Modern tech stacks</p>
+                                            <div className="font-semibold text-gray-900">Growth-Ready Development</div>
+                                            <p className="text-xs text-gray-500 mt-1">Fast, scalable web builds</p>
                                         </div>
                                         <div className="bg-violet-50 rounded-2xl p-5 border border-violet-100">
                                             <Palette className="w-8 h-8 text-violet-600 mb-3" />
-                                            <div className="font-semibold text-gray-900">Great Design</div>
-                                            <p className="text-xs text-gray-500 mt-1">User-centric UI/UX</p>
+                                            <div className="font-semibold text-gray-900">Simple UX/UI</div>
+                                            <p className="text-xs text-gray-500 mt-1">Clear and easy experiences</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,19 +147,19 @@ export default function AboutPage() {
                                     Who We Are
                                 </span>
                                 <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                                    A Team of Innovators
+                                    A Team for Growth & Experience
                                 </h2>
                                 <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
                                     <p>
-                                        We are a team of creative developers, designers, and strategists who blend innovation with execution.
+                                        We are a team of SEO specialists, developers, designers, and strategists focused on real business outcomes.
                                     </p>
                                     <p>
-                                        Our strength lies in understanding every client&apos;s vision deeply and turning it into a digital reality —
-                                        whether it&apos;s an e-commerce app, food delivery system, SaaS platform, or a complete business ecosystem.
+                                        Our strength lies in understanding your audience and building the right digital journey — from discoverability
+                                        and trust to conversion-ready websites and products.
                                     </p>
                                     <p>
-                                        We specialize in both <strong>pre-built solutions</strong> (for fast and affordable launches) and <strong>custom development</strong>
-                                        (for unique, tailor-made platforms).
+                                        We deliver both <strong>pre-built solutions</strong> (for fast launches) and <strong>custom development</strong>, with SEO and UX/UI
+                                        integrated from the start.
                                     </p>
                                 </div>
 
@@ -191,29 +191,29 @@ export default function AboutPage() {
                             {[
                                 {
                                     icon: Rocket,
-                                    title: "Speed + Quality",
-                                    description: "We deliver fast without compromising on performance or design.",
+                                    title: "Fast + Reliable Delivery",
+                                    description: "We move quickly while keeping performance, quality, and usability strong.",
                                     iconBg: "bg-orange-100",
                                     iconColor: "text-orange-600"
                                 },
                                 {
                                     icon: Lightbulb,
-                                    title: "Innovation First",
-                                    description: "We stay ahead with modern tech stacks and creative problem-solving.",
+                                    title: "SEO + Digital Strategy",
+                                    description: "We align content, structure, and user flow to improve online visibility.",
                                     iconBg: "bg-amber-100",
                                     iconColor: "text-amber-600"
                                 },
                                 {
                                     icon: Handshake,
-                                    title: "Client-Centric",
-                                    description: "Your success is our priority. We listen, understand, and build accordingly.",
+                                    title: "User-First UX/UI",
+                                    description: "We design clear, simple interfaces that users can understand and trust.",
                                     iconBg: "bg-emerald-100",
                                     iconColor: "text-emerald-600"
                                 },
                                 {
                                     icon: Package,
-                                    title: "End-to-End",
-                                    description: "From idea to launch and beyond — we handle it all with care.",
+                                    title: "End-to-End Execution",
+                                    description: "From strategy and design to development and optimization — we handle all stages.",
                                     iconBg: "bg-violet-100",
                                     iconColor: "text-violet-600"
                                 },
@@ -241,9 +241,8 @@ export default function AboutPage() {
                                 </div>
                                 <h3 className="text-3xl font-bold mb-4 text-gray-900">Our Vision</h3>
                                 <p className="text-gray-600 leading-relaxed text-lg">
-                                    To be the go-to digital partner for startups and businesses worldwide —
-                                    enabling them to build, launch, and scale with confidence. We envision a future
-                                    where every business, big or small, has access to world-class technology and design.
+                                    To be the go-to growth partner for businesses worldwide — helping them strengthen
+                                    digital presence through SEO, high-quality web platforms, and user-friendly experiences.
                                 </p>
                             </div>
 
@@ -254,9 +253,8 @@ export default function AboutPage() {
                                 </div>
                                 <h3 className="text-3xl font-bold mb-4 text-gray-900">Our Mission</h3>
                                 <p className="text-gray-600 leading-relaxed text-lg">
-                                    To make technology simple, scalable, and impactful. We&apos;re driven by passion
-                                    to create digital products that not only look stunning but also deliver real
-                                    business results for our clients across the globe.
+                                    To make digital growth simple, scalable, and measurable by combining strategy,
+                                    design, and engineering into practical solutions that deliver real business results.
                                 </p>
                             </div>
                         </div>
@@ -305,7 +303,7 @@ export default function AboutPage() {
                                     Ready to Build Something Amazing?
                                 </h2>
                                 <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">
-                                    Let&apos;s turn your idea into reality. Whether you need a prebuilt solution or custom development, we&apos;re here to help you succeed.
+                                    Let&apos;s grow your business with SEO, stronger digital presence, web development, and easy-to-use UX/UI built for real users.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                     <Link

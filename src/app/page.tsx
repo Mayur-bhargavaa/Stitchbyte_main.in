@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import {
   UtensilsCrossed,
   ShoppingCart,
+  ShoppingBag,
   Briefcase,
   FileText,
   Zap,
@@ -22,6 +23,8 @@ import {
   Layers,
   Globe,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Instagram,
   MessageCircle,
 
@@ -88,6 +91,47 @@ interface Product {
   comingSoon?: boolean;
 }
 
+interface CustomProject {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  technologies: string[];
+}
+
+interface MarketingCaseStudy {
+  id: string;
+  slug: string;
+  brand: string;
+  industry: string;
+  category: "performance" | "seo";
+  summary: string;
+  highlights: string[];
+}
+
+interface UiUxProject {
+  id: string;
+  title: string;
+  brand: string;
+  projectType: "figma" | "pdf" | "website" | "other";
+  summary: string;
+  tags: string[];
+  projectUrl: string;
+}
+
+type WorkSource = "marketing" | "seo" | "uiux" | "prebuilt" | "customized";
+
+interface HomeWorkCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  href: string;
+  source: WorkSource;
+  isExternal?: boolean;
+}
+
 const faqs = [
   {
     question: "How long does it take to deliver a pre-built application or website?",
@@ -135,34 +179,175 @@ function FAQItem({ question, answer, isOpen, onClick }: { question: string; answ
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [homeWorkCards, setHomeWorkCards] = useState<HomeWorkCard[]>([]);
+  const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [visibleReviewCount, setVisibleReviewCount] = useState(3);
+  const [workLoading, setWorkLoading] = useState(true);
+  const [workError, setWorkError] = useState<string | null>(null);
+  const displayReviewImages = reviewImageUrls.filter(Boolean);
 
-  // Fetch products from MongoDB
+  // Fetch mixed work cards from different sections
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchHomeWorkCards = async () => {
       try {
-        setLoading(true);
-        const response = await fetch('/api/products');
-        const data = await response.json();
+        setWorkLoading(true);
+        setWorkError(null);
 
-        if (response.ok && data.products) {
-          // Limit to first 4 products for home page
-          setProducts(data.products.slice(0, 4));
-        } else {
-          setError(data.error || "Failed to load products");
+        const [productsResponse, customResponse, marketingResponse, uiuxResponse] = await Promise.all([
+          fetch('/api/products'),
+          fetch('/api/custom-projects?category=all'),
+          fetch('/api/marketing-case-studies'),
+          fetch('/api/ui-ux-projects'),
+        ]);
+
+        const productsData = await productsResponse.json();
+        const customData = await customResponse.json();
+        const marketingData = await marketingResponse.json();
+        const uiuxData = await uiuxResponse.json();
+
+        const products: Product[] = Array.isArray(productsData.products) ? productsData.products : [];
+        const customProjects: CustomProject[] = Array.isArray(customData.data) ? customData.data : [];
+        const marketingStudies: MarketingCaseStudy[] = Array.isArray(marketingData.studies) ? marketingData.studies : [];
+        const uiuxProjects: UiUxProject[] = Array.isArray(uiuxData.projects) ? uiuxData.projects : [];
+
+        const firstMarketing = marketingStudies.find((item) => item.category === "performance");
+        const firstSeo = marketingStudies.find((item) => item.category === "seo");
+        const firstUiUx = uiuxProjects[0];
+        const firstPrebuilt = products[0];
+        const firstCustomized = customProjects[0];
+
+        const cards: HomeWorkCard[] = [];
+
+        if (firstMarketing) {
+          cards.push({
+            id: `marketing-${firstMarketing.id}`,
+            title: firstMarketing.brand,
+            subtitle: "Marketing Case Study",
+            description: firstMarketing.summary,
+            tags: firstMarketing.highlights || [],
+            href: `/marketing/${firstMarketing.slug}`,
+            source: "marketing",
+          });
         }
+
+        if (firstUiUx) {
+          cards.push({
+            id: `uiux-${firstUiUx.id}`,
+            title: firstUiUx.title,
+            subtitle: "UI & UX Project",
+            description: firstUiUx.summary,
+            tags: firstUiUx.tags || [],
+            href: firstUiUx.projectUrl,
+            source: "uiux",
+            isExternal: true,
+          });
+        }
+
+        if (firstSeo) {
+          cards.push({
+            id: `seo-${firstSeo.id}`,
+            title: firstSeo.brand,
+            subtitle: "SEO Case Study",
+            description: firstSeo.summary,
+            tags: firstSeo.highlights || [],
+            href: `/marketing/${firstSeo.slug}`,
+            source: "seo",
+          });
+        }
+
+        if (firstPrebuilt) {
+          cards.push({
+            id: `prebuilt-${firstPrebuilt.id}`,
+            title: firstPrebuilt.name,
+            subtitle: "Prebuilt Solution",
+            description: firstPrebuilt.shortDescription || firstPrebuilt.tagline,
+            tags: (firstPrebuilt.highlights || []).map((item) => item.label),
+            href: `/prebuilt/${firstPrebuilt.id}`,
+            source: "prebuilt",
+          });
+        } else if (firstCustomized) {
+          cards.push({
+            id: `customized-${firstCustomized.id}`,
+            title: firstCustomized.title,
+            subtitle: "Customized Project",
+            description: firstCustomized.description,
+            tags: firstCustomized.technologies || [],
+            href: `/customized/${firstCustomized.slug}`,
+            source: "customized",
+          });
+        }
+
+        if (cards.length === 0) {
+          setWorkError("No work items available yet.");
+        }
+
+        setHomeWorkCards(cards.slice(0, 4));
       } catch (err) {
-        console.error("Error fetching products:", err);
-        setError("Failed to load products");
+        console.error("Error fetching home work cards:", err);
+        setWorkError("Failed to load work cards");
       } finally {
-        setLoading(false);
+        setWorkLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchHomeWorkCards();
   }, []);
+
+  useEffect(() => {
+    const fetchReviewImages = async () => {
+      try {
+        const response = await fetch('/api/site-content/reviews');
+        const data = await response.json();
+
+        if (response.ok && data.success && Array.isArray(data.reviewImages)) {
+          setReviewImageUrls(data.reviewImages);
+        }
+      } catch (err) {
+        console.error('Error fetching review images:', err);
+      }
+    };
+
+    fetchReviewImages();
+  }, []);
+
+  useEffect(() => {
+    setCurrentReviewIndex(0);
+  }, [displayReviewImages.length]);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      if (window.innerWidth < 768) {
+        setVisibleReviewCount(1);
+      } else if (window.innerWidth < 1280) {
+        setVisibleReviewCount(2);
+      } else {
+        setVisibleReviewCount(3);
+      }
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  useEffect(() => {
+    if (displayReviewImages.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setCurrentReviewIndex((current) => (current + 1) % displayReviewImages.length);
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [displayReviewImages.length]);
+
+  const activeReviewCount = Math.min(visibleReviewCount, displayReviewImages.length || 1);
+  const visibleReviewImages = Array.from({ length: activeReviewCount }, (_, offset) => {
+    if (displayReviewImages.length === 0) return "";
+    const index = (currentReviewIndex + offset) % displayReviewImages.length;
+    return displayReviewImages[index];
+  }).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
@@ -238,7 +423,7 @@ export default function LandingPage() {
             <div className="mb-8 animate-fade-in">
               <span className="inline-flex items-center gap-2 px-5 py-2 bg-white/80 backdrop-blur-sm text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-lg">
                 <Sparkles className="w-4 h-4 text-orange-500" />
-                Your Digital Partner for Startup Success
+                SEO, Digital Presence, Web Development & UX/UI
               </span>
             </div>
 
@@ -284,8 +469,8 @@ export default function LandingPage() {
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mb-12 leading-relaxed">
-              We turn your ideas into reality. From prebuilt solutions to custom development,
-              launch your digital product faster than ever before.
+              We help brands grow online with SEO, stronger digital presence, modern web development,
+              and easy-to-use UX/UI experiences—all in the same trusted StitchByte workflow.
             </p>
 
             {/* CTA Buttons */}
@@ -319,12 +504,12 @@ export default function LandingPage() {
         <section className="py-8 overflow-hidden bg-gradient-to-b from-transparent to-slate-50/50">
           <div className="relative">
             <div className="flex animate-marquee whitespace-nowrap">
-              {['From Idea to Execution', 'Build Your Dream', 'Launch with Confidence', 'Scale Your Business', 'Go Digital Today', 'Innovation First', 'Your Vision, Our Code'].map((quote, i) => (
+              {['SEO That Performs', 'Grow Your Digital Presence', 'Web Development That Scales', 'Simple UX, Strong UI', 'Launch with Confidence', 'Your Vision, Our Execution', 'Build, Rank, and Grow'].map((quote, i) => (
                 <span key={i} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
                   ✦ {quote}
                 </span>
               ))}
-              {['From Idea to Execution', 'Build Your Dream', 'Launch with Confidence', 'Scale Your Business', 'Go Digital Today', 'Innovation First', 'Your Vision, Our Code'].map((quote, i) => (
+              {['SEO That Performs', 'Grow Your Digital Presence', 'Web Development That Scales', 'Simple UX, Strong UI', 'Launch with Confidence', 'Your Vision, Our Execution', 'Build, Rank, and Grow'].map((quote, i) => (
                 <span key={`dup-${i}`} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
                   ✦ {quote}
                 </span>
@@ -350,16 +535,16 @@ export default function LandingPage() {
             </div>
 
             {/* Loading State */}
-            {loading && (
+            {workLoading && (
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
               </div>
             )}
 
             {/* Error State */}
-            {error && !loading && (
+            {workError && !workLoading && (
               <div className="text-center py-20">
-                <p className="text-gray-500">{error}</p>
+                <p className="text-gray-500">{workError}</p>
                 <button
                   onClick={() => window.location.reload()}
                   className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full"
@@ -370,19 +555,23 @@ export default function LandingPage() {
             )}
 
             {/* App Cards Grid */}
-            {!loading && !error && (
+            {!workLoading && !workError && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {products.map((product: Product, index: number) => {
-                  const IconComponent = product.highlights?.[0]?.icon
-                    ? getIcon(product.highlights[0].icon)
-                    : Smartphone;
-                  const isLive = !product.comingSoon;
+                {homeWorkCards.map((card) => {
+                  const iconBySource: Record<WorkSource, LucideIcon> = {
+                    marketing: BarChart3,
+                    seo: Globe,
+                    uiux: Layers,
+                    prebuilt: Store,
+                    customized: ShoppingBag,
+                  };
+
+                  const IconComponent = iconBySource[card.source] || Smartphone;
 
                   return (
                     <div
-                      key={product.id}
-                      className={`group relative bg-white rounded-3xl border border-gray-200 overflow-hidden transition-all duration-300 ${isLive ? "hover:shadow-2xl hover:border-gray-300 hover:-translate-y-1" : "opacity-60"
-                        }`}
+                      key={card.id}
+                      className="group relative bg-white rounded-3xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-1"
                     >
                       {/* Card Header */}
                       <div className="relative p-6 pb-0">
@@ -392,64 +581,60 @@ export default function LandingPage() {
                               <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" />
                             </div>
                             <div>
-                              <h3 className="text-xl font-bold text-gray-900">{product.name}</h3>
-                              <p className="text-sm text-gray-500">by StitchByte</p>
+                              <h3 className="text-xl font-bold text-gray-900">{card.title}</h3>
+                              <p className="text-sm text-gray-500">{card.subtitle}</p>
                             </div>
                           </div>
-                          {isLive ? (
-                            <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-full">
-                              <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                              </span>
-                              Live
+                          <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-full">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                             </span>
-                          ) : (
-                            <span className="px-3 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full border border-gray-200">
-                              Coming Soon
-                            </span>
-                          )}
+                            Live
+                          </span>
                         </div>
                       </div>
 
                       {/* Preview Area */}
                       <div className="px-6 pb-6">
                         <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
-                          <p className="text-gray-600 text-sm leading-relaxed mb-4">{product.shortDescription || product.tagline}</p>
+                          <p className="text-gray-600 text-sm leading-relaxed mb-4">{card.description}</p>
 
                           {/* Feature Tags */}
                           <div className="flex flex-wrap gap-2">
-                            {product.highlights?.slice(0, 4).map((highlight: ProductHighlight, i: number) => (
+                            {card.tags?.slice(0, 4).map((tag: string, i: number) => (
                               <span
-                                key={highlight.label}
+                                key={`${card.id}-${tag}-${i}`}
                                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 border border-gray-200"
                               >
                                 <span className="w-4 h-4 bg-gray-100 rounded flex items-center justify-center text-[10px] text-gray-500">
                                   {String(i + 1).padStart(2, '0')}
                                 </span>
-                                {highlight.label}
+                                {tag}
                               </span>
                             ))}
                           </div>
                         </div>
 
                         {/* Action Button */}
-                        {isLive ? (
+                        {card.isExternal ? (
+                          <a
+                            href={card.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
+                          >
+                            Explore Now
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                          </a>
+                        ) : (
                           <Link
-                            href={`/prebuilt/${product.id}`}
+                            href={card.href}
                             className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
                           >
                             Explore Now
                             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                           </Link>
-                        ) : (
-                          <button
-                            disabled
-                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-100 text-gray-400 rounded-xl font-medium cursor-not-allowed border border-gray-200"
-                          >
-                            <Clock className="w-4 h-4" />
-                            Coming Soon
-                          </button>
                         )}
                       </div>
                     </div>
@@ -461,10 +646,10 @@ export default function LandingPage() {
             {/* View All Button */}
             <div className="text-center mt-12">
               <Link
-                href="/prebuilt"
+                href="/work"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-medium rounded-full border-2 border-gray-200 hover:border-gray-900 transition-all"
               >
-                View All Products
+                View All Work
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -492,8 +677,8 @@ export default function LandingPage() {
                 Why Choose StitchByte?
               </h2>
               <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                We make launching your digital products easy. Perfect for developers and entrepreneurs,
-                it&apos;s customizable, scalable, and hassle-free.
+                We combine SEO strategy, digital brand growth, quality web development, and intuitive UX/UI
+                to deliver results that are scalable and easy for users.
               </p>
             </div>
 
@@ -507,9 +692,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-emerald-200 group-hover:bg-emerald-50 transition-all">
                     <BarChart3 className="w-6 h-6 text-gray-600 group-hover:text-emerald-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Real-Time Analytics</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">SEO & Performance Insights</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Analyze results based on location to tailor your business performance and market reach.
+                    Track rankings, traffic, and audience behavior to improve visibility and growth decisions.
                   </p>
                 </div>
 
@@ -518,9 +703,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-violet-200 group-hover:bg-violet-50 transition-all">
                     <Layers className="w-6 h-6 text-gray-600 group-hover:text-violet-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Specially Built for Business</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Web Development for Your Business</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Engineered specifically for your industry, ensuring a smooth and relevant user experience.
+                    Build reliable websites and platforms tailored to your goals, users, and operations.
                   </p>
                 </div>
 
@@ -529,9 +714,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-cyan-200 group-hover:bg-cyan-50 transition-all">
                     <CreditCard className="w-6 h-6 text-gray-600 group-hover:text-cyan-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Versatile Payment Options</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Stronger Digital Presence</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Integrates multiple payment gateways for secure and varied transaction choices.
+                    Align your website, content, and conversion flow so customers find and trust your brand.
                   </p>
                 </div>
               </div>
@@ -619,9 +804,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-amber-200 group-hover:bg-amber-50 transition-all">
                     <Smartphone className="w-6 h-6 text-gray-600 group-hover:text-amber-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">All-Inclusive Platform</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">UX/UI That Feels Easy</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Offers a complete package with mobile and web apps, plus an admin panel for total control.
+                    Create clean interfaces and simple user journeys that improve engagement and retention.
                   </p>
                 </div>
 
@@ -630,9 +815,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-rose-200 group-hover:bg-rose-50 transition-all">
                     <Shield className="w-6 h-6 text-gray-600 group-hover:text-rose-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Enhanced Security Features</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Secure and Reliable Delivery</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Provides secure access with multi-login options to protect user and store information.
+                    Launch confidently with secure builds, stable architecture, and support you can trust.
                   </p>
                 </div>
 
@@ -641,9 +826,9 @@ export default function LandingPage() {
                   <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-indigo-200 group-hover:bg-indigo-50 transition-all">
                     <Layers className="w-6 h-6 text-gray-600 group-hover:text-indigo-600 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Broad Product Categories</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">One Team, End-to-End</h3>
                   <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Categorize products into various sections for a streamlined browsing and shopping experience.
+                    Handle strategy, design, development, and optimization in one consistent process.
                   </p>
                 </div>
               </div>
@@ -675,6 +860,93 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Client Reviews */}
+        <section className="max-w-6xl mx-auto px-6 py-16">
+          <div className="text-center mb-10">
+            <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
+              Client Reviews
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+              What Clients Shared
+            </h2>
+          </div>
+
+          {displayReviewImages.length > 0 ? (
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-3 sm:gap-4">
+                {displayReviewImages.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setCurrentReviewIndex((current) =>
+                        current === 0 ? displayReviewImages.length - 1 : current - 1,
+                      )
+                    }
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
+                    aria-label="Previous review"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 flex-1">
+                  {visibleReviewImages.map((reviewImage, index) => (
+                    <div key={`${reviewImage}-${index}`} className="bg-white border border-gray-200 rounded-2xl p-3 hover:shadow-lg transition-all">
+                      <img
+                        src={reviewImage}
+                        alt={`Client Review ${currentReviewIndex + index + 1}`}
+                        className="w-full h-48 sm:h-52 object-cover rounded-xl"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {displayReviewImages.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setCurrentReviewIndex((current) => (current + 1) % displayReviewImages.length)
+                    }
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
+                    aria-label="Next review"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              {displayReviewImages.length > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <div className="flex items-center gap-2">
+                    {displayReviewImages.map((_, dotIndex) => (
+                      <button
+                        key={dotIndex}
+                        onClick={() => setCurrentReviewIndex(dotIndex)}
+                        className={`h-2.5 rounded-full transition-all ${
+                          dotIndex === currentReviewIndex ? "w-6 bg-gray-900" : "w-2.5 bg-gray-300"
+                        }`}
+                        aria-label={`Go to review ${dotIndex + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="text-center mt-8">
+                <Link
+                  href="/reviews"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-medium rounded-full border border-gray-200 hover:border-gray-900 transition-all"
+                >
+                  View All Reviews
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-2xl mx-auto text-center bg-white border border-gray-200 rounded-3xl p-8">
+              <p className="text-gray-500">No reviews added yet. Add review images from Admin Panel → Homepage Reviews.</p>
+            </div>
+          )}
         </section>
 
         {/* FAQ Section */}

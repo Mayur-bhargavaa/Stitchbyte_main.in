@@ -24,10 +24,10 @@ interface Project {
 }
 
 const marqueeItems = [
-    "Develop it Once",
-    "Develop it from Best",
-    "Develop it Once",
-    "Develop it from Best",
+    "Built for Your Brand",
+    "Designed to Convert",
+    "SEO + UX from Day One",
+    "Grow Your Digital Presence",
 ];
 
 export default function CustomizedPage() {
@@ -111,10 +111,11 @@ export default function CustomizedPage() {
                         <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
                             Customized Development
                             <br />
-                            From Scratch
+                            for Business Growth
                         </h1>
                         <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-                            We build tailored solutions from the ground up, designed specifically for your unique business requirements and goals.
+                            We build tailored platforms from scratch with SEO-ready architecture, conversion-focused UX/UI,
+                            and clear user journeys aligned to your business goals.
                         </p>
                     </div>
 
@@ -141,6 +142,9 @@ export default function CustomizedPage() {
                         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
                             Our Top Projects
                         </h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+                            Explore selected builds focused on digital presence, better engagement, and measurable business outcomes.
+                        </p>
 
                         {/* Tabs */}
                         <div className="inline-flex items-center gap-2 p-1 bg-white border border-gray-200 rounded-full">
@@ -343,16 +347,16 @@ export default function CustomizedPage() {
                 {/* CTA Section */}
                 <section className="max-w-4xl mx-auto px-6 py-16 text-center">
                     <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                        Have a Project in Mind?
+                        Have a Growth Goal in Mind?
                     </h2>
                     <p className="text-gray-600 mb-8 max-w-xl mx-auto">
-                        Let's discuss your idea and create something amazing together. Get a free consultation today.
+                        Let&apos;s plan a customized solution that improves visibility, user experience, and conversions.
                     </p>
                     <Link
                         href="/contact"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-all hover:shadow-xl hover:-translate-y-0.5"
                     >
-                        Start Your Project
+                        Start Your Strategy
                         <ArrowRight className="w-4 h-4" />
                     </Link>
                 </section>

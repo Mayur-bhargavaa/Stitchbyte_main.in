@@ -16,9 +16,12 @@ export default function Navbar() {
     const navLinks = [
         { href: "/prebuilt", label: "Prebuilt" },
         { href: "/customized", label: "Customized" },
+        { href: "/marketing", label: "Marketing" },
+
     ];
 
     const navLinksRight = [
+        { href: "/ui-ux", label: "UI & UX" },
         { href: "/about", label: "About Us" },
         { href: "/contact", label: "Contact Us" },
     ];

@@ -78,18 +78,18 @@ export default function ContactPage() {
   const features = [
     {
       icon: MessageSquare,
-      title: "Quick Response",
-      description: "We typically respond within 24 hours",
+      title: "Focused Discovery",
+      description: "Share your goals for SEO, web, or UX/UI and we map next steps",
     },
     {
       icon: Users,
-      title: "Expert Support",
-      description: "Get help from our experienced team",
+      title: "Cross-Functional Team",
+      description: "Work with strategists, developers, and designers in one flow",
     },
     {
       icon: Clock,
-      title: "24/7 Available",
-      description: "Reach out anytime, we're here to help",
+      title: "Quick Turnaround",
+      description: "Get clear timelines and practical execution from day one",
     },
   ];
 
@@ -145,8 +145,8 @@ export default function ContactPage() {
             Let's Talk
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have a question or want to work together? We'd love to hear from you.
-            Send us a message and we'll respond as soon as possible.
+            Tell us what you need — SEO growth, digital presence, web development, or UX/UI improvements.
+            We&apos;ll guide you with a clear plan and practical execution.
           </p>
         </section>
 
@@ -176,7 +176,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="lg:col-span-3">
               <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tell Us About Your Goals</h2>
 
                 {sent ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -185,7 +185,7 @@ export default function ContactPage() {
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
                     <p className="text-gray-600">
-                      Thank you for reaching out. We'll get back to you soon.
+                      Thanks for reaching out. Our team will get back with next steps soon.
                     </p>
                   </div>
                 ) : (
@@ -235,7 +235,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, subject: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
-                        placeholder="How can we help?"
+                        placeholder="SEO, website, UX/UI, or digital growth support"
                       />
                     </div>
 
@@ -251,7 +251,7 @@ export default function ContactPage() {
                           setFormData({ ...formData, message: e.target.value })
                         }
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all resize-none"
-                        placeholder="Tell us more about your project or question..."
+                        placeholder="Share your business goals, current challenges, and what outcome you want..."
                       />
                     </div>
 
