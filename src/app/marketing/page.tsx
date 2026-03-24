@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { ArrowRight, Loader2, Sparkles } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -20,18 +19,18 @@ interface MarketingCaseStudy {
 }
 
 export default function MarketingPage() {
-  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<MarketingCategory>("performance");
   const [caseStudies, setCaseStudies] = useState<MarketingCaseStudy[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
     const category = searchParams.get("category");
     if (category === "seo" || category === "performance") {
       setActiveTab(category);
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     const loadCaseStudies = async () => {
