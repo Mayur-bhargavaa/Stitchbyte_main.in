@@ -27,7 +27,6 @@ import {
   ChevronRight,
   Instagram,
   MessageCircle,
-
   CreditCard,
   Truck,
   Store,
@@ -38,12 +37,13 @@ import {
   Calendar,
   Building,
   Loader2,
-  LucideIcon
+  Star,
+  User,
+  LucideIcon,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
-// Icon mapping for dynamic rendering from MongoDB
 const iconMap: Record<string, LucideIcon> = {
   Smartphone,
   Globe,
@@ -67,10 +67,9 @@ const iconMap: Record<string, LucideIcon> = {
   Briefcase,
   Clock,
   Shield,
-  Zap
+  Zap,
 };
 
-// Helper function to get icon component
 const getIcon = (iconName: string): LucideIcon => {
   return iconMap[iconName] || Smartphone;
 };
@@ -119,6 +118,18 @@ interface UiUxProject {
   projectUrl: string;
 }
 
+interface ReviewCard {
+  name: string;
+  reviewTitle?: string;
+  reviewText: string;
+  rating: number;
+  avatarUrl?: string;
+  serviceType?: string;
+  projectMonth?: string;
+  projectYear?: string;
+  projectSize?: string;
+}
+
 type WorkSource = "marketing" | "seo" | "uiux" | "prebuilt" | "customized";
 
 interface HomeWorkCard {
@@ -155,6 +166,34 @@ const faqs = [
   }
 ];
 
+const workTimeline = [
+  {
+    phase: "Discovery",
+    duration: "3-5 days",
+    details: "We align on goals, audience, scope, and constraints through a focused kickoff process.",
+  },
+  {
+    phase: "Strategy",
+    duration: "4-7 days",
+    details: "We define the roadmap, information architecture, and channel priorities before production.",
+  },
+  {
+    phase: "Build",
+    duration: "2-6 weeks",
+    details: "Design, development, SEO/ads setup, and QA move in clear sprint milestones.",
+  },
+  {
+    phase: "Launch",
+    duration: "2-4 days",
+    details: "We handle deployment, analytics verification, and go-live checks for a stable release.",
+  },
+  {
+    phase: "Optimization",
+    duration: "Ongoing",
+    details: "We monitor performance, iterate with data, and continuously improve business outcomes.",
+  },
+];
+
 // FAQ Accordion Component
 function FAQItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
   return (
@@ -180,12 +219,12 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const [homeWorkCards, setHomeWorkCards] = useState<HomeWorkCard[]>([]);
-  const [reviewImageUrls, setReviewImageUrls] = useState<string[]>([]);
+  const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [visibleReviewCount, setVisibleReviewCount] = useState(3);
   const [workLoading, setWorkLoading] = useState(true);
   const [workError, setWorkError] = useState<string | null>(null);
-  const displayReviewImages = reviewImageUrls.filter(Boolean);
+  const displayReviewCards = reviewCards.filter((item) => item.name && item.reviewText);
 
   // Fetch mixed work cards from different sections
   useEffect(() => {
@@ -295,25 +334,39 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    const fetchReviewImages = async () => {
+    const fetchReviewCards = async () => {
       try {
         const response = await fetch('/api/site-content/reviews');
         const data = await response.json();
 
-        if (response.ok && data.success && Array.isArray(data.reviewImages)) {
-          setReviewImageUrls(data.reviewImages);
+        if (response.ok && data.success && Array.isArray(data.reviewCards)) {
+          const incomingCards = data.reviewCards
+            .map((item: ReviewCard) => ({
+              name: typeof item?.name === "string" ? item.name.trim() : "",
+              reviewTitle: typeof item?.reviewTitle === "string" ? item.reviewTitle.trim() : "",
+              reviewText: typeof item?.reviewText === "string" ? item.reviewText.trim() : "",
+              rating: Math.min(5, Math.max(1, Number(item?.rating) || 5)),
+              avatarUrl: typeof item?.avatarUrl === "string" ? item.avatarUrl.trim() : "",
+              serviceType: typeof item?.serviceType === "string" ? item.serviceType.trim() : "",
+              projectMonth: typeof item?.projectMonth === "string" ? item.projectMonth.trim() : "",
+              projectYear: typeof item?.projectYear === "string" ? item.projectYear.trim() : "",
+              projectSize: typeof item?.projectSize === "string" ? item.projectSize.trim() : "",
+            }))
+            .filter((item: ReviewCard) => item.name && item.reviewText);
+
+          setReviewCards(incomingCards);
         }
       } catch (err) {
-        console.error('Error fetching review images:', err);
+        console.error('Error fetching review cards:', err);
       }
     };
 
-    fetchReviewImages();
+    fetchReviewCards();
   }, []);
 
   useEffect(() => {
     setCurrentReviewIndex(0);
-  }, [displayReviewImages.length]);
+  }, [displayReviewCards.length]);
 
   useEffect(() => {
     const updateVisibleCount = () => {
@@ -333,21 +386,19 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    if (displayReviewImages.length <= 1) return;
+    if (displayReviewCards.length <= 1) return;
 
     const timer = setInterval(() => {
-      setCurrentReviewIndex((current) => (current + 1) % displayReviewImages.length);
-    }, 3500);
+      setCurrentReviewIndex((current) => (current + 1) % displayReviewCards.length);
+    }, 2000);
 
     return () => clearInterval(timer);
-  }, [displayReviewImages.length]);
+  }, [displayReviewCards.length]);
 
-  const activeReviewCount = Math.min(visibleReviewCount, displayReviewImages.length || 1);
-  const visibleReviewImages = Array.from({ length: activeReviewCount }, (_, offset) => {
-    if (displayReviewImages.length === 0) return "";
-    const index = (currentReviewIndex + offset) % displayReviewImages.length;
-    return displayReviewImages[index];
-  }).filter(Boolean);
+  const reviewTrackCards =
+    displayReviewCards.length > visibleReviewCount
+      ? [...displayReviewCards, ...displayReviewCards.slice(0, visibleReviewCount)]
+      : displayReviewCards;
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
@@ -862,25 +913,69 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Client Reviews */}
+        {/* How We Work Timeline */}
         <section className="max-w-6xl mx-auto px-6 py-16">
           <div className="text-center mb-10">
-            <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
-              Client Reviews
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
+              <Clock className="w-4 h-4" />
+              Process Transparency
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              What Clients Shared
+              How We Work
             </h2>
+            <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+              Clear stages, practical timelines, and accountable execution from kickoff to growth.
+            </p>
           </div>
 
-          {displayReviewImages.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5">
+            {workTimeline.map((step, index) => (
+              <div key={step.phase} className="bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-all">
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white text-xs font-semibold">
+                    {index + 1}
+                  </span>
+                  <span className="text-xs font-semibold text-gray-600 bg-gray-100 border border-gray-200 rounded-full px-3 py-1">
+                    {step.duration}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-semibold text-gray-900">{step.phase}</h3>
+                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{step.details}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Client Reviews */}
+        <section className="max-w-6xl mx-auto px-6 py-16">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-10">
+            <div>
+              <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
+                Client Reviews
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+                What Clients Shared
+              </h2>
+            </div>
+
+            <Link
+              href="/reviews"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-medium rounded-full border border-gray-200 hover:border-gray-900 transition-all self-start"
+            >
+              View All Reviews
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {displayReviewCards.length > 0 ? (
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center gap-3 sm:gap-4">
-                {displayReviewImages.length > 1 && (
+                {displayReviewCards.length > 1 && (
                   <button
                     onClick={() =>
                       setCurrentReviewIndex((current) =>
-                        current === 0 ? displayReviewImages.length - 1 : current - 1,
+                        current === 0 ? displayReviewCards.length - 1 : current - 1,
                       )
                     }
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
@@ -890,22 +985,57 @@ export default function LandingPage() {
                   </button>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 flex-1">
-                  {visibleReviewImages.map((reviewImage, index) => (
-                    <div key={`${reviewImage}-${index}`} className="bg-white border border-gray-200 rounded-2xl p-3 hover:shadow-lg transition-all">
-                      <img
-                        src={reviewImage}
-                        alt={`Client Review ${currentReviewIndex + index + 1}`}
-                        className="w-full h-48 sm:h-52 object-cover rounded-xl"
-                      />
-                    </div>
-                  ))}
+                <div className="flex-1 overflow-hidden">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${(currentReviewIndex * 100) / visibleReviewCount}%)` }}
+                  >
+                    {reviewTrackCards.map((review, index) => (
+                      <div key={`${review.name}-${index}`} className="px-2" style={{ minWidth: `${100 / visibleReviewCount}%` }}>
+                        <div className="bg-white border border-gray-200 rounded-3xl px-7 py-6 hover:shadow-md transition-all">
+                      <div className="flex items-center gap-1 text-amber-500">
+                        {Array.from({ length: 5 }).map((_, starIndex) => (
+                          <Star
+                            key={starIndex}
+                            className={`w-5 h-5 ${starIndex < review.rating ? "fill-current" : "text-gray-300"}`}
+                          />
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-3 mt-6 text-gray-700">
+                        <div className="w-7 h-7 rounded-full border border-gray-400/60 flex items-center justify-center overflow-hidden text-gray-500">
+                          {review.avatarUrl ? (
+                            <img src={review.avatarUrl} alt={review.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <User className="w-4 h-4" />
+                          )}
+                        </div>
+                        <p className="text-lg sm:text-xl font-semibold tracking-tight lowercase">{review.name}</p>
+                      </div>
+
+                      <h3 className="mt-4 sm:mt-5 text-xl sm:text-2xl text-gray-900 line-clamp-1" style={{ fontFamily: "Georgia, serif" }}>
+                        {review.reviewTitle || "Great experience"}
+                      </h3>
+
+                      <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-700 leading-relaxed line-clamp-3">{review.reviewText}</p>
+
+                          {(review.serviceType || review.projectMonth || review.projectYear || review.projectSize) && (
+                            <p className="mt-4 text-xs text-gray-500">
+                              Project Context: {[review.serviceType, [review.projectMonth, review.projectYear].filter(Boolean).join(" "), review.projectSize]
+                                .filter(Boolean)
+                                .join(" • ")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {displayReviewImages.length > 1 && (
+                {displayReviewCards.length > 1 && (
                   <button
                     onClick={() =>
-                      setCurrentReviewIndex((current) => (current + 1) % displayReviewImages.length)
+                      setCurrentReviewIndex((current) => (current + 1) % displayReviewCards.length)
                     }
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
                     aria-label="Next review"
@@ -915,10 +1045,10 @@ export default function LandingPage() {
                 )}
               </div>
 
-              {displayReviewImages.length > 1 && (
+              {displayReviewCards.length > 1 && (
                 <div className="flex items-center justify-center gap-2 mt-6">
                   <div className="flex items-center gap-2">
-                    {displayReviewImages.map((_, dotIndex) => (
+                    {displayReviewCards.map((_, dotIndex) => (
                       <button
                         key={dotIndex}
                         onClick={() => setCurrentReviewIndex(dotIndex)}
@@ -931,20 +1061,10 @@ export default function LandingPage() {
                   </div>
                 </div>
               )}
-
-              <div className="text-center mt-8">
-                <Link
-                  href="/reviews"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-medium rounded-full border border-gray-200 hover:border-gray-900 transition-all"
-                >
-                  View All Reviews
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
             </div>
           ) : (
             <div className="max-w-2xl mx-auto text-center bg-white border border-gray-200 rounded-3xl p-8">
-              <p className="text-gray-500">No reviews added yet. Add review images from Admin Panel → Homepage Reviews.</p>
+              <p className="text-gray-500">No reviews added yet. Add text review cards from Admin Panel → Homepage Reviews.</p>
             </div>
           )}
         </section>
