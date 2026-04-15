@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Script from "next/script";
 
 interface Job {
     _id: string;
@@ -502,6 +503,59 @@ export default function JobDetailPage() {
                         </Link>
                     </div>
                 </section>
+
+                {/* JobPosting JSON-LD Schema */}
+                <Script
+                    id="jobposting-schema"
+                    type="application/ld+json"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "JobPosting",
+                            title: job.title,
+                            description: job.description,
+                            datePosted: new Date().toISOString().split('T')[0],
+                            validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                            employmentType: job.type === "Full-time" ? "FULL_TIME" : job.type === "Part-time" ? "PART_TIME" : "FULL_TIME",
+                            hiringOrganization: {
+                                "@type": "Organization",
+                                name: "Stitchbyte",
+                                sameAs: "https://stitchbyte.in",
+                                logo: "https://stitchbyte.in/logo-stitchbyte.png",
+                            },
+                            jobLocation: {
+                                "@type": "Place",
+                                address: {
+                                    "@type": "PostalAddress",
+                                    addressLocality: "Jaipur",
+                                    addressRegion: "Rajasthan",
+                                    addressCountry: "IN",
+                                },
+                            },
+                            ...(job.location?.includes("Remote") ? { jobLocationType: "TELECOMMUTE" } : {}),
+                            ...(job.salary ? {
+                                baseSalary: {
+                                    "@type": "MonetaryAmount",
+                                    currency: "INR",
+                                    value: {
+                                        "@type": "QuantitativeValue",
+                                        unitText: "YEAR",
+                                    },
+                                },
+                            } : {}),
+                            responsibilities: job.responsibilities?.join(", "),
+                            qualifications: job.requirements?.join(", "),
+                            industry: "Information Technology",
+                            occupationalCategory: job.department,
+                            url: `https://stitchbyte.in/careers/${job._id}`,
+                            applicantLocationRequirements: {
+                                "@type": "Country",
+                                name: "India",
+                            },
+                        }),
+                    }}
+                />
 
                 <Footer />
             </div>

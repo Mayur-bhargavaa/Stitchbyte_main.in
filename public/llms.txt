@@ -1,0 +1,31 @@
+# Stitchbyte
+> Stitchbyte is a digital agency that helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences.
+
+## Services
+- [SEO Services](https://stitchbyte.in/marketing?category=seo): Search engine optimization to improve visibility, traffic, and growth decisions.
+- [Web Development](https://stitchbyte.in/customized): Custom web development tailored to business goals, users, and operations.
+- [Prebuilt Solutions](https://stitchbyte.in/prebuilt): Fast-launch prebuilt websites and applications ready for deployment in 24-48 hours.
+- [UX/UI Design](https://stitchbyte.in/ui-ux): Clean interfaces and simple user journeys that improve engagement and retention.
+- [Digital Marketing](https://stitchbyte.in/marketing): Performance marketing and SEO case studies with real growth outcomes.
+
+## Key Pages
+- [Homepage](https://stitchbyte.in): Overview of all services, client reviews, and work process.
+- [About Us](https://stitchbyte.in/about): Meet the Stitchbyte team helping brands grow through strategy, design, and development.
+- [Blog](https://stitchbyte.in/blog): Insights on SEO, digital presence, web development, and UX/UI.
+- [Careers](https://stitchbyte.in/careers): Open positions to build impactful SEO, web, and UX/UI solutions.
+- [Contact](https://stitchbyte.in/contact): Get in touch for SEO, web development, and UX/UI solutions.
+- [Portfolio / Work](https://stitchbyte.in/work): All projects across Marketing, SEO, UI/UX, Prebuilt, and Customized work.
+- [Client Reviews](https://stitchbyte.in/reviews): Client testimonials and project feedback.
+
+## Key Facts
+- Stitchbyte offers end-to-end digital services: strategy, design, development, and optimization.
+- Pre-built solutions are typically ready for deployment within 24-48 hours.
+- Full source code ownership is provided to all clients.
+- Technologies used include Next.js, React, TypeScript, TailwindCSS, PostgreSQL, and MongoDB.
+- Process follows 5 stages: Discovery, Strategy, Build, Launch, Optimization.
+
+## Contact
+- Email: info@stitchbyte.in
+- Website: https://stitchbyte.in
+- Instagram: https://www.instagram.com/stitchbyte.in/
+- LinkedIn: https://www.linkedin.com/in/vinita-bhargava-46a533390/

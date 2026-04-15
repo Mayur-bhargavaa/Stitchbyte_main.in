@@ -119,7 +119,8 @@ export default function Footer() {
 
             {/* Full Width Brand Name */}
             <div className="mt-16 overflow-hidden">
-                <h2
+                <p
+                    aria-hidden="true"
                     className="text-[12vw] font-bold text-gray-100 tracking-tight leading-none text-center select-none"
                     style={{
                         fontFamily: 'Arial, sans-serif',
@@ -127,7 +128,7 @@ export default function Footer() {
                     }}
                 >
                     STITCHBYTE
-                </h2>
+                </p>
             </div>
         </footer>
     );

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, Share2, Loader2, Link as LinkIcon, Download } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Script from "next/script";
 
 interface BlogPost {
     id: string;
@@ -206,7 +207,74 @@ export default function SingleBlogPage({ params }: { params: Promise<{ slug: str
                                 {copied ? <LinkIcon className="w-4 h-4 text-green-500" /> : <Share2 className="w-4 h-4 text-gray-600" />}
                             </button>
                         </div>
+
+                        {/* Author Bio Section for E-E-A-T */}
+                        <div className="mt-12 p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                            <div className="flex items-start gap-4">
+                                <div className="w-14 h-14 bg-gray-900 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <User className="w-7 h-7 text-white" />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500 mb-1">Written by</p>
+                                    <h4 className="text-lg font-bold text-gray-900">{blog.author}</h4>
+                                    <p className="text-sm text-gray-600 mt-1">
+                                        Content published by the Stitchbyte team — experts in SEO, web development, UX/UI design, and digital marketing. 
+                                        We share insights from real projects to help businesses grow online.
+                                    </p>
+                                    <div className="flex items-center gap-3 mt-3">
+                                        <Link href="/about" className="text-sm text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+                                            About our team →
+                                        </Link>
+                                        <span className="text-gray-300">|</span>
+                                        <Link href="/blog" className="text-sm text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+                                            More articles →
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </article>
+
+                    {/* BlogPosting JSON-LD Schema */}
+                    <Script
+                        id="blogposting-schema"
+                        type="application/ld+json"
+                        strategy="afterInteractive"
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify({
+                                "@context": "https://schema.org",
+                                "@type": "BlogPosting",
+                                headline: blog.title,
+                                description: blog.excerpt,
+                                author: {
+                                    "@type": "Person",
+                                    name: blog.author,
+                                    url: "https://stitchbyte.in/about",
+                                },
+                                publisher: {
+                                    "@type": "Organization",
+                                    name: "Stitchbyte",
+                                    logo: {
+                                        "@type": "ImageObject",
+                                        url: "https://stitchbyte.in/logo-stitchbyte.png",
+                                    },
+                                },
+                                datePublished: blog.createdAt,
+                                dateModified: blog.createdAt,
+                                mainEntityOfPage: {
+                                    "@type": "WebPage",
+                                    "@id": `https://stitchbyte.in/blog/${blog.slug}`,
+                                },
+                                ...(blog.coverImage && blog.coverImage !== "" ? { image: blog.coverImage } : {}),
+                                articleSection: blog.category,
+                                keywords: blog.tags?.join(", "),
+                                wordCount: blog.content?.split(/\s+/).length || 0,
+                                url: `https://stitchbyte.in/blog/${blog.slug}`,
+                                inLanguage: "en",
+                            }),
+                        }}
+                    />
+
                     <Footer />
                 </>
             )}
