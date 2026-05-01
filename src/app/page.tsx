@@ -1,23 +1,147 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import {
-  Sparkles,
-  Layers,
+  UtensilsCrossed,
+  ShoppingCart,
+  ShoppingBag,
+  Briefcase,
+  FileText,
   Zap,
   Shield,
   Smartphone,
   ArrowRight,
+  Github,
+  Mail,
+  QrCode,
+  BarChart3,
+  Users,
+  Clock,
+  Sparkles,
+  Layers,
   Globe,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Instagram,
+  MessageCircle,
   CreditCard,
-  BarChart3,
-  Clock,
+  Truck,
+  Store,
+  Bell,
+  GraduationCap,
+  Stethoscope,
+  Home,
+  Calendar,
+  Building,
+  Loader2,
+  Star,
+  User,
+  LucideIcon,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import HomepageFAQSchema from "@/components/HomepageFAQSchema";
-import FAQAccordion from "@/components/homepage/FAQAccordion";
-import ReviewCarousel from "@/components/homepage/ReviewCarousel";
-import WorkCardsGrid from "@/components/homepage/WorkCardsGrid";
+
+const iconMap: Record<string, LucideIcon> = {
+  Smartphone,
+  Globe,
+  Users,
+  BarChart3,
+  CreditCard,
+  Truck,
+  Store,
+  QrCode,
+  Bell,
+  FileText,
+  Layers,
+  GraduationCap,
+  Stethoscope,
+  Home,
+  Calendar,
+  Building,
+  Sparkles,
+  UtensilsCrossed,
+  ShoppingCart,
+  Briefcase,
+  Clock,
+  Shield,
+  Zap,
+};
+
+const getIcon = (iconName: string): LucideIcon => {
+  return iconMap[iconName] || Smartphone;
+};
+
+// Interface for MongoDB product data
+interface ProductHighlight {
+  icon: string;
+  label: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  tagline: string;
+  shortDescription: string;
+  gradient: string;
+  highlights: ProductHighlight[];
+  comingSoon?: boolean;
+}
+
+interface CustomProject {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  technologies: string[];
+}
+
+interface MarketingCaseStudy {
+  id: string;
+  slug: string;
+  brand: string;
+  industry: string;
+  category: "performance" | "seo";
+  summary: string;
+  highlights: string[];
+}
+
+interface UiUxProject {
+  id: string;
+  title: string;
+  brand: string;
+  projectType: "figma" | "pdf" | "website" | "other";
+  summary: string;
+  tags: string[];
+  projectUrl: string;
+}
+
+interface ReviewCard {
+  name: string;
+  reviewTitle?: string;
+  reviewText: string;
+  rating: number;
+  avatarUrl?: string;
+  serviceType?: string;
+  projectMonth?: string;
+  projectYear?: string;
+  projectSize?: string;
+}
+
+type WorkSource = "marketing" | "seo" | "uiux" | "prebuilt" | "customized";
+
+interface HomeWorkCard {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  href: string;
+  source: WorkSource;
+  isExternal?: boolean;
+}
 
 const faqs = [
   {
@@ -70,7 +194,212 @@ const workTimeline = [
   },
 ];
 
+// FAQ Accordion Component
+function FAQItem({ question, answer, isOpen, onClick }: { question: string; answer: string; isOpen: boolean; onClick: () => void }) {
+  return (
+    <div className="border-b border-gray-200">
+      <button
+        onClick={onClick}
+        className="w-full py-5 flex items-start gap-4 text-left hover:bg-gray-50 transition-colors"
+      >
+        <div className="w-1 h-6 bg-gray-900 rounded-full flex-shrink-0 mt-0.5" />
+        <span className="flex-1 text-gray-900 font-medium pr-8">{question}</span>
+        <ChevronDown className={`w-5 h-5 text-gray-900 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="pb-5 pl-5 pr-8 text-gray-700 leading-relaxed">
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const [homeWorkCards, setHomeWorkCards] = useState<HomeWorkCard[]>([]);
+  const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [visibleReviewCount, setVisibleReviewCount] = useState(3);
+  const [workLoading, setWorkLoading] = useState(true);
+  const [workError, setWorkError] = useState<string | null>(null);
+  const displayReviewCards = reviewCards.filter((item) => item.name && item.reviewText);
+
+  // Fetch mixed work cards from different sections
+  useEffect(() => {
+    const fetchHomeWorkCards = async () => {
+      try {
+        setWorkLoading(true);
+        setWorkError(null);
+
+        const [productsResponse, customResponse, marketingResponse, uiuxResponse] = await Promise.all([
+          fetch('/api/products'),
+          fetch('/api/custom-projects?category=all'),
+          fetch('/api/marketing-case-studies'),
+          fetch('/api/ui-ux-projects'),
+        ]);
+
+        const productsData = await productsResponse.json();
+        const customData = await customResponse.json();
+        const marketingData = await marketingResponse.json();
+        const uiuxData = await uiuxResponse.json();
+
+        const products: Product[] = Array.isArray(productsData.products) ? productsData.products : [];
+        const customProjects: CustomProject[] = Array.isArray(customData.data) ? customData.data : [];
+        const marketingStudies: MarketingCaseStudy[] = Array.isArray(marketingData.studies) ? marketingData.studies : [];
+        const uiuxProjects: UiUxProject[] = Array.isArray(uiuxData.projects) ? uiuxData.projects : [];
+
+        const firstMarketing = marketingStudies.find((item) => item.category === "performance");
+        const firstSeo = marketingStudies.find((item) => item.category === "seo");
+        const firstUiUx = uiuxProjects[0];
+        const firstPrebuilt = products[0];
+        const firstCustomized = customProjects[0];
+
+        const cards: HomeWorkCard[] = [];
+
+        if (firstMarketing) {
+          cards.push({
+            id: `marketing-${firstMarketing.id}`,
+            title: firstMarketing.brand,
+            subtitle: "Marketing Case Study",
+            description: firstMarketing.summary,
+            tags: firstMarketing.highlights || [],
+            href: `/marketing/${firstMarketing.slug}`,
+            source: "marketing",
+          });
+        }
+
+        if (firstUiUx) {
+          cards.push({
+            id: `uiux-${firstUiUx.id}`,
+            title: firstUiUx.title,
+            subtitle: "UI & UX Project",
+            description: firstUiUx.summary,
+            tags: firstUiUx.tags || [],
+            href: firstUiUx.projectUrl,
+            source: "uiux",
+            isExternal: true,
+          });
+        }
+
+        if (firstSeo) {
+          cards.push({
+            id: `seo-${firstSeo.id}`,
+            title: firstSeo.brand,
+            subtitle: "SEO Case Study",
+            description: firstSeo.summary,
+            tags: firstSeo.highlights || [],
+            href: `/marketing/${firstSeo.slug}`,
+            source: "seo",
+          });
+        }
+
+        if (firstPrebuilt) {
+          cards.push({
+            id: `prebuilt-${firstPrebuilt.id}`,
+            title: firstPrebuilt.name,
+            subtitle: "Prebuilt Solution",
+            description: firstPrebuilt.shortDescription || firstPrebuilt.tagline,
+            tags: (firstPrebuilt.highlights || []).map((item) => item.label),
+            href: `/prebuilt/${firstPrebuilt.id}`,
+            source: "prebuilt",
+          });
+        } else if (firstCustomized) {
+          cards.push({
+            id: `customized-${firstCustomized.id}`,
+            title: firstCustomized.title,
+            subtitle: "Customized Project",
+            description: firstCustomized.description,
+            tags: firstCustomized.technologies || [],
+            href: `/customized/${firstCustomized.slug}`,
+            source: "customized",
+          });
+        }
+
+        if (cards.length === 0) {
+          setWorkError("No work items available yet.");
+        }
+
+        setHomeWorkCards(cards.slice(0, 4));
+      } catch (err) {
+        console.error("Error fetching home work cards:", err);
+        setWorkError("Failed to load work cards");
+      } finally {
+        setWorkLoading(false);
+      }
+    };
+
+    fetchHomeWorkCards();
+  }, []);
+
+  useEffect(() => {
+    const fetchReviewCards = async () => {
+      try {
+        const response = await fetch('/api/site-content/reviews');
+        const data = await response.json();
+
+        if (response.ok && data.success && Array.isArray(data.reviewCards)) {
+          const incomingCards = data.reviewCards
+            .map((item: ReviewCard) => ({
+              name: typeof item?.name === "string" ? item.name.trim() : "",
+              reviewTitle: typeof item?.reviewTitle === "string" ? item.reviewTitle.trim() : "",
+              reviewText: typeof item?.reviewText === "string" ? item.reviewText.trim() : "",
+              rating: Math.min(5, Math.max(1, Number(item?.rating) || 5)),
+              avatarUrl: typeof item?.avatarUrl === "string" ? item.avatarUrl.trim() : "",
+              serviceType: typeof item?.serviceType === "string" ? item.serviceType.trim() : "",
+              projectMonth: typeof item?.projectMonth === "string" ? item.projectMonth.trim() : "",
+              projectYear: typeof item?.projectYear === "string" ? item.projectYear.trim() : "",
+              projectSize: typeof item?.projectSize === "string" ? item.projectSize.trim() : "",
+            }))
+            .filter((item: ReviewCard) => item.name && item.reviewText);
+
+          setReviewCards(incomingCards);
+        }
+      } catch (err) {
+        console.error('Error fetching review cards:', err);
+      }
+    };
+
+    fetchReviewCards();
+  }, []);
+
+  useEffect(() => {
+    setCurrentReviewIndex(0);
+  }, [displayReviewCards.length]);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      if (window.innerWidth < 768) {
+        setVisibleReviewCount(1);
+      } else if (window.innerWidth < 1280) {
+        setVisibleReviewCount(2);
+      } else {
+        setVisibleReviewCount(3);
+      }
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  useEffect(() => {
+    if (displayReviewCards.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setCurrentReviewIndex((current) => (current + 1) % displayReviewCards.length);
+    }, 2000);
+
+    return () => clearInterval(timer);
+  }, [displayReviewCards.length]);
+
+  const reviewTrackCards =
+    displayReviewCards.length > visibleReviewCount
+      ? [...displayReviewCards, ...displayReviewCards.slice(0, visibleReviewCount)]
+      : displayReviewCards;
+
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
       {/* Global Grid Background - Same as Prebuilt */}
@@ -256,8 +585,114 @@ export default function LandingPage() {
               </h2>
             </div>
 
-            {/* Work Cards - Client Island */}
-            <WorkCardsGrid />
+            {/* Loading State */}
+            {workLoading && (
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
+              </div>
+            )}
+
+            {/* Error State */}
+            {workError && !workLoading && (
+              <div className="text-center py-20">
+                <p className="text-gray-500">{workError}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
+
+            {/* App Cards Grid */}
+            {!workLoading && !workError && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {homeWorkCards.map((card) => {
+                  const iconBySource: Record<WorkSource, LucideIcon> = {
+                    marketing: BarChart3,
+                    seo: Globe,
+                    uiux: Layers,
+                    prebuilt: Store,
+                    customized: ShoppingBag,
+                  };
+
+                  const IconComponent = iconBySource[card.source] || Smartphone;
+
+                  return (
+                    <div
+                      key={card.id}
+                      className="group relative bg-white rounded-3xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-1"
+                    >
+                      {/* Card Header */}
+                      <div className="relative p-6 pb-0">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-900 transition-colors">
+                              <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold text-gray-900">{card.title}</h3>
+                              <p className="text-sm text-gray-500">{card.subtitle}</p>
+                            </div>
+                          </div>
+                          <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-full">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                            </span>
+                            Live
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Preview Area */}
+                      <div className="px-6 pb-6">
+                        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
+                          <p className="text-gray-600 text-sm leading-relaxed mb-4">{card.description}</p>
+
+                          {/* Feature Tags */}
+                          <div className="flex flex-wrap gap-2">
+                            {card.tags?.slice(0, 4).map((tag: string, i: number) => (
+                              <span
+                                key={`${card.id}-${tag}-${i}`}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 border border-gray-200"
+                              >
+                                <span className="w-4 h-4 bg-gray-100 rounded flex items-center justify-center text-[10px] text-gray-500">
+                                  {String(i + 1).padStart(2, '0')}
+                                </span>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Action Button */}
+                        {card.isExternal ? (
+                          <a
+                            href={card.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
+                          >
+                            Explore Now
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                          </a>
+                        ) : (
+                          <Link
+                            href={card.href}
+                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
+                          >
+                            Explore Now
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* View All Button */}
             <div className="text-center mt-12">
@@ -533,8 +968,105 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          {/* Review Carousel - Client Island */}
-          <ReviewCarousel initialReviews={[]} />
+          {displayReviewCards.length > 0 ? (
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-3 sm:gap-4">
+                {displayReviewCards.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setCurrentReviewIndex((current) =>
+                        current === 0 ? displayReviewCards.length - 1 : current - 1,
+                      )
+                    }
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
+                    aria-label="Previous review"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+
+                <div className="flex-1 overflow-hidden">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${(currentReviewIndex * 100) / visibleReviewCount}%)` }}
+                  >
+                    {reviewTrackCards.map((review, index) => (
+                      <div key={`${review.name}-${index}`} className="px-2" style={{ minWidth: `${100 / visibleReviewCount}%` }}>
+                        <div className="bg-white border border-gray-200 rounded-3xl px-7 py-6 hover:shadow-md transition-all">
+                      <div className="flex items-center gap-1 text-amber-500">
+                        {Array.from({ length: 5 }).map((_, starIndex) => (
+                          <Star
+                            key={starIndex}
+                            className={`w-5 h-5 ${starIndex < review.rating ? "fill-current" : "text-gray-300"}`}
+                          />
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-3 mt-6 text-gray-700">
+                        <div className="w-7 h-7 rounded-full border border-gray-400/60 flex items-center justify-center overflow-hidden text-gray-500">
+                          {review.avatarUrl ? (
+                            <img src={review.avatarUrl} alt={review.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <User className="w-4 h-4" />
+                          )}
+                        </div>
+                        <p className="text-lg sm:text-xl font-semibold tracking-tight lowercase">{review.name}</p>
+                      </div>
+
+                      <h3 className="mt-4 sm:mt-5 text-xl sm:text-2xl text-gray-900 line-clamp-1" style={{ fontFamily: "Georgia, serif" }}>
+                        {review.reviewTitle || "Great experience"}
+                      </h3>
+
+                      <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-700 leading-relaxed line-clamp-3">{review.reviewText}</p>
+
+                          {(review.serviceType || review.projectMonth || review.projectYear || review.projectSize) && (
+                            <p className="mt-4 text-xs text-gray-500">
+                              Project Context: {[review.serviceType, [review.projectMonth, review.projectYear].filter(Boolean).join(" "), review.projectSize]
+                                .filter(Boolean)
+                                .join(" • ")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {displayReviewCards.length > 1 && (
+                  <button
+                    onClick={() =>
+                      setCurrentReviewIndex((current) => (current + 1) % displayReviewCards.length)
+                    }
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-200 bg-white text-gray-700 hover:text-gray-900 hover:border-gray-300 transition-all flex items-center justify-center flex-shrink-0"
+                    aria-label="Next review"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+
+              {displayReviewCards.length > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <div className="flex items-center gap-2">
+                    {displayReviewCards.map((_, dotIndex) => (
+                      <button
+                        key={dotIndex}
+                        onClick={() => setCurrentReviewIndex(dotIndex)}
+                        className={`h-2.5 rounded-full transition-all ${
+                          dotIndex === currentReviewIndex ? "w-6 bg-gray-900" : "w-2.5 bg-gray-300"
+                        }`}
+                        aria-label={`Go to review ${dotIndex + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="max-w-2xl mx-auto text-center bg-white border border-gray-200 rounded-3xl p-8">
+              <p className="text-gray-500">No reviews added yet. Add text review cards from Admin Panel → Homepage Reviews.</p>
+            </div>
+          )}
         </section>
 
         {/* FAQ Section */}
@@ -558,16 +1090,21 @@ export default function LandingPage() {
                 </h2>
               </div>
 
-              {/* Right - FAQ Items - Client Island */}
+              {/* Right - FAQ Items */}
               <div>
-                <FAQAccordion faqs={faqs} />
+                {faqs.map((faq, index) => (
+                  <FAQItem
+                    key={index}
+                    question={faq.question}
+                    answer={faq.answer}
+                    isOpen={openFaq === index}
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </section>
-
-        {/* FAQ Schema for rich results */}
-        <HomepageFAQSchema />
 
         {/* Shared Footer Component */}
         <Footer />

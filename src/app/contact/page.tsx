@@ -64,7 +64,7 @@ export default function ContactPage() {
     {
       icon: MapPin,
       label: "Location",
-      value: "Jaipur, Rajasthan, India",
+      value: "Alwar, Rajasthan, Delhi NCR",
       href: "#",
     },
   ];
