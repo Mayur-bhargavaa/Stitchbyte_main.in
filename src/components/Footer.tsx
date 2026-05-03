@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Github, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, MessageCircle } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -31,13 +31,13 @@ export default function Footer() {
                             <a href="https://www.facebook.com/profile.php?id=61563772072392" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
                                 <Facebook className="w-5 h-5" />
                             </a>
-                            <a href="https://github.com/Mayur-bhargavaa" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                                <Github className="w-5 h-5" />
+                            <a href="https://wa.me/919414292675" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                                <MessageCircle className="w-5 h-5" />
                             </a>
                             <a href="https://www.instagram.com/stitchbyte.in/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
                                 <Instagram className="w-5 h-5" />
                             </a>
-                            <a href="https://www.linkedin.com/in/vinita-bhargava-46a533390/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
+                            <a href="https://www.linkedin.com/company/stitchbyte1" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors">
                                 <Linkedin className="w-5 h-5" />
                             </a>
                         </div>

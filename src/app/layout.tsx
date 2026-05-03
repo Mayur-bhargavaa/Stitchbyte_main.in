@@ -128,9 +128,9 @@ export default function RootLayout({
     },
     sameAs: [
       "https://www.facebook.com/profile.php?id=61563772072392",
-      "https://github.com/Mayur-bhargavaa",
+      "https://wa.me/919414292675",
       "https://www.instagram.com/stitchbyte.in/",
-      "https://www.linkedin.com/in/vinita-bhargava-46a533390/",
+      "https://www.linkedin.com/company/stitchbyte1",
     ],
   };
 

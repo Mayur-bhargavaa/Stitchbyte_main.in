@@ -58,8 +58,8 @@ export default function ContactPage() {
     {
       icon: Phone,
       label: "Phone",
-      value: "+91 94613 30819",
-      href: "tel:+919461330819",
+      value: "+91 94142 92675",
+      href: "tel:+919414292675",
     },
     {
       icon: MapPin,
@@ -70,8 +70,8 @@ export default function ContactPage() {
   ];
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/stitchbyte", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/company/stitchbyte1", label: "LinkedIn" },
+    { icon: MessageSquare, href: "https://wa.me/919414292675", label: "WhatsApp" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/stitchbyte1", label: "LinkedIn" },
     { icon: Instagram, href: "https://www.instagram.com/stitchbyte.in/", label: "Instagram" },
   ];
 
