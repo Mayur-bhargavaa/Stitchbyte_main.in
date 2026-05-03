@@ -149,6 +149,33 @@ export default function ReviewsPage() {
           </div>
         </section>
 
+        {/* SEO Content Section */}
+        <section className="max-w-5xl mx-auto px-6 py-20 border-t border-gray-100">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+              Why Client Reviews Matter
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              At StitchByte, we believe that honest client feedback is the strongest indicator of the quality and
+              reliability of our work. Every review on this page comes from a real client who partnered with us for
+              web development, SEO, performance marketing, or UI/UX design services. These testimonials reflect
+              the actual experience of working with our team — from initial discovery through project delivery and beyond.
+            </p>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              We encourage clients to share specific details about their project scope, timeline, and results so that
+              potential clients can make informed decisions. Whether it is a custom web application, a prebuilt SaaS
+              deployment, a marketing campaign, or a design system, each review provides context about the service
+              type, project complexity, and business outcomes achieved.
+            </p>
+            <p className="text-gray-600 leading-relaxed">
+              Our commitment to transparency means we publish all genuine reviews — both praise and constructive
+              feedback. This open approach helps us continuously improve our services and gives you confidence that
+              what you see here accurately represents the StitchByte client experience. If you have worked with us
+              and would like to leave a review, please reach out to our team.
+            </p>
+          </div>
+        </section>
+
         <Footer />
       </div>
     </div>

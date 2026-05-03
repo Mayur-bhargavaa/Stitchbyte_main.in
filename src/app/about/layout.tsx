@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Stitchbyte | SEO, Web Development & UX/UI Team",
+  title: "About Our Jaipur Web & Marketing Agency | StitchByte",
   description:
     "Meet the Stitchbyte team helping brands grow through SEO strategy, digital presence, modern web development, and intuitive UX/UI.",
   alternates: {

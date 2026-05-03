@@ -97,7 +97,7 @@ export default function RestaurantLanding() {
               <UtensilsCrossed className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg tracking-tight">QR Restaurant</h1>
+              <span className="font-bold text-lg tracking-tight">QR Restaurant</span>
               <p className="text-[10px] text-black/50 uppercase tracking-[0.2em]">by StitchByte</p>
             </div>
           </Link>
@@ -265,6 +265,48 @@ export default function RestaurantLanding() {
                 >
                   <CheckCircle className="w-5 h-5 text-white flex-shrink-0" />
                   <span className="text-white/80">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="max-w-7xl mx-auto px-6 py-24 border-t border-black/10">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+              Restaurant Management System in Jaipur
+            </h2>
+            <p className="text-black/60 leading-relaxed mb-4">
+              What is a modern restaurant management system, and why is it crucial? In today's fast-paced hospitality industry, relying on manual orders, paper menus, and disjointed kitchen operations is no longer viable. A comprehensive restaurant management system streamlines your entire workflow, from digital QR code ordering at the table to real-time kitchen displays and detailed sales analytics. At StitchByte, we provide an all-in-one software solution that empowers restaurant owners to optimize their daily operations, dramatically reduce wait times, and drastically improve order accuracy across the board.
+            </p>
+            <p className="text-black/60 leading-relaxed mb-4">
+              Why does this matter for Jaipur businesses? Jaipur is a massive culinary destination, bustling with local food enthusiasts and millions of international tourists every year. With hundreds of cafes, fine dining establishments, and quick-service restaurants competing for attention, customer experience is everything. If your patrons have to wait 20 minutes just to place an order or receive a bill, they might not return. By adopting our advanced restaurant management system in Jaipur, local restaurants can provide a frictionless, modern dining experience. It allows establishments in Jaipur to handle higher foot traffic efficiently, reduce staff workload, and ultimately increase table turnover rates and profitability.
+            </p>
+            <p className="text-black/60 leading-relaxed mb-4">
+              Our setup process is designed to be incredibly fast and straightforward. First, you create an account and easily digitize your entire menu, adding high-quality photos, descriptions, and pricing. Next, the system instantly generates unique QR codes for every single table in your establishment. You simply place these codes on your tables. When customers arrive, they scan the code with their smartphone, browse the digital menu, and place orders directly without needing to download any app. The order instantly pings the kitchen display screen, completely eliminating communication errors.
+            </p>
+            <p className="text-black/60 leading-relaxed">
+              We also provide a powerful backend administrative dashboard. This allows restaurant managers in Jaipur to track live sales, identify their best-selling dishes, and manage employee access in real-time. Whether you run a small cozy cafe or a multi-story fine dining restaurant, our platform scales with your business needs, delivering enterprise-level technology at an accessible price point, ensuring you stay ahead of the competition.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold mb-6">
+              Our Core Capabilities
+            </h3>
+            <div className="space-y-4">
+              {[
+                { title: "Contactless QR Ordering", desc: "Instantly digitize your menu. Customers simply scan, browse, and order directly from their personal smartphones without downloading any applications." },
+                { title: "Real-Time Kitchen Displays", desc: "Orders are instantly transmitted to digital screens in the kitchen, completely replacing messy paper tickets and ensuring high order accuracy." },
+                { title: "Advanced Sales Analytics", desc: "Gain deep insights into your revenue, peak operational hours, and best-performing menu items to make data-driven business decisions." },
+                { title: "Instant Staff Notifications", desc: "Your servers and kitchen staff receive immediate visual and audio alerts for new orders, modifications, or requests for the bill." },
+                { title: "Multi-Role Management", desc: "Assign specific roles and permissions to managers, servers, and kitchen staff to ensure secure and organized operational workflows." },
+              ].map((item) => (
+                <div key={item.title} className="bg-black/[0.02] border border-black/10 rounded-xl p-5">
+                  <h4 className="font-semibold text-black mb-1">{item.title}</h4>
+                  <p className="text-sm text-black/60 leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

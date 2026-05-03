@@ -347,6 +347,47 @@ export default function ContactPage() {
           </div>
         </section>
 
+        {/* SEO Content Section */}
+        <section className="max-w-5xl mx-auto px-6 py-20 border-t border-gray-100">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                Contact Our Jaipur Digital Agency
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Are you ready to transform your business's digital presence? Partnering with the right digital agency is a critical decision that directly impacts your brand's growth and revenue. StitchByte is a premier digital agency proudly operating in the Jaipur and larger Rajasthan region, while seamlessly serving ambitious clients across India and globally. We specialize in comprehensive SEO optimization, highly custom web development, aggressive performance marketing, and user-centric UI/UX design. Our primary goal is helping businesses of all sizes build robust, future-proof digital foundations that drive real, highly measurable growth.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Why is it important to work with a dedicated technical partner in Jaipur? As the Jaipur market rapidly expands, relying on outdated websites and weak local search visibility will cause you to lose high-value customers to your competitors. Whether you are a dynamic local startup looking to launch your very first digital platform, an established heritage brand desperately seeking better Google search rankings, or a rapidly growing B2B business that needs a highly secure custom web application, our Jaipur-based team combines elite strategic thinking with flawless, hands-on technical execution to deliver outstanding, industry-leading results.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Our engagement process is intentionally straightforward, transparent, and entirely focused on your business objectives. We don't hide behind confusing technical jargon or vague promises. First, we carefully discover your specific revenue goals and technical constraints. Next, we define a rigorous strategy encompassing SEO, development, and marketing. Then, we build the solution with absolute precision using the latest modern technologies. Finally, we relentlessly optimize the platform based on real-world user data. This means clear communication, incredibly practical timelines, and strict accountable delivery from the very first consultation all the way through to final launch.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Contacting us is the very first step toward digital dominance. Whether you need an urgent technical SEO audit, a complete website redesign, or a scalable e-commerce infrastructure, our expert consultants in Jaipur are ready to carefully evaluate your unique situation. We provide honest technical feedback and clear roadmaps so you know exactly what investment is required and precisely what return on investment you can realistically expect.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                What to Expect When You Contact Us
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { title: "Free Initial Discovery Consultation", desc: "Openly share your business goals, current bottlenecks, and technical challenges. We will rapidly assess your digital landscape and honestly recommend the most effective strategic approach — absolutely no initial commitment required." },
+                  { title: "Crystal Clear Scope & Strict Timeline", desc: "Before a single line of code is written or design made, you receive a meticulously detailed scope document outlining all deliverables, key milestones, and highly realistic launch deadlines." },
+                  { title: "Dedicated Expert Point of Contact", desc: "One highly experienced technical team lead personally manages your entire project end-to-end, guaranteeing consistent, clear communication and uncompromising quality across all deliverables." },
+                  { title: "Comprehensive Post-Launch Support", desc: "Unlike other agencies, we do not simply disappear after your project goes live. We offer robust ongoing support, aggressive continuous SEO optimization, and proactive server maintenance packages." },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Shared Footer Component */}
         <Footer />
       </div>

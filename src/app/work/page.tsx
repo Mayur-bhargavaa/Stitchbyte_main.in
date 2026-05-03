@@ -280,6 +280,47 @@ export default function WorkPage() {
           )}
         </section>
 
+        {/* SEO Content Section */}
+        <section className="max-w-5xl mx-auto px-6 py-20 border-t border-gray-100">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                Our Digital Portfolio in Jaipur
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                What makes a digital project successful? At StitchByte, we believe our work speaks for itself. We have helped many businesses in fields like health, education, and real estate. Our team builds websites, mobile apps, and manages SEO. We also create marketing plans and great designs. We tailor every project to fit your specific business goals and audience.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Why is an expert partner important for Jaipur businesses? Jaipur is a major business hub with more competition than ever. To stand out, you need more than a basic website. You need a partner who understands your goals. We help startups and old brands alike with high-quality tech and design. Our goal is to help you compete on a national level with fast and beautiful digital products.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                We focus on results. Every project in our portfolio shows a real problem we solved. We use smart thinking and expert tech to help our clients. Before we start, we study your business model and your audience. This makes sure the final product looks great and drives real sales for you.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                We invite you to browse our work and case studies. You can see our custom builds and UI/UX design projects. Each project shows the tech we used, like Next.js and React. We also explain the reason behind our design choices. Let our success in Jaipur be the start of your next digital project.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                What Sets Our Work Apart
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { title: "Business-First Approach", desc: "Every project starts with learning about your goals and audience. we plan everything before we start design or code." },
+                  { title: "Modern Tech Stack", desc: "We build powerful apps using Next.js, React, and Node.js. Our tools scale easily as your business grows." },
+                  { title: "SEO Built In", desc: "We build SEO and speed optimization into the start of every project. We make sure your site is ready for Google." },
+                  { title: "Transparent Agile Process", desc: "We give you clear updates and project milestones. You will always know the status of your investment." },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <Footer />
       </div>
     </div>

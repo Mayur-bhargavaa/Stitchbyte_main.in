@@ -432,11 +432,53 @@ export default function PrebuiltPage() {
                 </div>
             </section>
 
+            {/* SEO Content Section */}
+            <section className="max-w-5xl mx-auto px-6 py-20">
+                <div className="grid md:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                            Prebuilt SaaS Solutions in Jaipur
+                        </h2>
+                        <p className="text-gray-600 leading-relaxed mb-4">
+                            What are prebuilt SaaS solutions? Building a product from scratch can take months and cost a lot. At StitchByte, we offer production-ready platforms in Jaipur. Our solutions can be ready in just 48 hours. They come with SEO and mobile design built in. This helps you launch faster and save money.
+                        </p>
+                        <p className="text-gray-600 leading-relaxed mb-4">
+                            Why is this good for Jaipur businesses? Jaipur is a fast-paced market. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
+                        </p>
+                        <p className="text-gray-600 leading-relaxed mb-4">
+                            Our process is fast and clear. First, you pick a platform that fits your business. We have tools for restaurants, shops, and clinics. Next, we customize the design to match your brand. We test everything to make sure it works on all devices. Finally, we handle the launch for you. Your platform can be live in under two days.
+                        </p>
+                        <p className="text-gray-600 leading-relaxed">
+                            Our products include more than just design. They come with full backend logic and admin panels. You can manage your orders and users easily. You also own 100% of the source code. There are no hidden fees or monthly licenses. This gives you the freedom to grow your Jaipur business your way.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                            What Every Prebuilt Product Includes
+                        </h3>
+                        <div className="space-y-4">
+                            {[
+                                { title: "SEO-Ready Foundation", desc: "We use clean links and meta tags so your site ranks well on Google. Your site is ready for search engines from day one." },
+                                { title: "Mobile-First Design", desc: "Every screen is built for phones, tablets, and desktops. Your users will have a smooth experience on any device." },
+                                { title: "Admin Dashboard", desc: "Manage your content and orders from a simple panel. You do not need a developer for day-to-day work." },
+                                { title: "Payment & Auth Integration", desc: "We include secure login and payment tools out of the box. Your business is ready to take orders safely." },
+                                { title: "Full Source Code", desc: "You own all the code. You can host it on your own servers and grow your platform without any limits." },
+                            ].map((item) => (
+                                <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* CTA Section */}
             <section className="py-24 bg-gray-50">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h2 className="text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                        Ready to Go Digital?
+                        Ready to Launch Your Prebuilt Software?
                     </h2>
                     <p className="text-lg text-gray-600 mb-10">
                         Get started with our prebuilt solutions and launch your business faster.

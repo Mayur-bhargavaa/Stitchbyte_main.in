@@ -54,7 +54,7 @@ export default function PrivacyPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Introduction
+                                Privacy Policy Introduction
                             </h2>
                             <p className="text-gray-600 leading-relaxed">
                                 At StitchByte ("we," "our," or "us"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Information We Collect
+                                Information We Collect at StitchByte
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 We may collect information about you in a variety of ways. The information we may collect includes:
@@ -78,7 +78,7 @@ export default function PrivacyPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                How We Use Your Information
+                                How We Use Collected Data
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 We use the information we collect to:
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Data Security
+                                Security of Your Data
                             </h2>
                             <p className="text-gray-600 leading-relaxed">
                                 We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.

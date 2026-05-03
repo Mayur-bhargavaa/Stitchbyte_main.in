@@ -73,7 +73,7 @@ export default async function AdminDashboard() {
       {/* Header */}
       <header className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-black">Admin Dashboard</h1>
+          <span className="text-xl font-bold text-black">Admin Dashboard</span>
           <nav className="flex items-center gap-4">
             <Link href="/restaurant/admin/restaurants" className="text-sm text-black hover:text-gray-600">
               Restaurants

@@ -183,7 +183,7 @@ export default function AboutPage() {
                                 Our Approach
                             </span>
                             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                                What Makes Us Different
+                                What Makes StitchByte Different
                             </h2>
                         </div>
 
@@ -199,14 +199,14 @@ export default function AboutPage() {
                                 {
                                     icon: Lightbulb,
                                     title: "SEO + Digital Strategy",
-                                    description: "We align content, structure, and user flow to improve online visibility.",
+                                    description: "We improve your visibility to reach more customers.",
                                     iconBg: "bg-amber-100",
                                     iconColor: "text-amber-600"
                                 },
                                 {
                                     icon: Handshake,
                                     title: "User-First UX/UI",
-                                    description: "We design clear, simple interfaces that users can understand and trust.",
+                                    description: "We create simple designs that people trust.",
                                     iconBg: "bg-emerald-100",
                                     iconColor: "text-emerald-600"
                                 },
@@ -269,7 +269,7 @@ export default function AboutPage() {
                                 Benefits
                             </span>
                             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                                Why Work With Us
+                                Benefits of Working With Us
                             </h2>
                         </div>
 
@@ -293,6 +293,48 @@ export default function AboutPage() {
                     </div>
                 </section>
 
+                {/* SEO Content Section */}
+                <section className="max-w-7xl mx-auto px-6 py-24">
+                    <div className="grid md:grid-cols-2 gap-12 items-start">
+                        <div>
+                            <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                                A Leading Digital Agency in Jaipur
+                            </h2>
+                            <p className="text-gray-600 leading-relaxed mb-4 text-lg">
+                                What does a full-service digital agency do? At StitchByte, we help your business grow. We are based in Jaipur and offer complete digital solutions. We build websites, create mobile apps, and manage SEO. We also handle marketing and design. By putting everything under one roof, we save you time. Our goal is to help your brand succeed with clear results.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed mb-4 text-lg">
+                                Why is this approach good for Jaipur businesses? Jaipur is a fast-growing city for business and tech. Local competition is increasing every day. You cannot afford to have separate teams for design, SEO, and development. We bring everyone together to work as one. This leads to faster websites and better marketing results for you.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed mb-4 text-lg">
+                                We work with you every step of the way. We start by learning about your industry and your goals. We do not use generic templates. Instead, we build custom solutions that fit your needs. Whether you need an e-commerce site or a local SEO boost, we are here to help. We provide regular updates so you always know where your project stands.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed text-lg">
+                                Our mission is to help you scale your business. We combine expert engineering with creative marketing. This means your website will look great and attract more customers. You will have full ownership of your code with no hidden fees. StitchByte is a trusted partner for businesses in Jaipur looking to grow in the digital world.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                                Core Pillars of Our Agency
+                            </h3>
+                            <div className="space-y-4">
+                                {[
+                                    { title: "Strategic Digital Consulting", desc: "We study your business model and recommend the best tech and marketing for your goals." },
+                                    { title: "Full-Stack Engineering Excellence", desc: "Our team builds fast and secure apps using modern tech like React and Next.js." },
+                                    { title: "Data-Driven Marketing & SEO", desc: "We find new customers and leads through SEO and smart ad campaigns." },
+                                    { title: "Human-Centric UI/UX Design", desc: "We design beautiful interfaces that are easy to use and help you get more sales." },
+                                    { title: "Long-Term Growth Partnerships", desc: "We provide ongoing support to make sure your platform grows with your business." },
+                                ].map((item) => (
+                                    <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                                        <h4 className="font-semibold text-gray-900 mb-2 text-lg">{item.title}</h4>
+                                        <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* CTA Section */}
                 <section className="py-24">
                     <div className="max-w-4xl mx-auto px-6 text-center">
@@ -300,7 +342,7 @@ export default function AboutPage() {
                             <div className="absolute inset-0 bg-gradient-to-r from-emerald-200/50 via-teal-200/50 to-cyan-200/50 rounded-3xl blur-3xl" />
                             <div className="relative bg-white rounded-3xl p-12 shadow-2xl border border-gray-100">
                                 <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                                    Ready to Build Something Amazing?
+                                    Ready to Build Your Digital Future?
                                 </h2>
                                 <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">
                                     Let&apos;s grow your business with SEO, stronger digital presence, web development, and easy-to-use UX/UI built for real users.

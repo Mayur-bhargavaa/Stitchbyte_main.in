@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
-    default: "Stitchbyte | SEO, Digital Presence, Web Development & UX/UI",
-    template: "%s | Stitchbyte",
+    default: "StitchByte | SEO & Web Development Agency in Jaipur",
+    template: "%s | StitchByte",
   },
   description:
-    "Stitchbyte helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences. Launch your brand online with expert strategy, design, and execution.",
+    "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
   keywords: [
     "SEO services",
     "web development",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://stitchbyte.in",
     siteName: "Stitchbyte",
-    title: "Stitchbyte | SEO, Digital Presence, Web Development & UX/UI",
+    title: "StitchByte | SEO & Web Development Agency in Jaipur",
     description:
-      "Stitchbyte helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences.",
+      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
     images: [
       {
         url: "/logo-stitchbyte.png",
@@ -68,9 +68,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stitchbyte | SEO, Digital Presence, Web Development & UX/UI",
+    title: "StitchByte | SEO & Web Development Agency in Jaipur",
     description:
-      "Stitchbyte helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences.",
+      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
     images: ["/logo-stitchbyte.png"],
   },
   robots: {
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stitchbyte | SEO, Web Development & UX/UI",
+    title: "StitchByte | SEO & Web Development Agency in Jaipur",
   },
   formatDetection: {
     telephone: true,
@@ -119,7 +119,7 @@ export default function RootLayout({
     url: "https://stitchbyte.in",
     logo: "https://stitchbyte.in/logo-stitchbyte.png",
     description:
-      "Stitchbyte helps businesses grow with SEO, stronger digital presence, modern web development, and easy-to-use UX/UI experiences.",
+      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
     contactPoint: {
       "@type": "ContactPoint",
       email: "info@stitchbyte.in",
@@ -170,7 +170,7 @@ export default function RootLayout({
         description:
           "Track rankings, traffic, and audience behavior to improve visibility and growth decisions.",
         provider: { "@type": "Organization", name: "Stitchbyte" },
-        url: "https://stitchbyte.in/marketing?category=seo",
+        url: "https://stitchbyte.in/marketing",
       },
       {
         "@type": "Service",
@@ -233,6 +233,23 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(serviceSchema),
+          }}
+        />
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-H27QKB00PJ`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-H27QKB00PJ');
+            `,
           }}
         />
       </head>

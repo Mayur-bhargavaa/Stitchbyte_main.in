@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Marketing Case Studies | Performance Marketing & SEO - Stitchbyte",
+  title: "SEO & Marketing Services in Jaipur | StitchByte",
   description:
     "Explore Stitchbyte marketing case studies across performance marketing and SEO, with real growth outcomes for digital businesses.",
   alternates: {

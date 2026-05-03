@@ -249,9 +249,51 @@ export default function UiUxPage() {
           )}
         </section>
 
+        {/* SEO Content Section */}
+        <section className="max-w-5xl mx-auto px-6 py-20">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                Professional UI/UX Design Services in Jaipur
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                What is UI/UX design? Great design is about more than looks. It&apos;s about making a website or app easy to use. At StitchByte, we are a top design agency in Jaipur. We help businesses turn complex tools into simple, friendly screens. Our goal is to help your users find what they need and take action. This leads to more sales and happier customers.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Why is good design important for Jaipur businesses? Jaipur is a fast-growing city for tech and business. Your website is often the first thing a customer sees. If it&apos;s hard to use, they will leave for a competitor. Good design shows that your brand is professional and reliable. We help Jaipur startups and shops stand out with clean, modern interfaces.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                We start every project with deep research. We study your users and what they need. We map out how they will move through your app. This makes sure every button and screen has a purpose. We create simple sketches called wireframes first. Then, we build interactive models for you to test. This helps us get the experience right before we start building.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                We build complete design systems, not just single screens. We create sets of buttons, fonts, and colors that work together. This keeps your brand looking consistent everywhere. It also makes future updates faster and cheaper. Whether you need a redesign or a new app, our Jaipur team builds products that look premium and work perfectly.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                Our Proven Design Process
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { title: "Discovery & User Research", desc: "We study your users to learn what they need. This helps us build a product that works for them." },
+                  { title: "Information Architecture", desc: "We organize your content so it is easy to find. We make sure your app is simple to navigate." },
+                  { title: "Wireframing & Prototyping", desc: "We create simple models for you to test. This helps us get feedback before we start the final design." },
+                  { title: "Visual Design & Branding", desc: "We build beautiful interfaces with clear colors and fonts. We make sure your brand looks great." },
+                  { title: "Handoff & Quality Assurance", desc: "We give our designs to the developers with clear notes. We make sure the final product looks exactly right." },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="max-w-4xl mx-auto px-6 py-16 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            Ready to Improve Your Product Experience?
+            Ready to Improve Your Product UI/UX?
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Let&apos;s design a UI and UX strategy that improves engagement, trust, and conversion quality.

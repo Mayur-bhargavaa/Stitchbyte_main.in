@@ -578,10 +578,7 @@ export default function LandingPage() {
                 Our Products
               </span>
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                Streamline Business with
-              </h2>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                our Flexible Options
+                Streamline Business with <br /> our Flexible Options
               </h2>
             </div>
 
@@ -914,7 +911,7 @@ export default function LandingPage() {
         </section>
 
         {/* How We Work Timeline */}
-        <section className="max-w-6xl mx-auto px-6 py-16">
+        <section id="how-we-work" className="max-w-6xl mx-auto px-6 py-16">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
               <Clock className="w-4 h-4" />
@@ -1084,9 +1081,7 @@ export default function LandingPage() {
               {/* Left - Title */}
               <div>
                 <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  Frequently Asked
-                  <br />
-                  Questions
+                  Frequently Asked <br /> Questions
                 </h2>
               </div>
 

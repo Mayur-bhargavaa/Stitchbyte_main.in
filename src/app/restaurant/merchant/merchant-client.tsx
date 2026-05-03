@@ -505,7 +505,7 @@ export default function MerchantClient({
       <header className="bg-white border-b sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-black">{restaurant.name}</h1>
+            <span className="text-xl font-bold text-black">{restaurant.name}</span>
             <p className="text-sm text-black">Merchant Dashboard</p>
           </div>
           <button

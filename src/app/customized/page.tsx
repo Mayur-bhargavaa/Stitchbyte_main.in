@@ -140,7 +140,7 @@ export default function CustomizedPage() {
                             Projects
                         </span>
                         <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
-                            Our Top Projects
+                            Customized Software Projects
                         </h2>
                         <p className="text-gray-600 max-w-2xl mx-auto mb-8">
                             Explore selected builds focused on digital presence, better engagement, and measurable business outcomes.
@@ -344,10 +344,52 @@ export default function CustomizedPage() {
                     )}
                 </section>
 
+                {/* SEO Content Section */}
+                <section className="max-w-5xl mx-auto px-6 py-20">
+                    <div className="grid md:grid-cols-2 gap-12 items-start">
+                        <div>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                                Custom Web Development in Jaipur
+                            </h2>
+                            <p className="text-gray-600 leading-relaxed mb-4">
+                                What is custom web development? Basic templates might work for some, but your brand needs a unique digital experience. Customized development is the best path forward for growth. At StitchByte, we build tailored websites and web apps from scratch in Jaipur. We design software around your specific business needs and long-term goals.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed mb-4">
+                                Why is this important for Jaipur businesses? Jaipur is a busy hub for business and tech. Local competition is growing fast. You need a fast and secure website to stand out. Customers expect smooth online experiences today. A slow website can drive clients to your competitors. Custom development helps you automate sales and provide a great user experience. It helps Jaipur businesses compete on a global scale.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed mb-4">
+                                We focus on transparency and results. Every project starts with a clear plan. We learn about your audience and your goals before we write any code. Our team then creates designs for you to review. Once you approve, we build the site using modern tech like Next.js. We test everything thoroughly on all devices before we launch.
+                            </p>
+                            <p className="text-gray-600 leading-relaxed">
+                                We build in SEO and mobile support from the start. You will own 100% of your code with no hidden fees. We help with corporate sites, e-commerce stores, and complex apps. Our Jaipur team provides ongoing support as your business grows. We make sure your platform stays updated and fast.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                                What Our Custom Builds Include
+                            </h3>
+                            <div className="space-y-4">
+                                {[
+                                    { title: "SEO-First Architecture", desc: "Clean URL structures, semantic HTML, structured data, and fast page loads built into the foundation — not bolted on later." },
+                                    { title: "Conversion-Focused UX", desc: "User journeys designed to reduce friction at every step. We optimize forms, CTAs, navigation, and content flow for measurable outcomes." },
+                                    { title: "Scalable Tech Stack", desc: "We use modern frameworks like Next.js, React, and Node.js to build platforms that handle growth without performance compromise." },
+                                    { title: "Full Code Ownership", desc: "You own 100% of the source code. No vendor lock-in, no recurring license fees, and full freedom to modify or extend your platform." },
+                                    { title: "Post-Launch Support", desc: "We provide ongoing maintenance, performance monitoring, and iterative improvements based on real user data and analytics." },
+                                ].map((item) => (
+                                    <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                                        <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                                        <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* CTA Section */}
                 <section className="max-w-4xl mx-auto px-6 py-16 text-center">
                     <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                        Have a Growth Goal in Mind?
+                        Ready for a Custom Development Solution?
                     </h2>
                     <p className="text-gray-600 mb-8 max-w-xl mx-auto">
                         Let&apos;s plan a customized solution that improves visibility, user experience, and conversions.

@@ -115,7 +115,7 @@ export default function CareersPage() {
                                 <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                                     <benefit.icon className="w-6 h-6 text-gray-700" />
                                 </div>
-                                <h3 className="font-semibold text-gray-900">{benefit.title}</h3>
+                                <h3 className="font-semibold text-gray-900">Career {benefit.title}</h3>
                                 <p className="text-sm text-gray-500">{benefit.description}</p>
                             </div>
                         ))}
@@ -125,7 +125,7 @@ export default function CareersPage() {
                 {/* Job Listings */}
                 <section className="max-w-4xl mx-auto px-6 pb-24">
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: 'Georgia, serif' }}>
-                        Open Positions
+                        Open Career Opportunities
                     </h2>
 
                     {jobs.length === 0 ? (

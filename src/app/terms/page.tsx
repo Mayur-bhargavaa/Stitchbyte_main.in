@@ -54,7 +54,7 @@ export default function TermsPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Agreement to Terms
+                                Agreement to Terms & Conditions
                             </h2>
                             <p className="text-gray-600 leading-relaxed">
                                 By accessing or using the services provided by StitchByte ("Company," "we," "us," or "our"), you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you may not access our services.
@@ -63,7 +63,7 @@ export default function TermsPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Services
+                                Description of Services
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 StitchByte provides website development, application development, and digital solutions including but not limited to:
@@ -79,7 +79,7 @@ export default function TermsPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Intellectual Property
+                                StitchByte Intellectual Property
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 Upon full payment of all agreed fees:
@@ -96,7 +96,7 @@ export default function TermsPage() {
 
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                                Payment Terms
+                                Terms of Payment
                             </h2>
                             <ul className="list-disc list-inside text-gray-600 space-y-2">
                                 <li>Payment terms will be specified in individual project proposals or agreements</li>

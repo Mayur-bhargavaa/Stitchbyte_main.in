@@ -107,7 +107,7 @@ export default function MarketingPage() {
               Case Studies
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8" style={{ fontFamily: "Georgia, serif" }}>
-              Marketing Success Stories
+              Our Performance Marketing Approach
             </h2>
 
             <div className="inline-flex items-center gap-2 p-1 bg-white border border-gray-200 rounded-full">
@@ -192,9 +192,51 @@ export default function MarketingPage() {
           )}
         </section>
 
+        {/* SEO Content Section */}
+        <section className="max-w-5xl mx-auto px-6 py-20">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                Performance Marketing &amp; SEO Services in Jaipur
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                What is performance marketing and SEO? Good marketing is about spending money wisely. We help your business get found online. At StitchByte, we are based in Jaipur and help you attract new customers. We use data to drive our ads and SEO work. Every strategy is built for your specific goals.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Why is marketing important for Jaipur businesses? Jaipur is a busy city with many competing brands. Just having a website is not enough anymore. If you are not on the first page of Google, you are losing sales. Our experts help you lower your costs and find more customers. We build a marketing plan that works for you 24/7.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                We follow a clear plan for performance marketing. We manage ads on Google, Facebook, and LinkedIn. Before we start, we study your audience and your rivals. We make sure every dollar you spend brings clear results. Whether you want leads, sales, or app installs, we can help.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Our SEO work is about more than just keywords. We audit your site, optimize your content, and build strong links. We help your business grow naturally over time. This approach helps you get sales now with ads while building long-term growth with SEO. We help you dominate the search results in Jaipur.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
+                How We Deliver Marketing Results
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { title: "Campaign Strategy & Setup", desc: "We find your ideal customers and map their journey. We build ad campaigns that are easy to test and scale fast." },
+                  { title: "SEO Technical Audits", desc: "We find and fix site errors, slow speeds, and indexing gaps that keep you from ranking well on Google." },
+                  { title: "Content-Driven Organic Growth", desc: "We create SEO blog posts and landing pages that attract new visitors and build your authority online." },
+                  { title: "Transparent Analytics & Reporting", desc: "We provide clear monthly reports. You will see clicks, leads, and ROI metrics that are easy to understand." },
+                  { title: "Continuous Iterative Optimization", desc: "We constantly test new ads and refine your audience. We keep improving your results month after month." },
+                ].map((item) => (
+                  <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
+                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
+                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="max-w-4xl mx-auto px-6 py-16 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-            Want Results Like These?
+            Want to Grow Your Organic Traffic?
           </h2>
           <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
             Let&apos;s plan a focused strategy for your business across SEO, performance marketing, and conversion-ready web experiences.
