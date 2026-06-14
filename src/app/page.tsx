@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   UtensilsCrossed,
   ShoppingCart,
@@ -40,6 +40,14 @@ import {
   Star,
   User,
   LucideIcon,
+  Megaphone,
+  ArrowUpRight,
+  Rocket,
+  Brain,
+  BrainCog,
+  BadgeCheck,
+  Play,
+  Pause,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -215,8 +223,76 @@ function FAQItem({ question, answer, isOpen, onClick }: { question: string; answ
   );
 }
 
+function SpotlightVideoCard({ videoUrl }: { videoUrl: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.error("Playback failed:", err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+
+    return () => {
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
+  }, []);
+
+  return (
+    <div 
+      className="w-full aspect-[9/16] rounded-[2rem] overflow-hidden border border-gray-200 shadow-2xl bg-black relative group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+      onClick={togglePlay}
+    >
+      <video
+        ref={videoRef}
+        src={videoUrl}
+        className="w-full h-full object-cover"
+        loop
+        playsInline
+      />
+      {/* Premium Glassmorphic Play/Pause Button Overlay */}
+      <div className={`absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition-all duration-300 ${
+        isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
+      }`}>
+        <div className="w-16 h-16 rounded-full bg-white/25 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-lg transform scale-90 group-hover:scale-100 transition-all duration-300 hover:bg-white/40">
+          {isPlaying ? (
+            <Pause className="w-6 h-6 fill-current" />
+          ) : (
+            <Play className="w-6 h-6 fill-current translate-x-0.5" />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [spotlightVideoUrls, setSpotlightVideoUrls] = useState<string[]>([]);
+
+  const activeVideos = spotlightVideoUrls.length > 0 
+    ? spotlightVideoUrls 
+    : ["https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-his-computer-at-night-40342-large.mp4"];
 
   const [homeWorkCards, setHomeWorkCards] = useState<HomeWorkCard[]>([]);
   const [reviewCards, setReviewCards] = useState<ReviewCard[]>([]);
@@ -339,22 +415,28 @@ export default function LandingPage() {
         const response = await fetch('/api/site-content/reviews');
         const data = await response.json();
 
-        if (response.ok && data.success && Array.isArray(data.reviewCards)) {
-          const incomingCards = data.reviewCards
-            .map((item: ReviewCard) => ({
-              name: typeof item?.name === "string" ? item.name.trim() : "",
-              reviewTitle: typeof item?.reviewTitle === "string" ? item.reviewTitle.trim() : "",
-              reviewText: typeof item?.reviewText === "string" ? item.reviewText.trim() : "",
-              rating: Math.min(5, Math.max(1, Number(item?.rating) || 5)),
-              avatarUrl: typeof item?.avatarUrl === "string" ? item.avatarUrl.trim() : "",
-              serviceType: typeof item?.serviceType === "string" ? item.serviceType.trim() : "",
-              projectMonth: typeof item?.projectMonth === "string" ? item.projectMonth.trim() : "",
-              projectYear: typeof item?.projectYear === "string" ? item.projectYear.trim() : "",
-              projectSize: typeof item?.projectSize === "string" ? item.projectSize.trim() : "",
-            }))
-            .filter((item: ReviewCard) => item.name && item.reviewText);
-
-          setReviewCards(incomingCards);
+        if (response.ok && data.success) {
+          if (Array.isArray(data.reviewCards)) {
+            const incomingCards = data.reviewCards
+              .map((item: ReviewCard) => ({
+                name: typeof item?.name === "string" ? item.name.trim() : "",
+                reviewTitle: typeof item?.reviewTitle === "string" ? item.reviewTitle.trim() : "",
+                reviewText: typeof item?.reviewText === "string" ? item.reviewText.trim() : "",
+                rating: Math.min(5, Math.max(1, Number(item?.rating) || 5)),
+                avatarUrl: typeof item?.avatarUrl === "string" ? item.avatarUrl.trim() : "",
+                serviceType: typeof item?.serviceType === "string" ? item.serviceType.trim() : "",
+                projectMonth: typeof item?.projectMonth === "string" ? item.projectMonth.trim() : "",
+                projectYear: typeof item?.projectYear === "string" ? item.projectYear.trim() : "",
+                projectSize: typeof item?.projectSize === "string" ? item.projectSize.trim() : "",
+              }))
+              .filter((item: ReviewCard) => item.name && item.reviewText);
+            setReviewCards(incomingCards);
+          }
+          if (data.spotlightVideoUrls && Array.isArray(data.spotlightVideoUrls) && data.spotlightVideoUrls.length > 0) {
+            setSpotlightVideoUrls(data.spotlightVideoUrls);
+          } else if (data.spotlightVideoUrl) {
+            setSpotlightVideoUrls([data.spotlightVideoUrl]);
+          }
         }
       } catch (err) {
         console.error('Error fetching review cards:', err);
@@ -399,6 +481,43 @@ export default function LandingPage() {
     displayReviewCards.length > visibleReviewCount
       ? [...displayReviewCards, ...displayReviewCards.slice(0, visibleReviewCount)]
       : displayReviewCards;
+
+  const tailoredProducts = [
+    {
+      id: "marketing",
+      title: "Strategic Marketing",
+      subtitle: "Live Campaigns",
+      description: "High-impact marketing systems designed to scale your reach and conversion through data-driven precision.",
+      href: "/marketing",
+      number: "01",
+    },
+    {
+      id: "seo",
+      title: "Advanced SEO",
+      subtitle: "SEO Strategy",
+      description: "Commanding the first page of search results with surgical keyword targeting.",
+      href: "/marketing",
+      number: "02",
+      icon: BarChart3,
+    },
+    {
+      id: "uiux",
+      title: "UI/UX Craft",
+      subtitle: "UI/UX Design",
+      description: "Immersive user journeys that blend aesthetic purity with conversion psychology.",
+      href: "/ui-ux",
+      number: "03",
+      icon: Layers,
+    },
+    {
+      id: "web",
+      title: "Modern Web Infrastructure",
+      subtitle: "Web Development",
+      description: "Fast, secure, and accessible web experiences built on the industry's most robust tech stacks.",
+      href: "/customized",
+      number: "04",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
@@ -508,13 +627,14 @@ export default function LandingPage() {
             {/* Main Headline - Large & Bold */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tight">
               <span className="block text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                From Idea to Execution —
+                Let&apos;s Build Something
               </span>
               <span className="block text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                Launch with <span className="relative inline-block">
-                  <span className="relative z-10">StitchByte</span>
+                <span className="relative inline-block">
+                  <span className="relative z-10">Extraordinary</span>
                   <span className="absolute bottom-2 left-0 right-0 h-4 bg-gradient-to-r from-emerald-200 to-teal-200 -z-10 rounded" />
-                </span>
+                </span>{' '}
+                together
               </span>
             </h1>
 
@@ -551,396 +671,431 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Motivational Quotes Marquee Section */}
+        {/* Service Offerings Marquee Section */}
         <section className="py-8 overflow-hidden bg-gradient-to-b from-transparent to-slate-50/50">
           <div className="relative">
-            <div className="flex animate-marquee whitespace-nowrap">
-              {['SEO That Performs', 'Grow Your Digital Presence', 'Web Development That Scales', 'Simple UX, Strong UI', 'Launch with Confidence', 'Your Vision, Our Execution', 'Build, Rank, and Grow'].map((quote, i) => (
-                <span key={i} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
-                  ✦ {quote}
+            <div className="flex animate-marquee whitespace-nowrap items-center">
+              {[
+                { text: "Web Development", color: "bg-indigo-500" },
+                { text: "UX/UI Design", color: "bg-violet-500" },
+                { text: "Marketing Systems", color: "bg-amber-500" },
+                { text: "Digital Presence", color: "bg-emerald-500" },
+                { text: "SEO Strategy", color: "bg-cyan-500" },
+              ].map((item, i) => (
+                <span key={i} className="mx-12 text-2xl font-medium text-slate-500 tracking-wide inline-flex items-center gap-3">
+                  <span className={`w-2 h-2 rounded-full ${item.color} flex-shrink-0`} />
+                  {item.text}
                 </span>
               ))}
-              {['SEO That Performs', 'Grow Your Digital Presence', 'Web Development That Scales', 'Simple UX, Strong UI', 'Launch with Confidence', 'Your Vision, Our Execution', 'Build, Rank, and Grow'].map((quote, i) => (
-                <span key={`dup-${i}`} className="mx-12 text-2xl font-light text-gray-300 tracking-wide">
-                  ✦ {quote}
+              {/* Duplicate for infinite loop */}
+              {[
+                { text: "Web Development", color: "bg-indigo-500" },
+                { text: "UX/UI Design", color: "bg-violet-500" },
+                { text: "Marketing Systems", color: "bg-amber-500" },
+                { text: "Digital Presence", color: "bg-emerald-500" },
+                { text: "SEO Strategy", color: "bg-cyan-500" },
+              ].map((item, i) => (
+                <span key={`dup-${i}`} className="mx-12 text-2xl font-medium text-slate-500 tracking-wide inline-flex items-center gap-3">
+                  <span className={`w-2 h-2 rounded-full ${item.color} flex-shrink-0`} />
+                  {item.text}
+                </span>
+              ))}
+              {/* Triple to ensure smooth screen loop */}
+              {[
+                { text: "Web Development", color: "bg-indigo-500" },
+                { text: "UX/UI Design", color: "bg-violet-500" },
+                { text: "Marketing Systems", color: "bg-amber-500" },
+                { text: "Digital Presence", color: "bg-emerald-500" },
+                { text: "SEO Strategy", color: "bg-cyan-500" },
+              ].map((item, i) => (
+                <span key={`trip-${i}`} className="mx-12 text-2xl font-medium text-slate-500 tracking-wide inline-flex items-center gap-3">
+                  <span className={`w-2 h-2 rounded-full ${item.color} flex-shrink-0`} />
+                  {item.text}
                 </span>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Apps Grid - Modern Black & White Theme */}
+        {/* Apps Grid - Tailored Bento Grid Theme */}
         <section id="apps" className="relative py-24 overflow-hidden bg-white">
-          <div className="relative max-w-6xl mx-auto px-6">
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
-                Our Products
-              </span>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
-                Streamline Business with <br /> our Flexible Options
-              </h2>
-            </div>
-
-            {/* Loading State */}
-            {workLoading && (
-              <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
-              </div>
-            )}
-
-            {/* Error State */}
-            {workError && !workLoading && (
-              <div className="text-center py-20">
-                <p className="text-gray-500">{workError}</p>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full"
-                >
-                  Retry
-                </button>
-              </div>
-            )}
-
-            {/* App Cards Grid */}
-            {!workLoading && !workError && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {homeWorkCards.map((card) => {
-                  const iconBySource: Record<WorkSource, LucideIcon> = {
-                    marketing: BarChart3,
-                    seo: Globe,
-                    uiux: Layers,
-                    prebuilt: Store,
-                    customized: ShoppingBag,
-                  };
-
-                  const IconComponent = iconBySource[card.source] || Smartphone;
-
-                  return (
-                    <div
-                      key={card.id}
-                      className="group relative bg-white rounded-3xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-1"
-                    >
-                      {/* Card Header */}
-                      <div className="relative p-6 pb-0">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-900 transition-colors">
-                              <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" />
-                            </div>
-                            <div>
-                              <h3 className="text-xl font-bold text-gray-900">{card.title}</h3>
-                              <p className="text-sm text-gray-500">{card.subtitle}</p>
-                            </div>
-                          </div>
-                          <span className="flex items-center gap-1.5 px-3 py-1 bg-gray-900 text-white text-xs font-medium rounded-full">
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                            </span>
-                            Live
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Preview Area */}
-                      <div className="px-6 pb-6">
-                        <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
-                          <p className="text-gray-600 text-sm leading-relaxed mb-4">{card.description}</p>
-
-                          {/* Feature Tags */}
-                          <div className="flex flex-wrap gap-2">
-                            {card.tags?.slice(0, 4).map((tag: string, i: number) => (
-                              <span
-                                key={`${card.id}-${tag}-${i}`}
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 border border-gray-200"
-                              >
-                                <span className="w-4 h-4 bg-gray-100 rounded flex items-center justify-center text-[10px] text-gray-500">
-                                  {String(i + 1).padStart(2, '0')}
-                                </span>
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Action Button */}
-                        {card.isExternal ? (
-                          <a
-                            href={card.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
-                          >
-                            Explore Now
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                          </a>
-                        ) : (
-                          <Link
-                            href={card.href}
-                            className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 text-white rounded-xl font-medium hover:bg-gray-800 transition-all group-hover:gap-3"
-                          >
-                            Explore Now
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* View All Button */}
-            <div className="text-center mt-12">
-              <Link
-                href="/work"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-medium rounded-full border-2 border-gray-200 hover:border-gray-900 transition-all"
-              >
-                View All Work
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Us Section - Futuredesks Style */}
-        <section id="features" className="relative py-24 lg:py-32 bg-white overflow-hidden">
-          {/* Subtle Background Pattern */}
+          {/* Subtle Grid Backdrop matching the screenshot */}
           <div
-            className="absolute inset-0 opacity-[0.02]"
+            className="absolute inset-0 z-0"
             style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0,0,0) 1px, transparent 0)`,
-              backgroundSize: '32px 32px'
+              backgroundImage: `
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
             }}
           />
 
-          <div className="relative max-w-7xl mx-auto px-6">
+          <div className="relative z-10 max-w-6xl mx-auto px-6">
             {/* Section Header */}
-            <div className="text-center mb-16 lg:mb-20">
-              <span className="inline-block px-5 py-2 bg-gray-50 text-gray-600 text-sm font-medium rounded-full border border-gray-200 mb-6">
-                Why Us
-              </span>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-                Why Choose StitchByte?
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+              <div className="max-w-2xl">
+                <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                  Our Tailored Products
+                </h2>
+                <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                  Precision-engineered digital solutions designed to elevate your brand&apos;s presence in the competitive landscape.
+                </p>
+              </div>
+              
+              <Link
+                href="/work"
+                className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 hover:scale-110 active:scale-95 transition-all shadow-md self-start md:self-auto"
+                aria-label="View all work"
+              >
+                <ArrowUpRight className="w-6 h-6" />
+              </Link>
+            </div>            {/* Bento App Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {tailoredProducts.map((card, index) => {
+                const layoutIndex = index % 4;
+
+                if (layoutIndex === 0) {
+                  // Wide Card (Strategic Marketing)
+                  return (
+                    <Link
+                      key={card.id}
+                      href={card.href}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between md:col-span-2 min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      {/* Header Area */}
+                      <div className="flex justify-between items-start mb-6">
+                        <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100/50 text-[10px] font-semibold tracking-wider uppercase rounded-full">
+                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                          {card.subtitle}
+                        </span>
+                        <span className="text-sm font-mono text-slate-350 font-semibold">{card.number}</span>
+                      </div>
+                      {/* Title and Description */}
+                      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-auto">
+                        <div className="max-w-md">
+                          <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-4">{card.title}</h3>
+                          <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                            <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{card.description}</p>
+                          </div>
+                        </div>
+                        {/* Sound/Megaphone Illustration */}
+                        <div className="hidden sm:flex w-24 h-24 bg-slate-50 rounded-2xl border border-slate-100 flex-shrink-0 items-center justify-center text-slate-300 group-hover:scale-110 transition-transform duration-500 relative">
+                          <Megaphone className="w-10 h-10 text-slate-400/80" />
+                          <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-slate-300 rounded-full animate-ping" />
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                } else if (layoutIndex === 1) {
+                  // Narrow Card (Advanced SEO)
+                  const IconComponent = card.icon || BarChart3;
+                  return (
+                    <Link
+                      key={card.id}
+                      href={card.href}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      {/* Header Area */}
+                      <div className="flex justify-between items-start mb-12">
+                        <span className="text-sm font-mono text-slate-355 font-semibold">{card.number}</span>
+                        <div className="w-9 h-9 rounded-xl border border-blue-100 bg-blue-50/50 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform duration-500">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      </div>
+                      {/* Title and Description */}
+                      <div className="mt-auto">
+                        <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-4">{card.title}</h3>
+                        <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                          <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{card.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                } else if (layoutIndex === 2) {
+                  // Narrow Card (UI/UX Craft)
+                  const IconComponent = card.icon || Layers;
+                  return (
+                    <Link
+                      key={card.id}
+                      href={card.href}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      {/* Header Area */}
+                      <div className="flex justify-between items-start mb-12">
+                        <span className="text-sm font-mono text-slate-355 font-semibold">{card.number}</span>
+                        <div className="w-9 h-9 rounded-xl border border-violet-100 bg-violet-50/50 flex items-center justify-center text-violet-500 group-hover:scale-110 transition-transform duration-500">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      </div>
+                      {/* Title and Description */}
+                      <div className="mt-auto">
+                        <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-4">{card.title}</h3>
+                        <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                          <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{card.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                } else {
+                  // Wide Card (Modern Web Infrastructure)
+                  return (
+                    <Link
+                      key={card.id}
+                      href={card.href}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between md:col-span-2 min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      {/* Header Area */}
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="flex gap-2">
+                          <span className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-[10px] font-mono text-slate-500 font-semibold">&lt;/&gt;</span>
+                          <span className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-500">
+                            <Zap className="w-3.5 h-3.5 text-amber-500" />
+                          </span>
+                        </div>
+                        <span className="text-sm font-mono text-slate-350 font-semibold">{card.number}</span>
+                      </div>
+                      {/* Title and Description */}
+                      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-auto">
+                        <div className="max-w-md">
+                          <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-4">{card.title}</h3>
+                          <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                            <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{card.description}</p>
+                          </div>
+                        </div>
+                        {/* Code/Terminal Illustration */}
+                        <div className="hidden sm:block w-40 h-28 bg-slate-900 rounded-xl p-3.5 shadow-inner relative overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
+                          <div className="flex gap-1.5 mb-2.5">
+                            <div className="w-1.5 h-1.5 bg-red-400 rounded-full" />
+                            <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
+                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                          </div>
+                          <span className="font-mono text-[11px] text-emerald-400">&gt; _</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                }
+              })}
+            </div>
+          </div>
+        </section>
+        {/* Why StitchByte Section */}
+        <section id="features" className="relative py-24 overflow-hidden bg-white">
+          {/* Subtle Grid Backdrop matching the screenshot */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }}
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-6">
+            {/* Section Header */}
+            <div className="text-center mb-20 flex flex-col items-center">
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+                Why StitchByte?
               </h2>
-              <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                We combine SEO strategy, digital brand growth, quality web development, and intuitive UX/UI
-                to deliver results that are scalable and easy for users.
+              <p className="text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+                We don&apos;t just build websites; we build growth engines that operate on autopilot.
               </p>
             </div>
 
-            {/* Three Column Layout: Features - Mockup - Features */}
-            <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center">
-
-              {/* Left Features Column */}
-              <div className="space-y-10 lg:space-y-12">
-                {/* Feature 1 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-emerald-200 group-hover:bg-emerald-50 transition-all">
-                    <BarChart3 className="w-6 h-6 text-gray-600 group-hover:text-emerald-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">SEO & Performance Insights</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Track rankings, traffic, and audience behavior to improve visibility and growth decisions.
-                  </p>
+            {/* Three Column Features Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+              {/* Feature 1 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center mb-6 hover:scale-110 transition-transform duration-300">
+                  <Rocket className="w-6 h-6" />
                 </div>
-
-                {/* Feature 2 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-violet-200 group-hover:bg-violet-50 transition-all">
-                    <Layers className="w-6 h-6 text-gray-600 group-hover:text-violet-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Web Development for Your Business</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Build reliable websites and platforms tailored to your goals, users, and operations.
-                  </p>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-cyan-200 group-hover:bg-cyan-50 transition-all">
-                    <CreditCard className="w-6 h-6 text-gray-600 group-hover:text-cyan-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Stronger Digital Presence</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Align your website, content, and conversion flow so customers find and trust your brand.
-                  </p>
-                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 tracking-tight">Speed of Thought</h3>
+                <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                  Our workflow is optimized for rapid deployment without ever sacrificing quality or design integrity.
+                </p>
               </div>
 
-              {/* Center Mockup Area */}
-              <div className="relative hidden lg:flex items-center justify-center">
-                {/* Main Dashboard Mockup */}
-                <div className="relative">
-                  {/* Background Glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/30 to-cyan-200/30 rounded-3xl blur-3xl scale-110" />
-
-                  {/* Main Card */}
-                  <div className="relative bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 transform hover:scale-105 transition-transform duration-500">
-                    <div className="w-72 h-80 bg-gradient-to-br from-gray-50 to-white rounded-xl overflow-hidden">
-                      {/* Dashboard Header */}
-                      <div className="bg-gray-900 p-3 flex items-center gap-2">
-                        <div className="flex gap-1.5">
-                          <div className="w-2.5 h-2.5 bg-red-400 rounded-full" />
-                          <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full" />
-                          <div className="w-2.5 h-2.5 bg-green-400 rounded-full" />
-                        </div>
-                        <div className="flex-1 bg-gray-700 rounded h-4 mx-4" />
-                      </div>
-
-                      {/* Dashboard Content */}
-                      <div className="p-4 space-y-3">
-                        <div className="flex gap-2">
-                          <div className="w-1/3 h-16 bg-emerald-100 rounded-lg" />
-                          <div className="w-1/3 h-16 bg-violet-100 rounded-lg" />
-                          <div className="w-1/3 h-16 bg-amber-100 rounded-lg" />
-                        </div>
-                        <div className="h-24 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded-lg border border-gray-100" />
-                        <div className="flex gap-2">
-                          <div className="flex-1 h-8 bg-gray-100 rounded" />
-                          <div className="w-20 h-8 bg-gray-900 rounded" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Floating Element - Top Left */}
-                  <div className="absolute -top-6 -left-8 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform -rotate-6 hover:rotate-0 transition-transform">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                        <Zap className="w-4 h-4 text-emerald-600" />
-                      </div>
-                      <span className="text-xs font-medium text-gray-700">Fast Deploy</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Element - Top Right */}
-                  <div className="absolute -top-4 -right-6 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform rotate-6 hover:rotate-0 transition-transform">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
-                        <Shield className="w-4 h-4 text-violet-600" />
-                      </div>
-                      <span className="text-xs font-medium text-gray-700">Secure</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Element - Bottom Left */}
-                  <div className="absolute -bottom-4 -left-6 bg-gray-900 rounded-xl shadow-lg p-3 transform rotate-3 hover:rotate-0 transition-transform">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-emerald-400">&lt;/&gt;</span>
-                      <span className="text-xs font-medium text-white">Code</span>
-                    </div>
-                  </div>
-
-                  {/* Floating Element - Bottom Right */}
-                  <div className="absolute -bottom-6 -right-8 bg-white rounded-xl shadow-lg border border-gray-100 p-3 transform -rotate-3 hover:rotate-0 transition-transform">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-lg flex items-center justify-center">
-                        <Globe className="w-4 h-4 text-cyan-600" />
-                      </div>
-                      <span className="text-xs font-medium text-gray-700">Global</span>
-                    </div>
-                  </div>
+              {/* Feature 2 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center mb-6 hover:scale-110 transition-transform duration-300">
+                  <BrainCog className="w-6 h-6" />
                 </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 tracking-tight">Strategic Depth</h3>
+                <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                  Every pixel and line of code is measured against your primary business goals and KPIs.
+                </p>
               </div>
 
-              {/* Right Features Column */}
-              <div className="space-y-10 lg:space-y-12">
-                {/* Feature 4 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-amber-200 group-hover:bg-amber-50 transition-all">
-                    <Smartphone className="w-6 h-6 text-gray-600 group-hover:text-amber-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">UX/UI That Feels Easy</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Create clean interfaces and simple user journeys that improve engagement and retention.
-                  </p>
+              {/* Feature 3 */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-black text-white flex items-center justify-center mb-6 hover:scale-110 transition-transform duration-300">
+                  <BadgeCheck className="w-6 h-6" />
                 </div>
-
-                {/* Feature 5 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-rose-200 group-hover:bg-rose-50 transition-all">
-                    <Shield className="w-6 h-6 text-gray-600 group-hover:text-rose-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Secure and Reliable Delivery</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Launch confidently with secure builds, stable architecture, and support you can trust.
-                  </p>
-                </div>
-
-                {/* Feature 6 */}
-                <div className="group">
-                  <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4 border border-gray-100 group-hover:border-indigo-200 group-hover:bg-indigo-50 transition-all">
-                    <Layers className="w-6 h-6 text-gray-600 group-hover:text-indigo-600 transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">One Team, End-to-End</h3>
-                  <p className="text-gray-500 leading-relaxed text-[15px]">
-                    Handle strategy, design, development, and optimization in one consistent process.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile: Show features in 2-column grid */}
-            <div className="lg:hidden mt-12 grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {/* Mobile Mockup */}
-              <div className="sm:col-span-2 flex justify-center mb-8">
-                <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 p-3">
-                  <div className="w-64 h-48 bg-gradient-to-br from-gray-50 to-white rounded-xl overflow-hidden">
-                    <div className="bg-gray-900 p-2 flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-red-400 rounded-full" />
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full" />
-                        <div className="w-2 h-2 bg-green-400 rounded-full" />
-                      </div>
-                    </div>
-                    <div className="p-3 space-y-2">
-                      <div className="flex gap-2">
-                        <div className="w-1/3 h-10 bg-emerald-100 rounded" />
-                        <div className="w-1/3 h-10 bg-violet-100 rounded" />
-                        <div className="w-1/3 h-10 bg-amber-100 rounded" />
-                      </div>
-                      <div className="h-16 bg-gradient-to-r from-emerald-50 to-cyan-50 rounded border border-gray-100" />
-                    </div>
-                  </div>
-                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 tracking-tight">Trusted Partner</h3>
+                <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                  Over 1.3k+ clients rely on our ecosystem for their daily digital operations and growth.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* How We Work Timeline */}
-        <section id="how-we-work" className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
-              <Clock className="w-4 h-4" />
-              Process Transparency
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              How We Work
-            </h2>
-            <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-              Clear stages, practical timelines, and accountable execution from kickoff to growth.
-            </p>
+        {/* The StitchByte Execution Model Section */}
+        <section id="how-we-work" className="relative py-24 overflow-hidden bg-white">
+          {/* Subtle Grid Backdrop matching the screenshot */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }}
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+              {/* Left Column - Title & Image Mockup */}
+              <div className="lg:col-span-5 flex flex-col">
+                <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-[1.15]">
+                  The StitchByte <br /> Execution Model
+                </h2>
+                <p className="text-slate-500 text-sm sm:text-base mb-12 max-w-md leading-relaxed">
+                  A transparent, four-stage process refined over hundreds of successful deployments.
+                </p>
+                
+                {/* Custom Browser Mockup wrapping Team Illustration */}
+                <div className="bg-[#1c1c1f] rounded-[2.5rem] p-6 sm:p-8 border border-slate-800 shadow-2xl relative overflow-hidden flex flex-col">
+                  {/* Browser Top Bar */}
+                  <div className="flex items-center justify-between bg-[#18181b] border-b border-slate-800/80 px-4 py-3 rounded-t-xl mb-4">
+                    <div className="flex gap-1.5">
+                      <span className="w-2.5 h-2.5 bg-[#ef4444] rounded-full" />
+                      <span className="w-2.5 h-2.5 bg-[#eab308] rounded-full" />
+                      <span className="w-2.5 h-2.5 bg-[#22c55e] rounded-full" />
+                    </div>
+                    <div className="flex-1 max-w-[240px] mx-auto bg-[#27272a]/60 text-[#a1a1aa] text-[10px] font-mono py-1 px-3 rounded-md text-center border border-slate-800/50 truncate">
+                      stitchbyte.com/about-us
+                    </div>
+                    <div className="w-12" /> {/* Spacer to balance dots */}
+                  </div>
+                  
+                  {/* Viewport Content */}
+                  <div className="relative bg-[#FAF6F0] rounded-b-xl overflow-hidden aspect-[4/3] flex items-center justify-center border-t border-slate-800/20">
+                    <Image
+                      src="/team-illustration-gray.png"
+                      alt="StitchByte Team"
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover object-center hover:scale-[1.03] transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Steps */}
+              <div className="lg:col-span-7 flex flex-col justify-center h-full">
+                {[
+                  {
+                    number: "01",
+                    title: "Discovery & Audit",
+                    description: "We dive deep into your brand's existing ecosystem to identify bottlenecks and growth opportunities."
+                  },
+                  {
+                    number: "02",
+                    title: "Architecture & Design",
+                    description: "Low-fidelity wireframes evolve into pixel-perfect prototypes that prioritize user flow and brand identity."
+                  },
+                  {
+                    number: "03",
+                    title: "Technical Development",
+                    description: "Clean code meets high-performance hosting. We build scalable engines optimized for lightning speed."
+                  },
+                  {
+                    number: "04",
+                    title: "Launch & Scale",
+                    description: "Post-launch monitoring and iterative marketing campaigns to ensure your new product reaches its full potential."
+                  }
+                ].map((step, index) => (
+                  <div
+                    key={step.number}
+                    className={`flex items-start gap-6 py-8 border-slate-100 ${index === 0 ? 'border-t border-b' : 'border-b'}`}
+                  >
+                    <div className="w-12 h-12 rounded-full border border-slate-200 bg-white flex items-center justify-center font-mono text-sm text-slate-500 flex-shrink-0 shadow-sm">
+                      {step.number}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 tracking-tight">
+                        {step.title}
+                      </h3>
+                      <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Instagram Reels Showcase */}
+        <section className="max-w-6xl mx-auto px-6 py-16 border-t border-slate-100/80">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12">
+            <div className="space-y-1">
+              <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#FAF6F0] border border-[#eee0cb] text-[#b37a3c] text-xs font-semibold rounded-full mb-3 shadow-xs">
+                <Instagram className="w-3.5 h-3.5" />
+                Featured Reel
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "Georgia, serif" }}>
+                Behind the Scenes at StitchByte
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm font-medium">
+                Watch our latest spotlight video.
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5">
-            {workTimeline.map((step, index) => (
-              <div key={step.phase} className="bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-all">
-                <div className="flex items-center justify-between gap-3 mb-4">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white text-xs font-semibold">
-                    {index + 1}
-                  </span>
-                  <span className="text-xs font-semibold text-gray-600 bg-gray-100 border border-gray-200 rounded-full px-3 py-1">
-                    {step.duration}
-                  </span>
+          {/* Mobile: Horizontal Carousel */}
+          <div className="sm:hidden">
+            <div
+              className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-6 -mx-6 px-6"
+              style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+            >
+              {activeVideos.map((videoUrl) => (
+                <div key={videoUrl} className="snap-center flex-shrink-0" style={{ width: "75vw", maxWidth: "320px" }}>
+                  <SpotlightVideoCard videoUrl={videoUrl} />
                 </div>
-
-                <h3 className="text-lg font-semibold text-gray-900">{step.phase}</h3>
-                <p className="text-sm text-gray-600 mt-2 leading-relaxed">{step.details}</p>
+              ))}
+            </div>
+            {/* Scroll indicator dots */}
+            {activeVideos.length > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-4">
+                {activeVideos.map((_, i) => (
+                  <span key={i} className="w-2 h-2 rounded-full bg-gray-300" />
+                ))}
               </div>
-            ))}
+            )}
+          </div>
+
+          {/* Desktop: Grid Layout */}
+          <div className="hidden sm:flex w-full items-center justify-center">
+            <div className={`grid gap-8 w-full justify-center items-center ${
+              activeVideos.length === 1 
+                ? "grid-cols-1 max-w-[320px]" 
+                : activeVideos.length === 2 
+                  ? "grid-cols-2 max-w-[640px]" 
+                  : activeVideos.length === 3 
+                    ? "grid-cols-2 lg:grid-cols-3 max-w-[960px]" 
+                    : "grid-cols-2 lg:grid-cols-4 max-w-6xl"
+            }`}>
+              {activeVideos.map((videoUrl) => (
+                <SpotlightVideoCard key={videoUrl} videoUrl={videoUrl} />
+              ))}
+            </div>
           </div>
         </section>
 

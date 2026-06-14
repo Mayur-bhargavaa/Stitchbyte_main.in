@@ -16,6 +16,10 @@ export interface ISiteContentSettings extends Document {
   key: string;
   reviewCards: IReviewCard[];
   reviewImages: string[];
+  instagramReelUrl?: string;
+  spotlightVideoUrl?: string;
+  mediaType?: "instagram" | "uploaded";
+  spotlightVideoUrls?: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -43,6 +47,10 @@ const SiteContentSettingsSchema = new Schema<ISiteContentSettings>(
       default: [],
     },
     reviewImages: { type: [String], default: [] },
+    instagramReelUrl: { type: String, default: "https://www.instagram.com/reel/DZW7Qa8RDfc/?igsh=Zno2OWN2Y3E5OHBj" },
+    spotlightVideoUrl: { type: String, default: "" },
+    mediaType: { type: String, enum: ["instagram", "uploaded"], default: "instagram" },
+    spotlightVideoUrls: { type: [String], default: [] },
   },
   {
     timestamps: true,

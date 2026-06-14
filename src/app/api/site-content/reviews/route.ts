@@ -27,6 +27,10 @@ export async function GET() {
       success: true,
       reviewCards,
       reviewImages: settings?.reviewImages || [],
+      instagramReelUrl: settings?.instagramReelUrl || "https://www.instagram.com/reel/DZW7Qa8RDfc/?igsh=Zno2OWN2Y3E5OHBj",
+      spotlightVideoUrl: settings?.spotlightVideoUrl || "",
+      mediaType: settings?.mediaType || "instagram",
+      spotlightVideoUrls: settings?.spotlightVideoUrls || [],
     });
   } catch (error) {
     console.error("Error fetching site content review images:", error);

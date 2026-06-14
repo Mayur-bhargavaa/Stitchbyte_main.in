@@ -26,13 +26,19 @@ export const metadata: Metadata = {
   description:
     "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
   keywords: [
-    "SEO services",
-    "web development",
-    "UX/UI design",
-    "digital presence",
-    "digital marketing",
-    "website development",
     "Stitchbyte",
+    "Stitch",
+    "Stitch agency",
+    "Stitch Jaipur",
+    "Stitch Rajasthan",
+    "Stitch web development",
+    "Stitch SEO",
+    "SEO services Jaipur",
+    "web development agency Jaipur",
+    "UX/UI design Rajasthan",
+    "digital marketing agency Jaipur",
+    "best digital agency in Rajasthan",
+    "website development Jaipur",
     "SEO agency India",
     "custom web development",
     "prebuilt websites",
@@ -96,6 +102,12 @@ export const metadata: Metadata = {
     // Add your Google Search Console verification code here
     // google: "your-verification-code",
   },
+  other: {
+    "geo.region": "IN-RJ",
+    "geo.placename": "Jaipur",
+    "geo.position": "26.9124;75.7873",
+    "ICBM": "26.9124, 75.7873"
+  }
 };
 
 export const viewport: Viewport = {
@@ -116,6 +128,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Stitchbyte",
+    alternateName: ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
     url: "https://stitchbyte.in",
     logo: "https://stitchbyte.in/logo-stitchbyte.png",
     description:
@@ -129,7 +142,7 @@ export default function RootLayout({
     sameAs: [
       "https://www.facebook.com/profile.php?id=61563772072392",
       "https://wa.me/919414292675",
-      "https://www.instagram.com/stitchbyte.in/",
+      "https://www.instagram.com/stitchbyte/",
       "https://www.linkedin.com/company/stitchbyte1",
     ],
   };
@@ -202,12 +215,65 @@ export default function RootLayout({
     ],
   };
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "StitchByte",
+    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
+    "image": "https://stitchbyte.in/logo-stitchbyte.png",
+    "@id": "https://stitchbyte.in/#localbusiness",
+    "url": "https://stitchbyte.in",
+    "telephone": "+919414292675",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Jaipur, Rajasthan",
+      "addressLocality": "Jaipur",
+      "addressRegion": "Rajasthan",
+      "postalCode": "302001",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 26.9124,
+      "longitude": 75.7873
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61563772072392",
+      "https://wa.me/919414292675",
+      "https://www.instagram.com/stitchbyte/",
+      "https://www.linkedin.com/company/stitchbyte1"
+    ]
+  };
+
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Local Business Schema */}
+        <Script
+          id="local-business-schema"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
         {/* Organization Schema */}
         <Script
           id="organization-schema"

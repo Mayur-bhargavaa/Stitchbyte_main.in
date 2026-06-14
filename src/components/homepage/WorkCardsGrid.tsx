@@ -241,7 +241,7 @@ export default function WorkCardsGrid() {
             {/* Preview Area */}
             <div className="px-6 pb-6">
               <div className="bg-gray-50 rounded-2xl p-6 mb-6 border border-gray-100">
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">{card.description}</p>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">{card.description}</p>
 
                 {/* Feature Tags */}
                 <div className="flex flex-wrap gap-2">

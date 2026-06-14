@@ -16,6 +16,21 @@ export interface IMarketingCaseStudy extends Document {
   order: number;
   createdAt: Date;
   updatedAt: Date;
+  // High-Converting Overhaul Fields
+  companySize?: string;
+  businessModel?: string;
+  targetAudience?: string;
+  problem?: string;
+  objectives?: string[];
+  solutionDetails?: string;
+  challenges?: string;
+  implementationProcess?: string;
+  resultsMetrics?: string[];
+  visualProof?: string[];
+  testimonialQuote?: string;
+  testimonialAuthor?: string;
+  testimonialDesignation?: string;
+  businessImpact?: string;
 }
 
 const MarketingCaseStudySchema = new Schema<IMarketingCaseStudy>(
@@ -33,6 +48,21 @@ const MarketingCaseStudySchema = new Schema<IMarketingCaseStudy>(
     outcomeMetrics: { type: [String], default: [] },
     isActive: { type: Boolean, default: true },
     order: { type: Number, default: 0 },
+    // High-Converting Overhaul Fields
+    companySize: { type: String, default: "" },
+    businessModel: { type: String, default: "" },
+    targetAudience: { type: String, default: "" },
+    problem: { type: String, default: "" },
+    objectives: { type: [String], default: [] },
+    solutionDetails: { type: String, default: "" },
+    challenges: { type: String, default: "" },
+    implementationProcess: { type: String, default: "" },
+    resultsMetrics: { type: [String], default: [] },
+    visualProof: { type: [String], default: [] },
+    testimonialQuote: { type: String, default: "" },
+    testimonialAuthor: { type: String, default: "" },
+    testimonialDesignation: { type: String, default: "" },
+    businessImpact: { type: String, default: "" },
   },
   {
     timestamps: true,

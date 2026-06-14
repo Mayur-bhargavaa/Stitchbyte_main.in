@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ExternalLink, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, ExternalLink, Loader2, Sparkles, Megaphone, ArrowUpRight, BarChart3, Globe, Layers, Store, ShoppingBag, Smartphone, Zap, LucideIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -59,18 +59,15 @@ interface WorkItem {
   isExternal?: boolean;
 }
 
-const tabOptions: Array<{ value: "all" | WorkType; label: string }> = [
+const tabOptions: Array<{ value: "all" | "marketing" | "seo"; label: string }> = [
   { value: "all", label: "All" },
   { value: "marketing", label: "Marketing" },
   { value: "seo", label: "SEO" },
-  { value: "uiux", label: "UI & UX" },
-  { value: "prebuilt", label: "Prebuilt" },
-  { value: "customized", label: "Customized" },
 ];
 
 export default function WorkPage() {
   const [items, setItems] = useState<WorkItem[]>([]);
-  const [activeTab, setActiveTab] = useState<"all" | WorkType>("all");
+  const [activeTab, setActiveTab] = useState<"all" | "marketing" | "seo">("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -80,22 +77,10 @@ export default function WorkPage() {
       setError("");
 
       try {
-        const [productsResponse, customResponse, marketingResponse, uiuxResponse] = await Promise.all([
-          fetch("/api/products"),
-          fetch("/api/custom-projects?category=all"),
-          fetch("/api/marketing-case-studies"),
-          fetch("/api/ui-ux-projects"),
-        ]);
+        const response = await fetch("/api/marketing-case-studies");
+        const data = await response.json();
 
-        const productsData = await productsResponse.json();
-        const customData = await customResponse.json();
-        const marketingData = await marketingResponse.json();
-        const uiuxData = await uiuxResponse.json();
-
-        const products: Product[] = Array.isArray(productsData.products) ? productsData.products : [];
-        const customProjects: CustomProject[] = Array.isArray(customData.data) ? customData.data : [];
-        const marketingStudies: MarketingCaseStudy[] = Array.isArray(marketingData.studies) ? marketingData.studies : [];
-        const uiuxProjects: UiUxProject[] = Array.isArray(uiuxData.projects) ? uiuxData.projects : [];
+        const marketingStudies: MarketingCaseStudy[] = Array.isArray(data.studies) ? data.studies : [];
 
         const marketingItems: WorkItem[] = marketingStudies
           .filter((item) => item.category === "performance")
@@ -121,46 +106,12 @@ export default function WorkPage() {
             type: "seo",
           }));
 
-        const uiuxItems: WorkItem[] = uiuxProjects.map((item) => ({
-          id: `uiux-${item.id}`,
-          title: item.title,
-          subtitle: `UI & UX • ${item.projectType.toUpperCase()}`,
-          description: item.summary,
-          tags: item.tags || [],
-          href: item.projectUrl,
-          type: "uiux",
-          isExternal: true,
-        }));
-
-        const prebuiltItems: WorkItem[] = products.map((item) => ({
-          id: `prebuilt-${item.id}`,
-          title: item.name,
-          subtitle: "Prebuilt Product",
-          description: item.shortDescription || item.tagline,
-          tags: (item.highlights || []).map((highlight) => highlight.label),
-          href: `/prebuilt/${item.id}`,
-          type: "prebuilt",
-        }));
-
-        const customizedItems: WorkItem[] = customProjects.map((item) => ({
-          id: `customized-${item.id}`,
-          title: item.title,
-          subtitle: "Customized Project",
-          description: item.description,
-          tags: item.technologies || [],
-          href: `/customized/${item.slug}`,
-          type: "customized",
-        }));
-
         setItems([
           ...marketingItems,
           ...seoItems,
-          ...uiuxItems,
-          ...prebuiltItems,
-          ...customizedItems,
         ]);
       } catch (loadError) {
-        setError("Failed to load work items.");
+        setError("Failed to load case studies.");
       } finally {
         setLoading(false);
       }
@@ -202,7 +153,7 @@ export default function WorkPage() {
               In One Place
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Marketing, SEO, UI/UX, Prebuilt products, and Customized projects in a single unified view.
+              Explore our performance marketing and SEO case studies managed directly from the admin panel.
             </p>
           </div>
         </section>
@@ -238,44 +189,144 @@ export default function WorkPage() {
               <p className="text-gray-500">No items available in this section yet.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-6">
-              {filteredItems.map((item) => (
-                <div key={item.id} className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all">
-                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">{item.subtitle}</p>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-3">{item.title}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-6" title={item.description}>{item.description}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {filteredItems.map((item, index) => {
+                const layoutIndex = index % 4;
 
-                  {(item.tags || []).length > 0 ? (
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {item.tags.slice(0, 4).map((tag) => (
-                        <span key={`${item.id}-${tag}`} className="px-2.5 py-1 text-xs rounded-full bg-gray-100 text-gray-600">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  ) : null}
+                // Setup custom icons for different services based on their category/type
+                const iconBySource: Record<WorkType, LucideIcon> = {
+                  marketing: BarChart3,
+                  seo: Globe,
+                  uiux: Layers,
+                  prebuilt: Store,
+                  customized: ShoppingBag,
+                };
+                const IconComponent = iconBySource[item.type] || Smartphone;
 
-                  {item.isExternal ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
-                    >
-                      Open Work
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  ) : (
+                // Format numbers like "01", "02", etc.
+                const numberStr = String(index + 1).padStart(2, "0");
+
+                if (layoutIndex === 0) {
+                  // Wide Card (index % 4 === 0)
+                  return (
                     <Link
+                      key={item.id}
                       href={item.href}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between md:col-span-2 min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
                     >
-                      Open Work
-                      <ArrowRight className="w-4 h-4" />
+                      <div className="flex justify-between items-start mb-6">
+                        <span className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100/50 text-[10px] font-semibold tracking-wider uppercase rounded-full">
+                          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                          {item.subtitle}
+                        </span>
+                        <span className="text-sm font-mono text-slate-350 font-semibold">{numberStr}</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-auto">
+                        <div className="max-w-md">
+                          <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-4">{item.title}</h3>
+                          <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                            <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{item.description}</p>
+                          </div>
+                        </div>
+                        <div className="hidden sm:flex w-24 h-24 bg-slate-50 rounded-2xl border border-slate-100 flex-shrink-0 items-center justify-center text-slate-300 group-hover:scale-110 transition-transform duration-500 relative">
+                          <Megaphone className="w-10 h-10 text-slate-400/80" />
+                          <div className="absolute top-2 right-2 w-1.5 h-1.5 bg-slate-300 rounded-full animate-ping" />
+                        </div>
+                      </div>
                     </Link>
-                  )}
-                </div>
-              ))}
+                  );
+                } else if (layoutIndex === 1) {
+                  // Narrow Card (index % 4 === 1)
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      <div className="flex justify-between items-start mb-12">
+                        <span className="text-sm font-mono text-slate-355 font-semibold">{numberStr}</span>
+                        <div className="w-9 h-9 rounded-xl border border-blue-100 bg-blue-50/50 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform duration-500">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      </div>
+                      <div className="mt-auto">
+                        <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1">{item.subtitle}</span>
+                        <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-4">{item.title}</h3>
+                        <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                          <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{item.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                } else if (layoutIndex === 2) {
+                  // Narrow Card (index % 4 === 2)
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      <div className="flex justify-between items-start mb-12">
+                        <span className="text-sm font-mono text-slate-355 font-semibold">{numberStr}</span>
+                        <div className="w-9 h-9 rounded-xl border border-violet-100 bg-violet-50/50 flex items-center justify-center text-violet-500 group-hover:scale-110 transition-transform duration-500">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      </div>
+                      <div className="mt-auto">
+                        <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1">{item.subtitle}</span>
+                        <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-4">{item.title}</h3>
+                        <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                          <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{item.description}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                } else {
+                  // Wide Card (index % 4 === 3)
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
+                      className="group relative bg-white rounded-[2rem] border border-slate-200/80 p-8 flex flex-col justify-between md:col-span-2 min-h-[300px] transition-all duration-500 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.04)] hover:border-slate-300 hover:-translate-y-1.5 overflow-hidden"
+                    >
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="flex gap-2">
+                          <span className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-[10px] font-mono text-slate-500 font-semibold">&lt;/&gt;</span>
+                          <span className="w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-500">
+                            <Zap className="w-3.5 h-3.5 text-amber-500" />
+                          </span>
+                        </div>
+                        <span className="text-sm font-mono text-slate-350 font-semibold">{numberStr}</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mt-auto">
+                        <div className="max-w-md">
+                          <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase block mb-1">{item.subtitle}</span>
+                          <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight mb-4">{item.title}</h3>
+                          <div className="bg-slate-50/50 rounded-2xl p-5 border border-slate-100/50">
+                            <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">{item.description}</p>
+                          </div>
+                        </div>
+                        <div className="hidden sm:block w-40 h-28 bg-slate-900 rounded-xl p-3.5 shadow-inner relative overflow-hidden flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
+                          <div className="flex gap-1.5 mb-2.5">
+                            <div className="w-1.5 h-1.5 bg-red-400 rounded-full" />
+                            <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
+                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                          </div>
+                          <span className="font-mono text-[11px] text-emerald-400">&gt; _</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                }
+              })}
             </div>
           )}
         </section>

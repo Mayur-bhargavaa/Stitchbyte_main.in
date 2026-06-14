@@ -8,6 +8,7 @@ import {
   Play,
   Pause,
   ExternalLink,
+  Bookmark,
   Heart,
   Share2,
   Sparkles,
@@ -27,6 +28,8 @@ interface MediaItem {
   ratioClass: string; // Tailored aspect-ratio classes for masonry diversity
   aspectRatio: string;
 }
+
+
 
 // Video player card that handles autoplay on hover
 function VideoCard({ item, onSelect }: { item: MediaItem; onSelect: () => void }) {
@@ -195,24 +198,6 @@ export default function GalleryPage() {
       .sort((a, b) => a.localeCompare(b));
   }, [items]);
 
-  // Support category filtering via URL query parameter (?category=seo)
-  useEffect(() => {
-    if (typeof window !== "undefined" && activeCategories.length > 0) {
-      const searchParams = new URLSearchParams(window.location.search);
-      const cat = searchParams.get("category");
-      if (cat) {
-        const matchedCategory = activeCategories.find(
-          (c) => c.toLowerCase() === cat.toLowerCase()
-        );
-        if (matchedCategory) {
-          setSelectedCategory(matchedCategory);
-        } else if (cat.toLowerCase() === "all") {
-          setSelectedCategory("All");
-        }
-      }
-    }
-  }, [activeCategories]);
-
   const filteredItems = selectedCategory === "All"
     ? items
     : items.filter(item => item.category.toLowerCase() === selectedCategory.toLowerCase());
@@ -289,6 +274,8 @@ export default function GalleryPage() {
             );
           })}
         </div>
+
+
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">

@@ -3,26 +3,27 @@ import Fuse from 'fuse.js';
 import { FAQ_DATABASE, DEFAULT_RESPONSE, FAQItem } from '@/data/faq-database';
 import { saveUnansweredQuestion } from '@/lib/mongodb';
 
-// Initialize Fuse.js for fuzzy search
+// Initialize Fuse.js for fuzzy search fallback
 const fuse = new Fuse(FAQ_DATABASE, {
-    keys: ['keywords', 'question'],
-    threshold: 0.4, // Lower = stricter matching
+    keys: ['keywords', 'question', 'answer'],
+    threshold: 0.4,
     includeScore: true,
     minMatchCharLength: 2,
     ignoreLocation: true,
 });
 
-// Common spelling corrections
+// Common spelling corrections for the fallback engine
 const spellingCorrections: { [key: string]: string } = {
     'servises': 'services',
     'wbesite': 'website',
     'websit': 'website',
     'webiste': 'website',
-    'app': 'app',
     'aplication': 'application',
+    'app': 'application',
     'pice': 'price',
     'prce': 'price',
     'prise': 'price',
+    'prcing': 'pricing',
     'cots': 'cost',
     'coust': 'cost',
     'devlopment': 'development',
@@ -35,30 +36,11 @@ const spellingCorrections: { [key: string]: string } = {
     'mobil': 'mobile',
     'moble': 'mobile',
     'andriod': 'android',
-    'androd': 'android',
-    'directer': 'director',
-    'directar': 'director',
-    'foundar': 'founder',
-    'foundor': 'founder',
-    'serives': 'services',
-    'servces': 'services',
-    'timleine': 'timeline',
-    'timline': 'timeline',
-    'tecnology': 'technology',
-    'technolgy': 'technology',
-    'suport': 'support',
-    'supprt': 'support',
-    'maintanance': 'maintenance',
-    'maintenace': 'maintenance',
     'stichbyte': 'stitchbyte',
     'sticthbyte': 'stitchbyte',
     'stitchbite': 'stitchbyte',
-    'whatsap': 'whatsapp',
-    'whatapp': 'whatsapp',
-    'emal': 'email',
-    'emil': 'email',
-    'contct': 'contact',
-    'contac': 'contact',
+    'stich': 'stitch',
+    'sb': 'stitchbyte',
     'helllo': 'hello',
     'helo': 'hello',
     'hii': 'hi',
@@ -66,14 +48,16 @@ const spellingCorrections: { [key: string]: string } = {
     'thnks': 'thanks',
     'plz': 'please',
     'pls': 'please',
-    'u': 'you',
-    'ur': 'your',
-    'hw': 'how',
-    'wht': 'what',
-    'wat': 'what',
-    'wen': 'when',
-    'wer': 'where',
-    'y': 'why',
+    'lalsweets': 'lal sweets',
+    'lalsweet': 'lal sweets',
+    'laalsweets': 'lal sweets',
+    'kirtilal': 'kirtilals',
+    'tradescrib': 'tradescribe',
+    'murzaban': 'murzban',
+    'porfolio': 'portfolio',
+    'portfoilo': 'portfolio',
+    'casestudy': 'case studies',
+    'casestudies': 'case studies'
 };
 
 function correctSpelling(text: string): string {
@@ -84,47 +68,12 @@ function correctSpelling(text: string): string {
     return corrected;
 }
 
-// Check if input is likely gibberish (no real words)
-function isGibberish(text: string): boolean {
-    const words = text.toLowerCase().split(/\s+/).filter(w => w.length > 1);
-    if (words.length === 0) return true;
-
-    const commonWords = new Set([
-        'hi', 'hello', 'hey', 'what', 'how', 'who', 'where', 'when', 'why',
-        'is', 'are', 'do', 'does', 'can', 'could', 'will', 'would',
-        'the', 'a', 'an', 'and', 'or', 'but', 'for', 'to', 'of', 'in', 'on',
-        'your', 'you', 'my', 'me', 'i', 'we', 'they', 'it', 'this', 'that',
-        'website', 'app', 'mobile', 'price', 'cost', 'service', 'services',
-        'design', 'development', 'marketing', 'seo', 'social', 'media',
-        'contact', 'email', 'phone', 'help', 'support', 'time', 'timeline',
-        'stitchbyte', 'director', 'founder', 'ceo', 'owner', 'name', 'about',
-        'products', 'tools', 'work', 'working', 'process', 'thanks', 'bye',
-        'need', 'want', 'looking', 'know', 'tell', 'get', 'start', 'build'
-    ]);
-
-    const hasRealWord = words.some(word => {
-        if (commonWords.has(word)) return true;
-        if (spellingCorrections[word]) return true;
-        return false;
-    });
-
-    return !hasRealWord;
-}
-
-function findBestMatchWithFuzzy(input: string): { answer: string; confidence: number } {
-    // Check for gibberish first
-    if (isGibberish(input)) {
-        return { answer: DEFAULT_RESPONSE, confidence: 0 };
-    }
-
+function findBestLocalMatch(input: string): { answer: string; confidence: number } {
     const correctedInput = correctSpelling(input);
-
-    // First try exact keyword matching
     const lowerInput = correctedInput.toLowerCase().trim();
 
-    // Sort by priority
+    // Try keyword matching first
     const sortedFAQs = [...FAQ_DATABASE].sort((a, b) => (b.priority || 0) - (a.priority || 0));
-
     let bestMatch: FAQItem | null = null;
     let highestScore = 0;
 
@@ -133,14 +82,9 @@ function findBestMatchWithFuzzy(input: string): { answer: string; confidence: nu
         for (const keyword of faq.keywords) {
             const keywordLower = keyword.toLowerCase();
             if (lowerInput === keywordLower) {
-                score += keyword.length * 10;
+                score += keyword.length * 12;
             } else if (lowerInput.includes(keywordLower)) {
-                score += keyword.length * 2;
-            } else if (keyword.includes(' ')) {
-                const keywordWords = keywordLower.split(' ');
-                if (keywordWords.every(word => lowerInput.includes(word))) {
-                    score += keyword.length;
-                }
+                score += keyword.length * 2.5;
             }
         }
         if (faq.priority) score += faq.priority * 0.1;
@@ -155,19 +99,72 @@ function findBestMatchWithFuzzy(input: string): { answer: string; confidence: nu
         return { answer: bestMatch.answer, confidence: Math.min(highestScore / 10, 1) };
     }
 
-    // Fall back to fuzzy search
+    // Try fuzzy search
     const fuseResults = fuse.search(correctedInput);
-
     if (fuseResults.length > 0 && fuseResults[0].score !== undefined) {
         const bestFuseMatch = fuseResults[0];
         const confidence = 1 - (bestFuseMatch.score || 0);
-
-        if (confidence > 0.5) {
+        if (confidence > 0.55) {
             return { answer: bestFuseMatch.item.answer, confidence };
         }
     }
 
     return { answer: DEFAULT_RESPONSE, confidence: 0 };
+}
+
+// Function to call Gemini API
+async function getGeminiResponse(message: string, apiKey: string): Promise<string> {
+    const faqContext = FAQ_DATABASE.map(item => `Q: ${item.question}\nA: ${item.answer}`).join("\n\n");
+    
+    const systemPrompt = `You are StitchBot 🤖, the official, highly smart, and funky AI assistant for StitchByte (often called "Stitch" or "sb"). 
+StitchByte is a leading web development, SEO, and UI/UX design agency based in the Pink City of Jaipur, Rajasthan, serving ambitious brands globally.
+
+Your personality:
+- Extremely funky, energetic, friendly, and cool! Use modern tech slang, emojis, and playful expressions (e.g. "Yo!", "Beep boop", "boom!", "that's how we roll", "wizard", "pure fire", "absolute masterpiece").
+- Sharp, smart, and direct. Do not be boring, dry, or formal.
+- Feel free to drop a subtle hint of Pink City/Jaipur charm if asked about location (e.g., "right here in the land of Pyaaz Kachoris and beautiful palaces, Jaipur!").
+- If you don't know the answer or if it's a specific custom request (like custom software specs, hiring developers, custom quote meetings), politely and funnily suggest they leave their contact details so our human wizards can connect.
+
+Contextual Knowledge:
+Here is the official StitchByte database to guide your answers:
+${faqContext}
+
+Rules:
+1. Answer any question about StitchByte using this context.
+2. If the user asks about the founders/team, mention Mayur Bhargava (CEO & Founder, code mastermind), Dhruv (Co-founder & AI/ML Specialist), and Mayank (Designing Head).
+3. If they write "Stitch" or "sb" instead of "StitchByte", answer it as StitchByte.
+4. If they ask about Case Studies or projects we've built, tell them about Lal Sweets (Ecom), Kirtilals (Luxury Jewelry), Tradescribe (Trading Journal Platform), and Murzban (Luxury Clothing). Highlight our performance outcomes and tech stacks!
+5. Keep answers readable, structured, and use bold text, lists, or custom bullet points where appropriate.
+6. If the question is completely unrelated to StitchByte, digital design, or tech, guide them back to StitchByte services in a funky way.`;
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [
+                {
+                    role: "user",
+                    parts: [{ text: message }]
+                }
+            ],
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            },
+            generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 600
+            }
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`Gemini API error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || DEFAULT_RESPONSE;
 }
 
 export async function POST(request: NextRequest) {
@@ -179,10 +176,34 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Message is required' }, { status: 400 });
         }
 
-        const { answer, confidence } = findBestMatchWithFuzzy(message);
+        const apiKey = process.env.GEMINI_API_KEY;
+        let answer = "";
+        let confidence = 1;
+        let isAi = false;
 
-        // If confidence is low and answer is default, save to MongoDB only if userInfo is provided
-        if (confidence < 0.3 && answer === DEFAULT_RESPONSE && userInfo?.name && userInfo?.email) {
+        if (apiKey) {
+            try {
+                answer = await getGeminiResponse(message, apiKey);
+                isAi = true;
+            } catch (aiError) {
+                console.error("Gemini failed, falling back to local search:", aiError);
+            }
+        }
+
+        // Fallback if no API key or if Gemini call fails
+        if (!answer) {
+            const localResult = findBestLocalMatch(message);
+            answer = localResult.answer;
+            confidence = localResult.confidence;
+        }
+
+        // Determine if we need human follow-up contact info
+        const contactKeywords = ["contact", "email", "phone", "call", "hire", "pricing", "price", "cost", "quote", "meeting", "consultation", "started", "callback", "whatsapp"];
+        const lowerMsg = message.toLowerCase();
+        const needsFollowUp = (!isAi && confidence < 0.3) || contactKeywords.some(keyword => lowerMsg.includes(keyword));
+
+        // Save unanswered questions in DB if follow-up is needed and info is provided
+        if (needsFollowUp && userInfo?.name && userInfo?.email) {
             try {
                 await saveUnansweredQuestion({
                     question: message,
@@ -190,14 +211,14 @@ export async function POST(request: NextRequest) {
                     userInfo: userInfo
                 });
             } catch (dbError) {
-                console.error('Failed to save unanswered question:', dbError);
+                console.error('Failed to save lead info:', dbError);
             }
         }
 
         return NextResponse.json({
             answer,
             confidence,
-            needsFollowUp: confidence < 0.3
+            needsFollowUp
         });
 
     } catch (error) {
