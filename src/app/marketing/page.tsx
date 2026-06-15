@@ -143,26 +143,50 @@ function ImageCard({ item, onSelect }: { item: MediaItem; onSelect: () => void }
   );
 }
 
+const getDetailedDescription = (category: string, title: string) => {
+  const cat = category.toLowerCase();
+  if (cat.includes("reel")) {
+    return "High-converting video reel engineered for the social media segment. Designed to maximize visual brand authority, drive high-retention user engagement, and optimize click-through conversion across modern platforms.";
+  }
+  if (cat.includes("beauty")) {
+    return "Premium packaging and visual branding design tailored for the cosmetics segment. Crafted to project a clean, high-end organic aesthetic, build visual brand authority, and elevate product appeal on retail shelves.";
+  }
+  if (cat.includes("clothing") || cat.includes("apparel")) {
+    return "Modern apparel display concept and minimalist showcase designed for the fashion retail segment. Engineered to maximize layout elegance, draw attention to premium product details, and drive customer conversion.";
+  }
+  if (cat.includes("event")) {
+    return "Sophisticated banquet layout and wedding setup design optimized for the event management segment. Crafted to emphasize layout flow, elegant table styling, and brand prestige for luxury hospitality.";
+  }
+  if (cat.includes("food") || cat.includes("restro") || cat.includes("restaurant")) {
+    return "High-fidelity gourmet showcase and pizza display design for the restaurant segment. Focused on mouth-watering visual presentation, food brand authority, and digital menu conversions.";
+  }
+  if (cat.includes("gym") || cat.includes("fitness")) {
+    return "High-impact boutique fitness space and equipment layout design. Engineered to inspire active lifestyle energy, project premium facility quality, and optimize membership sales.";
+  }
+  if (cat.includes("interior") || cat.includes("architect")) {
+    return "Premium architectural portfolio mockup and stationery design layout. Crafted to showcase structural precision, minimal layout aesthetics, and professional brand trust.";
+  }
+  if (cat.includes("jwellery") || cat.includes("jewelry") || cat.includes("watch")) {
+    return "Elite chronometer and luxury jewellery advertising layout. Engineered to highlight premium materials, micro-details, status symbol aesthetics, and high-value conversion rates.";
+  }
+  if (cat.includes("perfume")) {
+    return "Premium cosmetic bottle showcase and splash mockup designed for fragrance brands. Engineered to project refreshing, high-end elegance and drive customer desirability.";
+  }
+  if (cat.includes("estate")) {
+    return "Designed as a premium branding asset for the real estate segment. Engineered to maximize visual brand authority, showcase architectural scale, and optimize customer lead generation.";
+  }
+  return `Designed as a premium branding asset for the ${category} segment. Engineered to maximize visual brand authority and customer conversion.`;
+};
+
 export default function GalleryPage() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeMedia, setActiveMedia] = useState<MediaItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [modalScrolled, setModalScrolled] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
 
-  const handleModalScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    const scrollTop = e.currentTarget.scrollTop;
-    if (scrollTop > 40) {
-      setModalScrolled(true);
-    } else {
-      setModalScrolled(false);
-    }
-  };
-
   useEffect(() => {
-    setModalScrolled(false);
     if (detailsRef.current) {
       detailsRef.current.scrollTop = 0;
     }
@@ -344,61 +368,24 @@ export default function GalleryPage() {
           {/* Modal Container */}
           <div className="max-w-5xl w-full h-[85vh] flex flex-col md:flex-row bg-[#FAF6F0] rounded-3xl overflow-hidden shadow-2xl relative z-10 animate-scale-up">
             {/* Left side: Media Viewer */}
-            <div className={`
-              transition-all duration-300 ease-in-out
-              ${modalScrolled
-                ? "h-24 min-h-[96px] w-full bg-white border-b border-slate-100 flex items-center px-4 py-2 gap-4 shadow-sm md:h-auto md:min-h-0 md:flex-1 md:bg-black md:border-none md:p-2 md:shadow-none md:flex md:items-center md:justify-center"
-                : "w-full h-[40vh] min-h-[40vh] bg-black flex items-center justify-center p-2 md:h-auto md:min-h-0 md:flex-1"
-              }
-            `}>
+            <div className="w-full h-[45vh] md:h-auto bg-black flex items-center justify-center p-2 md:flex-1 relative">
               {activeMedia.type === "video" ? (
                 <video
                   src={activeMedia.src}
-                  controls={!modalScrolled}
+                  controls
                   autoPlay
                   loop
-                  muted={modalScrolled}
-                  className={`
-                    transition-all duration-300 ease-in-out
-                    ${modalScrolled
-                      ? "w-20 h-16 object-cover rounded-xl flex-shrink-0 md:w-full md:h-full md:object-contain md:rounded-xl"
-                      : "max-w-full max-h-full object-contain rounded-xl"
-                    }
-                  `}
+                  className="max-w-full max-h-full object-contain rounded-xl"
                 />
               ) : (
-                <div className={`
-                  transition-all duration-300 ease-in-out
-                  ${modalScrolled
-                    ? "relative w-20 h-16 flex-shrink-0 md:w-full md:h-full md:flex md:items-center md:justify-center"
-                    : "relative w-full h-full flex items-center justify-center"
-                  }
-                `}>
+                <div className="relative w-full h-full flex items-center justify-center">
                   <Image
                     src={activeMedia.src}
                     alt={activeMedia.title}
                     fill
-                    className={`
-                      transition-all duration-300 ease-in-out
-                      ${modalScrolled
-                        ? "object-cover rounded-xl p-0 md:object-contain md:p-4 md:rounded-3xl"
-                        : "object-contain p-4 rounded-3xl"
-                      }
-                    `}
-                    sizes={modalScrolled ? "80px" : "100vw"}
+                    className="object-contain p-4 rounded-3xl"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                </div>
-              )}
-
-              {/* Shrunken mobile title header */}
-              {modalScrolled && (
-                <div className="flex-1 min-w-0 md:hidden animate-fade-in">
-                  <span className="px-2 py-0.5 bg-slate-100 border border-slate-200 text-[8px] font-bold tracking-wider uppercase rounded-full text-slate-800">
-                    {activeMedia.category}
-                  </span>
-                  <h4 className="font-extrabold text-xs text-gray-900 truncate mt-1">
-                    {activeMedia.title}
-                  </h4>
                 </div>
               )}
             </div>
@@ -406,7 +393,6 @@ export default function GalleryPage() {
             {/* Right side: Media Details */}
             <div 
               ref={detailsRef}
-              onScroll={handleModalScroll}
               className="w-full md:w-[380px] bg-white p-8 flex flex-col justify-between overflow-y-auto"
             >
               <div className="space-y-8">
@@ -439,7 +425,7 @@ export default function GalleryPage() {
                     {activeMedia.title}
                   </h3>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    Designed as a premium branding asset for the {activeMedia.category} segment. Engineered to maximize visual brand authority and customer conversion.
+                    {getDetailedDescription(activeMedia.category, activeMedia.title)}
                   </p>
                 </div>
 
@@ -456,6 +442,10 @@ export default function GalleryPage() {
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-400 font-bold uppercase tracking-wider">Delivery</span>
                     <span className="text-slate-800 font-semibold">Bespoke Production</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400 font-bold uppercase tracking-wider">Turnaround</span>
+                    <span className="text-slate-800 font-semibold">24 - 48 Hours</span>
                   </div>
                 </div>
               </div>

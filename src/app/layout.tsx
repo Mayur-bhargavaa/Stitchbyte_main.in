@@ -20,28 +20,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
-    default: "StitchByte | SEO & Web Development Agency in Jaipur",
-    template: "%s | StitchByte",
+    default: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
+    template: "%s | Stitchbyte",
   },
   description:
-    "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
+    "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
   keywords: [
     "Stitchbyte",
-    "Stitch",
-    "Stitch agency",
-    "Stitch Jaipur",
-    "Stitch Rajasthan",
-    "Stitch web development",
-    "Stitch SEO",
-    "SEO services Jaipur",
-    "web development agency Jaipur",
-    "UX/UI design Rajasthan",
-    "digital marketing agency Jaipur",
-    "best digital agency in Rajasthan",
-    "website development Jaipur",
-    "SEO agency India",
-    "custom web development",
-    "prebuilt websites",
+    "software development agency",
+    "web development company",
+    "AI development agency",
+    "digital transformation partner",
+    "e-commerce development agency",
+    "Next.js development company",
+    "React Native developers",
+    "SaaS application development",
+    "UI/UX design agency",
+    "enterprise software solutions",
+    "custom software Dubai",
+    "software development USA",
+    "web developers India",
+    "headless commerce development"
   ],
   manifest: "/manifest.json",
   icons: {
@@ -57,26 +56,26 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_IN",
+    locale: "en_US",
     url: "https://stitchbyte.in",
     siteName: "Stitchbyte",
-    title: "StitchByte | SEO & Web Development Agency in Jaipur",
+    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
     description:
-      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
+      "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
     images: [
       {
         url: "/logo-stitchbyte.png",
         width: 1200,
         height: 630,
-        alt: "Stitchbyte — SEO, Web Development & UX/UI",
+        alt: "Stitchbyte — Custom Software Development & Digital Transformation Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "StitchByte | SEO & Web Development Agency in Jaipur",
+    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
     description:
-      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
+      "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
     images: ["/logo-stitchbyte.png"],
   },
   robots: {
@@ -93,7 +92,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "StitchByte | SEO & Web Development Agency in Jaipur",
+    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
   },
   formatDetection: {
     telephone: true,
@@ -105,8 +104,8 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "IN-RJ",
     "geo.placename": "Jaipur",
-    "geo.position": "26.9124;75.7873",
-    "ICBM": "26.9124, 75.7873"
+    "geo.position": "26.8530;75.8047",
+    "ICBM": "26.8530, 75.8047"
   }
 };
 
@@ -127,116 +126,115 @@ export default function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Stitchbyte",
-    alternateName: ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
-    url: "https://stitchbyte.in",
-    logo: "https://stitchbyte.in/logo-stitchbyte.png",
-    description:
-      "Grow your business with Stitchbyte, a top digital marketing agency in Jaipur. We deliver custom web development, UX/UI design, and proven SEO strategies.",
-    contactPoint: {
+    "@id": "https://stitchbyte.in/#organization",
+    "name": "Stitchbyte",
+    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
+    "url": "https://stitchbyte.in",
+    "logo": "https://stitchbyte.in/logo-stitchbyte.png",
+    "slogan": "Let's Build Something Extraordinary together",
+    "description": "Stitchbyte is a global custom software development agency and digital transformation partner. We build web applications, native mobile apps, and enterprise AI solutions.",
+    "contactPoint": {
       "@type": "ContactPoint",
-      email: "info@stitchbyte.in",
-      contactType: "customer service",
-      availableLanguage: ["English", "Hindi"],
+      "telephone": "+91-94142-92675",
+      "contactType": "sales",
+      "email": "info@stitchbyte.in",
+      "areaServed": ["IN", "AE", "US"],
+      "availableLanguage": ["English", "Hindi", "Arabic"]
     },
-    sameAs: [
+    "sameAs": [
       "https://www.facebook.com/profile.php?id=61563772072392",
       "https://wa.me/919414292675",
       "https://www.instagram.com/stitchbyte/",
-      "https://www.linkedin.com/company/stitchbyte1",
-    ],
+      "https://www.linkedin.com/company/stitchbyte1"
+    ]
   };
 
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Stitchbyte",
-    url: "https://stitchbyte.in",
-    description:
-      "SEO, Digital Presence, Web Development & UX/UI services for growing businesses.",
-    publisher: {
-      "@type": "Organization",
-      name: "Stitchbyte",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://stitchbyte.in/logo-stitchbyte.png",
-      },
+    "name": "Stitchbyte",
+    "url": "https://stitchbyte.in",
+    "description": "Custom Software Development, Web Development, Mobile Apps & Cognitive AI Solutions.",
+    "publisher": {
+      "@id": "https://stitchbyte.in/#organization"
     },
-    potentialAction: {
+    "potentialAction": {
       "@type": "SearchAction",
-      target: {
+      "target": {
         "@type": "EntryPoint",
-        urlTemplate: "https://stitchbyte.in/blog?q={search_term_string}",
+        "urlTemplate": "https://stitchbyte.in/blog?q={search_term_string}"
       },
-      "query-input": "required name=search_term_string",
-    },
+      "query-input": "required name=search_term_string"
+    }
   };
 
   const serviceSchema = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: [
+    "@graph": [
       {
         "@type": "Service",
-        position: 1,
-        name: "SEO Services",
-        description:
-          "Track rankings, traffic, and audience behavior to improve visibility and growth decisions.",
-        provider: { "@type": "Organization", name: "Stitchbyte" },
-        url: "https://stitchbyte.in/marketing",
+        "@id": "https://stitchbyte.in/#custom-software-service",
+        "serviceType": "Custom Software Development",
+        "provider": {
+          "@id": "https://stitchbyte.in/#organization"
+        },
+        "areaServed": ["IN", "AE", "US"],
+        "description": "Custom enterprise software engineering, database design, API integrations, and cloud infrastructure management."
       },
       {
         "@type": "Service",
-        position: 2,
-        name: "Web Development",
-        description:
-          "Build reliable websites and platforms tailored to your goals, users, and operations.",
-        provider: { "@type": "Organization", name: "Stitchbyte" },
-        url: "https://stitchbyte.in/customized",
+        "@id": "https://stitchbyte.in/#web-development-service",
+        "serviceType": "Web Development",
+        "provider": {
+          "@id": "https://stitchbyte.in/#organization"
+        },
+        "areaServed": ["IN", "AE", "US"],
+        "description": "Full-stack web application engineering utilizing React, Next.js, and Node.js for high-performance storefronts and platforms."
       },
       {
         "@type": "Service",
-        position: 3,
-        name: "UX/UI Design",
-        description:
-          "Create clean interfaces and simple user journeys that improve engagement and retention.",
-        provider: { "@type": "Organization", name: "Stitchbyte" },
-        url: "https://stitchbyte.in/ui-ux",
+        "@id": "https://stitchbyte.in/#ai-solutions-service",
+        "serviceType": "AI Solutions and Integration",
+        "provider": {
+          "@id": "https://stitchbyte.in/#organization"
+        },
+        "areaServed": ["IN", "AE", "US"],
+        "description": "Custom Large Language Model (LLM) integrations, machine learning analytics, and cognitive workflow automation."
       },
       {
         "@type": "Service",
-        position: 4,
-        name: "Digital Marketing",
-        description:
-          "Align your website, content, and conversion flow so customers find and trust your brand.",
-        provider: { "@type": "Organization", name: "Stitchbyte" },
-        url: "https://stitchbyte.in/marketing",
-      },
-    ],
+        "@id": "https://stitchbyte.in/#ui-ux-design-service",
+        "serviceType": "UI/UX Design Systems",
+        "provider": {
+          "@id": "https://stitchbyte.in/#organization"
+        },
+        "areaServed": ["IN", "AE", "US"],
+        "description": "Atomic design systems, custom wireframes, interactive Figma prototypes, and conversion-focused interfaces."
+      }
+    ]
   };
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "StitchByte",
-    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
-    "image": "https://stitchbyte.in/logo-stitchbyte.png",
     "@id": "https://stitchbyte.in/#localbusiness",
+    "name": "Stitchbyte",
+    "image": "https://stitchbyte.in/logo-stitchbyte.png",
+    "priceRange": "$$$",
+    "telephone": "+91-94142-92675",
     "url": "https://stitchbyte.in",
-    "telephone": "+919414292675",
-    "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Jaipur, Rajasthan",
+      "streetAddress": "Malviya Nagar",
       "addressLocality": "Jaipur",
       "addressRegion": "Rajasthan",
-      "postalCode": "302001",
+      "postalCode": "302017",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 26.9124,
-      "longitude": 75.7873
+      "latitude": 26.8530,
+      "longitude": 75.8047
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -256,6 +254,20 @@ export default function RootLayout({
       "https://wa.me/919414292675",
       "https://www.instagram.com/stitchbyte/",
       "https://www.linkedin.com/company/stitchbyte1"
+    ],
+    "areaServed": [
+      {
+        "@type": "AdministrativeArea",
+        "name": "Jaipur"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Dubai"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "United States"
+      }
     ]
   };
 

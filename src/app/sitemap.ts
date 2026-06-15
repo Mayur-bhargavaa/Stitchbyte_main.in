@@ -3,6 +3,7 @@ import { blogPrisma } from '@/lib/prisma';
 import connectDB from '@/lib/mongoose';
 import JobPosition from '@/models/JobPosition';
 import CustomProject from '@/models/CustomProject';
+import MarketingCaseStudy from '@/models/MarketingCaseStudy';
 import { connectToDatabase } from '@/lib/mongodb';
 
 const BASE_URL = 'https://stitchbyte.in';
@@ -43,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error('Error fetching blogs for sitemap:', error);
     }
 
-    // Try fetching jobs and custom projects (Mongoose)
+    // Try fetching jobs, custom projects, and case studies (Mongoose)
     try {
         await connectDB();
 
@@ -57,11 +58,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             });
         });
 
+        // Fixed route folder name to match [slug] directory (/customized/ instead of /custom-projects/)
         const projects = await CustomProject.find({ isActive: true }).select('slug updatedAt');
         projects.forEach((project) => {
             routes.push({
-                url: `${BASE_URL}/custom-projects/${project.slug || project._id}`,
+                url: `${BASE_URL}/customized/${project.slug || project._id}`,
                 lastModified: project.updatedAt || new Date(),
+                changeFrequency: 'monthly',
+                priority: 0.7,
+            });
+        });
+
+        // Add dynamic marketing case studies (performance + seo)
+        const studies = await MarketingCaseStudy.find({ isActive: true }).select('slug updatedAt');
+        studies.forEach((study) => {
+            routes.push({
+                url: `${BASE_URL}/marketing/${study.slug || study._id}`,
+                lastModified: study.updatedAt || new Date(),
                 changeFrequency: 'monthly',
                 priority: 0.7,
             });

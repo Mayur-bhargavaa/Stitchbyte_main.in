@@ -11,6 +11,7 @@ type ProjectType = "figma" | "pdf" | "website" | "other";
 
 interface UiUxProject {
   id: string;
+  slug: string;
   title: string;
   brand: string;
   projectType: ProjectType;
@@ -140,27 +141,8 @@ export default function UiUxPage() {
           </div>
         </section>
 
-        <section className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
-              What We Do
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
-              UI & UX Capabilities
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {servicePoints.map((item) => (
-              <div key={item.title} className="bg-white border border-gray-200 rounded-2xl p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="max-w-6xl mx-auto px-6 py-8 pb-16">
+        {/* Sample Projects Section */}
+        <section className="max-w-6xl mx-auto px-6 py-16 pb-8">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
               Sample Projects
@@ -190,30 +172,51 @@ export default function UiUxPage() {
                   key={project.id}
                   className={`flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} gap-8 md:gap-12 items-center`}
                 >
+                  {/* Mockup Showcase Wrapper */}
                   <div className="w-full md:w-1/2">
-                    <div className="bg-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-6 aspect-[4/3] flex items-center justify-center overflow-hidden">
-                      {project.thumbnailUrl ? (
-                        <Image
-                          src={project.thumbnailUrl}
-                          alt={project.title}
-                          width={600}
-                          height={450}
-                          className="w-full h-full object-cover rounded-lg sm:rounded-xl"
-                        />
-                      ) : (
-                        <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-6 w-full h-full border border-gray-200 flex flex-col justify-between">
-                          <div className="flex items-center justify-between">
-                            <span className="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700 uppercase">
-                              {project.projectType}
-                            </span>
-                            {project.brand ? <span className="text-xs text-gray-500">{project.brand}</span> : null}
+                    <div className="bg-gray-50/80 rounded-[32px] p-5 sm:p-7 aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200/40 shadow-sm">
+                      <div className="bg-white rounded-[24px] p-3 sm:p-4 shadow-lg border border-gray-100/80 w-full h-full flex flex-col justify-between">
+                        {/* Device / Figma / Browser Chrome Header */}
+                        <div className="bg-gray-50/80 border-b border-gray-100/80 px-3 py-2 flex items-center justify-between select-none rounded-t-xl mb-3">
+                          <div className="flex gap-1.5">
+                            <div className="w-2 h-2 rounded-full bg-red-400/80" />
+                            <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
+                            <div className="w-2 h-2 rounded-full bg-green-400/80" />
                           </div>
-                          <div>
-                            <p className="text-sm text-gray-500 mb-2">Project Preview</p>
-                            <p className="text-lg font-semibold text-gray-900 leading-snug">{project.title}</p>
+                          <div className="h-4.5 px-3 bg-white border border-gray-100 rounded-md text-[8px] font-mono text-gray-455 flex items-center justify-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0ACF83] shrink-0 animate-pulse" />
+                            {project.projectType === "figma" ? "figma.com/proto/..." : `${project.slug || 'project'}.stitchbyte.in`}
                           </div>
+                          <div className="w-6" />
                         </div>
-                      )}
+
+                        {/* Image Container with Relative & Fill Layout to resolve the image visibility issue */}
+                        <div className="relative flex-1 w-full bg-gray-50 flex items-center justify-center overflow-hidden rounded-lg border border-gray-100">
+                          {project.thumbnailUrl ? (
+                            <Image
+                              src={project.thumbnailUrl}
+                              alt={project.title}
+                              fill
+                              className="object-cover object-top"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              priority={index < 2}
+                            />
+                          ) : (
+                            <div className="bg-white p-6 w-full h-full flex flex-col justify-between">
+                              <div className="flex items-center justify-between">
+                                <span className="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700 uppercase">
+                                  {project.projectType}
+                                </span>
+                                {project.brand ? <span className="text-xs text-gray-500">{project.brand}</span> : null}
+                              </div>
+                              <div>
+                                <p className="text-sm text-gray-500 mb-2">Project Preview</p>
+                                <p className="text-lg font-semibold text-gray-900 leading-snug">{project.title}</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -247,6 +250,27 @@ export default function UiUxPage() {
               ))}
             </div>
           )}
+        </section>
+
+        {/* UI & UX Capabilities Section (moved down) */}
+        <section className="max-w-6xl mx-auto px-6 py-16">
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 bg-white border border-gray-200 text-gray-700 text-sm font-medium rounded-full mb-4">
+              What We Do
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: "Georgia, serif" }}>
+              UI & UX Capabilities
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {servicePoints.map((item) => (
+              <div key={item.title} className="bg-white border border-gray-200 rounded-2xl p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* SEO Content Section */}

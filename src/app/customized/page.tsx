@@ -201,23 +201,41 @@ export default function CustomizedPage() {
                                 >
                                     {/* Project Image */}
                                     <div className="w-full md:w-1/2">
-                                        <div className="bg-gray-100 rounded-xl sm:rounded-2xl p-3 sm:p-6 aspect-[4/3] flex items-center justify-center overflow-hidden">
-                                            {project.image && project.image !== '/projects/lal-sweets.png' ? (
-                                                <Image
-                                                    src={project.image}
-                                                    alt={project.title}
-                                                    width={600}
-                                                    height={450}
-                                                    className="w-full h-full object-cover rounded-lg sm:rounded-xl"
-                                                    onError={(e) => {
-                                                        (e.target as HTMLImageElement).style.display = 'none';
-                                                    }}
-                                                />
-                                            ) : (
-                                                <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 w-full h-full flex items-center justify-center text-gray-400">
-                                                    <span className="text-xs sm:text-sm">Project Screenshot</span>
+                                        <div className="bg-gray-50/80 rounded-[32px] p-5 sm:p-7 aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200/40 shadow-sm">
+                                            <div className="bg-white rounded-[24px] p-3 sm:p-4 shadow-lg border border-gray-100/80 w-full h-full flex flex-col justify-between">
+                                                {/* Browser Chrome Header */}
+                                                <div className="bg-gray-50/80 border-b border-gray-100/80 px-3 py-2 flex items-center justify-between select-none rounded-t-xl mb-3">
+                                                    <div className="flex gap-1.5">
+                                                        <div className="w-2 h-2 rounded-full bg-red-400/80" />
+                                                        <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
+                                                        <div className="w-2 h-2 rounded-full bg-green-400/80" />
+                                                    </div>
+                                                    <div className="h-4.5 w-32 bg-white border border-gray-100 rounded-md text-[8px] font-mono text-gray-400 flex items-center justify-center">
+                                                        {project.slug}.in
+                                                    </div>
+                                                    <div className="w-6" />
                                                 </div>
-                                            )}
+                                                
+                                                {/* Image Container */}
+                                                <div className="relative flex-1 w-full bg-white flex items-center justify-center overflow-hidden rounded-lg border border-gray-100">
+                                                    {project.image && project.image !== '/projects/lal-sweets.png' ? (
+                                                        <Image
+                                                            src={project.image}
+                                                            alt={project.title}
+                                                            fill
+                                                            className="object-cover object-top"
+                                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                                            onError={(e) => {
+                                                                (e.target as HTMLImageElement).style.display = 'none';
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <div className="absolute inset-0 bg-gray-50 flex items-center justify-center text-gray-400">
+                                                            <span className="text-xs sm:text-sm">Project Preview</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

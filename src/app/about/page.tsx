@@ -211,30 +211,28 @@ export default function AboutPage() {
                                     bio: "Shaping the visual identity, premium user interfaces, and intuitive user experiences built to command brand trust and client success."
                                 }
                             ].map((member, i) => (
-                                <div key={i} className="group bg-white border border-gray-200 rounded-[2rem] overflow-hidden shadow-xs hover:shadow-xl hover:border-gray-300 transition-all duration-500 flex flex-col h-full">
+                                <div key={i} className="group bg-white border border-gray-200 rounded-[2rem] overflow-hidden shadow-xs hover:shadow-xl hover:border-gray-300 transition-all duration-500 flex flex-col h-full items-center text-center p-8 pb-6">
                                     {/* Image Container */}
-                                    <div className="relative aspect-[4/5] bg-slate-50 overflow-hidden w-full">
+                                    <div className="relative w-36 h-36 bg-slate-50 overflow-hidden rounded-full border border-gray-100/80 shadow-inner transition-transform duration-500 group-hover:scale-105">
                                         <Image
                                             src={member.image}
                                             alt={member.name}
                                             fill
-                                            className="object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-103"
+                                            className="object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-500"
                                             sizes="(max-width: 768px) 100vw, 25vw"
                                             priority={i === 0}
                                         />
-                                        {/* Hover Overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                     </div>
 
                                     {/* Info Content */}
-                                    <div className="p-8 flex flex-col flex-1">
+                                    <div className="mt-6 flex flex-col flex-1 items-center">
                                         <span className="text-xs font-bold text-emerald-650 tracking-wider uppercase mb-2 block">
                                             {member.role}
                                         </span>
                                         <h3 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                                             {member.name}
                                         </h3>
-                                        <p className="text-gray-650 text-sm leading-relaxed mb-6 flex-1">
+                                        <p className="text-gray-650 text-sm leading-relaxed mb-4 flex-1">
                                             {member.bio}
                                         </p>
                                     </div>

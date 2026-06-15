@@ -153,24 +153,28 @@ interface HomeWorkCard {
 
 const faqs = [
   {
+    question: "What is Stitchbyte?",
+    answer: "Stitchbyte is a global custom software development agency and digital transformation partner specializing in web development, native mobile app engineering, e-commerce systems, and cognitive artificial intelligence (AI) solutions. Under the tagline 'Where Code Meets Commerce', we design and build secure, scalable digital products that connect software engineering with business targets."
+  },
+  {
+    question: "What services does Stitchbyte provide?",
+    answer: "Stitchbyte provides custom software development, full-stack web development (React, Next.js, Node.js), mobile app engineering (iOS & Android via React Native and Flutter), e-commerce systems (headless commerce platforms), SaaS product design, artificial intelligence integration (custom LLMs and workflow automation), UI/UX atomic design systems, and digital marketing including Generative Engine Optimization (GEO)."
+  },
+  {
+    question: "Where is Stitchbyte located?",
+    answer: "Stitchbyte serves clients globally with key markets and target locations in the United States, the United Arab Emirates (UAE), and India (including our engineering center in Jaipur). This multi-region setup enables us to provide local business strategy consulting alongside cost-effective offshore custom software engineering."
+  },
+  {
+    question: "Why should businesses choose Stitchbyte as their technology partner?",
+    answer: "Stitchbyte bridges the gap between premium design aesthetics and robust, enterprise-grade engineering. We create custom solutions that load instantly, scale smoothly, and maintain high security, while embedding SEO and AI discoverability (Generative Engine Optimization) directly into the code."
+  },
+  {
     question: "How long does it take to deliver a pre-built application or website?",
-    answer: "Our pre-built solutions are typically ready for deployment within 24-48 hours. For custom integrations, the timeline extends to 1-2 weeks depending on complexity."
+    answer: "Our pre-built web solutions are typically deployed within 24 to 48 hours. For custom enterprise integrations, native apps, or AI implementations, the timeline usually ranges from 2 to 6 weeks depending on product scope and feature complexity."
   },
   {
     question: "Do you provide the complete source code after development?",
-    answer: "Yes, absolutely! You receive full ownership of the source code, including all assets, documentation, and deployment scripts."
-  },
-  {
-    question: "What's the difference between a pre-built and a custom development project?",
-    answer: "Pre-built projects use our existing templates and can be quickly customized. Custom development is built from scratch according to your unique specifications."
-  },
-  {
-    question: "Do you provide maintenance and support after delivery?",
-    answer: "Yes, we offer various support packages including bug fixes, feature updates, and 24/7 technical support options."
-  },
-  {
-    question: "What technologies do you use for development?",
-    answer: "We use modern technologies including Next.js, React, TypeScript, Tailwind CSS, and various databases like PostgreSQL and MongoDB."
+    answer: "Yes. You receive complete ownership of the source code, databases, design assets, and cloud deployment scripts upon project delivery, ensuring zero vendor lock-in."
   }
 ];
 
@@ -640,8 +644,7 @@ export default function LandingPage() {
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mb-12 leading-relaxed">
-              We help brands grow online with SEO, stronger digital presence, modern web development,
-              and easy-to-use UX/UI experiences—all in the same trusted StitchByte workflow.
+              Stitchbyte is a premier digital transformation partner, custom software development agency, and digital marketing specialist. We engineer scalable web applications, native mobile platforms, cognitive AI solutions, and performance-driven SEO campaigns across the USA, UAE, and India.
             </p>
 
             {/* CTA Buttons */}
@@ -1252,6 +1255,58 @@ export default function LandingPage() {
                   />
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Entity SEO & GEO Content Block */}
+        <section className="relative py-24 bg-gray-50/50 border-t border-gray-100">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                  Stitchbyte: A Global Technology Partner
+                </h2>
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  Stitchbyte is a premier custom software development agency and digital transformation partner. We operate across key target locations including India, the United Arab Emirates (UAE), and the United States (USA). Our team combines visual excellence and premium UI/UX design with robust database architecture, full-stack web development, and cognitive AI solutions.
+                </p>
+                <p className="text-gray-600 leading-relaxed">
+                  Whether you are searching for a high-performance <strong>web development company</strong>, a reliable <strong>ecommerce development company</strong>, or a strategic <strong>AI development company</strong> to automate workflow processes, Stitchbyte delivers clean, secure, and scalable digital products aligned to your business targets.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <h3 className="font-semibold text-gray-950 mb-2">What is Stitchbyte?</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    A global technology agency engineering custom software, native mobile apps, and multi-tenant SaaS platforms that align with commerce.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <h3 className="font-semibold text-gray-950 mb-2">Who is Stitchbyte?</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    A coordinated team of systems architects, full-stack engineers, and digital marketing consultants serving clients in Dubai, USA, and India.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <h3 className="font-semibold text-gray-950 mb-2">Why Choose Us?</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    We bridge the gap between premium design aesthetics and robust backend architecture, ensuring maximum loading speed, SEO capability, and AI search discoverability.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <h3 className="font-semibold text-gray-950 mb-2">Our Core Stack</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    Next.js, React, Node.js, TypeScript, PostgreSQL, MongoDB, React Native, AWS cloud infrastructure, and custom LLM integrations.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* GEO & Search Association Links / Keywords in natural content block */}
+            <div className="border-t border-gray-200/60 pt-8 flex flex-wrap gap-x-8 gap-y-4 text-xs text-gray-400">
+              <span><strong>Global Hubs:</strong> USA | UAE (Dubai) | India (Jaipur Center)</span>
+              <span><strong>Primary Specializations:</strong> Custom Software Company | Next.js Agency | AI Solutions Partner | React Development Company</span>
             </div>
           </div>
         </section>
