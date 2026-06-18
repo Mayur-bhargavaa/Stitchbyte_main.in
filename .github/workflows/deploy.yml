@@ -1,0 +1,30 @@
+name: Deploy Stitchbyte
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Oracle VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/apps/stitchbyte
+
+            git pull origin main
+
+            npm install
+
+            NODE_OPTIONS="--max-old-space-size=768" npm run build
+
+            pm2 restart stitchbyte || pm2 start npm --name stitchbyte -- start
+
+            pm2 save
