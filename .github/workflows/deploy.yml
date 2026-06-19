@@ -10,20 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Oracle VM
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: npm run build
+
+      - name: Upload Build Files
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: ".next,public,package.json,package-lock.json,next.config.ts,next.config.js"
+          target: "/home/ubuntu/apps/stitchbyte"
+
+      - name: Restart Application
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          command_timeout: 30m
           script: |
             cd ~/apps/stitchbyte
 
-            git pull origin main
-
-            npm install
-
-            NODE_OPTIONS="--max-old-space-size=768" npm run build
+            npm ci --omit=dev
 
             pm2 restart stitchbyte || pm2 start npm --name stitchbyte -- start
 
