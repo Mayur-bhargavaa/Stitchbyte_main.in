@@ -175,7 +175,7 @@ export default function TermsPage() {
                             </p>
                             <div className="mt-4 p-4 bg-gray-50 rounded-xl">
                                 <p className="text-gray-900 font-medium">StitchByte</p>
-                                <p className="text-gray-600">Email: info@stitchbyte.in</p>
+                                <p className="text-gray-600">Email: <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span></p>
                                 <p className="text-gray-600">Phone: +91 94613 30819</p>
                             </div>
                         </div>

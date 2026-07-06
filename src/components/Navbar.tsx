@@ -22,7 +22,7 @@ export default function Navbar() {
 
     const navLinksRight = [
         { href: "/ui-ux", label: "UI & UX" },
-        { href: "/case-studies", label: "Case Studies" },
+        { href: "/work", label: "Case Studies" },
         { href: "/about", label: "About Us" },
         { href: "/contact", label: "Contact Us" },
     ];

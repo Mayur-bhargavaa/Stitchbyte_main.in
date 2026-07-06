@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
-    default: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
+    default: "Stitchbyte | Custom Software & Digital Agency",
     template: "%s | Stitchbyte",
   },
   description:
-    "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
+    "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
   keywords: [
     "Stitchbyte",
     "software development agency",
@@ -53,29 +53,33 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://stitchbyte.in",
+    languages: {
+      "en": "https://stitchbyte.in",
+      "x-default": "https://stitchbyte.in",
+    },
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://stitchbyte.in",
     siteName: "Stitchbyte",
-    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
+    title: "Stitchbyte | Custom Software & Digital Agency",
     description:
-      "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
+      "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: [
       {
         url: "/logo-stitchbyte.png",
         width: 1200,
         height: 630,
-        alt: "Stitchbyte — Custom Software Development & Digital Transformation Agency",
+        alt: "Stitchbyte — Custom Software & Digital Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
+    title: "Stitchbyte | Custom Software & Digital Agency",
     description:
-      "Stitchbyte is a global technology partner and software development agency. We build high-performance web applications, native mobile apps, cognitive AI solutions, and performance SEO campaigns. Let's Build Something Extraordinary together.",
+      "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: ["/logo-stitchbyte.png"],
   },
   robots: {
@@ -92,7 +96,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stitchbyte | Custom Software Development & Digital Transformation Agency",
+    title: "Stitchbyte | Custom Software & Digital Agency",
   },
   formatDetection: {
     telephone: true,
@@ -344,6 +348,25 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Facebook Pixel */}
+        <Script
+          id="fb-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -355,6 +378,16 @@ export default function RootLayout({
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {/* Facebook Pixel (noscript) */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}&ev=PageView&noscript=1`}
+            alt=""
           />
         </noscript>
         {children}

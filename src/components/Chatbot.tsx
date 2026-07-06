@@ -335,7 +335,7 @@ export default function Chatbot() {
             playSynthSound("glitch", isMuted);
             setMessages(prev => [...prev, {
                 role: "bot",
-                content: "Ouch! 💥 Connection glitch. Shoot us an email at info@stitchbyte.in, and we'll check it out!"
+                content: `Ouch! 💥 Connection glitch. Shoot us an email at info${'@'}stitchbyte.in, and we'll check it out!`
             }]);
         } finally {
             clearTimeout(statusTimer);

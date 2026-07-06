@@ -20,7 +20,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     {
         keywords: ["director", "founder", "ceo", "owner", "who runs", "who owns", "management", "leadership", "mayur", "dhruv", "mayank", "team", "people", "wizards"],
         question: "Who is the team/founder?",
-        answer: "StitchByte is run by our trio of tech wizards! 🧙‍♂️✨\n\n• **Mayur Bhargava** (CEO & Founder): Our code mastermind guiding strategic vision, technology, and operations.\n• **Dhruv** (Co-founder & AI/ML Specialist): Architecting smart robots, AI integrations, and backend databases.\n• **Mayank** (Designing Head): Crafting beautiful UI design systems and conversion-friendly user experiences.\n\nWant to slide into their inbox? Share your details or write to info@stitchbyte.in! 🚀",
+        answer: "StitchByte is run by our trio of tech wizards! 🧙‍♂️✨\n\n• **Mayur Bhargava** (CEO & Founder): Our code mastermind guiding strategic vision, technology, and operations.\n• **Dhruv** (Co-founder & AI/ML Specialist): Architecting smart robots, AI integrations, and backend databases.\n• **Mayank** (Designing Head): Crafting beautiful UI design systems and conversion-friendly user experiences.\n\nWant to slide into their inbox? Share your details or write to info [at] stitchbyte.in! 🚀",
         category: "general",
         priority: 100
     },
@@ -97,7 +97,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     {
         keywords: ["contact", "reach", "email", "phone", "talk", "call", "whatsapp", "hire", "meeting"],
         question: "How can I contact you?",
-        answer: "Let's connect! 📬\n\n📧 **Email**: info@stitchbyte.in\n💬 **Chat**: Right here! Drop your name and email in the form, and our humans will reach out in a jiffy.\n\nLet's build something epic! 🚀",
+        answer: "Let's connect! 📬\n\n📧 **Email**: info [at] stitchbyte.in\n💬 **Chat**: Right here! Drop your name and email in the form, and our humans will reach out in a jiffy.\n\nLet's build something epic! 🚀",
         category: "general",
         priority: 90
     },
@@ -111,7 +111,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     {
         keywords: ["bye", "goodbye", "see ya", "close"],
         question: "Goodbye!",
-        answer: "Catch you later! 👋\n\nWhen you're ready to dominate the digital space, write to us at info@stitchbyte.in. StitchBot out! 🤖⚡",
+        answer: "Catch you later! 👋\n\nWhen you're ready to dominate the digital space, write to us at info [at] stitchbyte.in. StitchBot out! 🤖⚡",
         category: "greeting",
         priority: 70
     },

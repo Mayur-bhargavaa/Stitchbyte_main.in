@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Mail,
@@ -49,12 +49,18 @@ export default function ContactPage() {
     setTimeout(() => setSent(false), 5000);
   };
 
+  const [emailText, setEmailText] = useState("");
+  
+  useEffect(() => {
+    setEmailText("info" + "@" + "stitchbyte.in");
+  }, []);
+
   const contactInfo = [
     {
       icon: Mail,
       label: "Email",
-      value: "info@stitchbyte.in",
-      href: "mailto:info@stitchbyte.in",
+      value: emailText || "info [at] stitchbyte.in",
+      href: emailText ? `mailto:${emailText}` : "#",
     },
     {
       icon: Phone,

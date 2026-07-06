@@ -13,7 +13,12 @@ export default function Footer() {
                     {/* Contact & Subscribe - Left */}
                     <div className="md:max-w-md">
                         <p className="text-gray-400 text-sm mb-1">Contact us at</p>
-                        <p className="font-medium text-gray-900 mb-6">info@stitchbyte.in</p>
+                        <a
+                            href="mailto:info&#64;stitchbyte&#46;in"
+                            className="font-medium text-gray-900 mb-6 hover:text-gray-600 transition-colors block"
+                        >
+                            <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span>
+                        </a>
 
                         <div className="flex gap-2">
                             <input

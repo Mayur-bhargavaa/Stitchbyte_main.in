@@ -88,7 +88,7 @@ export default function MarketingCaseStudyDetailPage() {
         <div className="text-center py-32 space-y-4">
           <AlertTriangle className="w-10 h-10 text-red-400 mx-auto" />
           <p className="text-red-500 text-base">{error || "Case study not found."}</p>
-          <Link href="/case-studies" className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all">
+          <Link href="/work" className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all">
             Back to Case Studies
           </Link>
         </div>
@@ -143,7 +143,7 @@ export default function MarketingCaseStudyDetailPage() {
 
           {/* ─── Back Link ─── */}
           <Link
-            href="/case-studies"
+            href="/work"
             className="inline-flex items-center gap-2 text-gray-400 text-sm mb-12 hover:text-gray-900 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
@@ -527,7 +527,7 @@ export default function MarketingCaseStudyDetailPage() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                href="/case-studies"
+                href="/work"
                 className="inline-flex items-center gap-2 px-10 py-5 bg-white text-gray-900 font-semibold rounded-full border-2 border-gray-200 hover:border-gray-900 transition-all"
               >
                 View More Case Studies
