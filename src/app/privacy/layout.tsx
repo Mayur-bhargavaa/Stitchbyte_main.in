@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | StitchByte Jaipur",
+  title: "Privacy Policy | StitchByte Alwar",
   description:
     "Read the Stitchbyte privacy policy to understand how we collect, use, and protect your personal data across our SEO, web development, and UX/UI services.",
   alternates: {

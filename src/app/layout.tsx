@@ -40,7 +40,28 @@ export const metadata: Metadata = {
     "custom software Dubai",
     "software development USA",
     "web developers India",
-    "headless commerce development"
+    "headless commerce development",
+    "Alwar",
+    "Digital Marketing Agency India",
+    "Best Digital Marketing Agency",
+    "SEO Agency India",
+    "Website Development Company India",
+    "Web Design Company India",
+    "Shopify Experts India",
+    "Shopify Development Company",
+    "WordPress Agency",
+    "React Development Company",
+    "MERN Stack Development",
+    "AI Automation Company",
+    "AI Development Company",
+    "Mobile App Development Company",
+    "Ecommerce Development Company",
+    "Branding Agency",
+    "UI UX Design Agency",
+    "Performance Marketing Agency",
+    "Google Ads Agency",
+    "Meta Ads Agency",
+    "Lead Generation Company"
   ],
   manifest: "/manifest.json",
   icons: {
@@ -107,9 +128,9 @@ export const metadata: Metadata = {
   },
   other: {
     "geo.region": "IN-RJ",
-    "geo.placename": "Jaipur",
-    "geo.position": "26.8530;75.8047",
-    "ICBM": "26.8530, 75.8047"
+    "geo.placename": "Alwar",
+    "geo.position": "27.5530;76.6346",
+    "ICBM": "27.5530, 76.6346"
   }
 };
 
@@ -132,7 +153,7 @@ export default function RootLayout({
     "@type": "Organization",
     "@id": "https://stitchbyte.in/#organization",
     "name": "Stitchbyte",
-    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Jaipur"],
+    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Alwar", "Stitch Delhi NCR"],
     "url": "https://stitchbyte.in",
     "logo": "https://stitchbyte.in/logo-stitchbyte.png",
     "slogan": "Let's Build Something Extraordinary together",
@@ -229,16 +250,16 @@ export default function RootLayout({
     "url": "https://stitchbyte.in",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Malviya Nagar",
-      "addressLocality": "Jaipur",
+      "streetAddress": "MIA Area",
+      "addressLocality": "Alwar",
       "addressRegion": "Rajasthan",
-      "postalCode": "302017",
+      "postalCode": "301030",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 26.8530,
-      "longitude": 75.8047
+      "latitude": 27.5530,
+      "longitude": 76.6346
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -262,7 +283,7 @@ export default function RootLayout({
     "areaServed": [
       {
         "@type": "AdministrativeArea",
-        "name": "Jaipur"
+        "name": "Alwar"
       },
       {
         "@type": "AdministrativeArea",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Our Jaipur Web & Marketing Agency | StitchByte",
+  title: "About Our Alwar Web & Marketing Agency | StitchByte",
   description:
     "Meet the Stitchbyte team helping brands grow through SEO strategy, digital presence, modern web development, and intuitive UX/UI.",
   alternates: {
@@ -58,7 +58,7 @@ export default function AboutLayout({
       ],
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Jaipur",
+        addressLocality: "Alwar",
         addressRegion: "Rajasthan",
         addressCountry: "IN",
       },

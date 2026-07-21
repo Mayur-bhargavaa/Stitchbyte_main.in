@@ -278,13 +278,13 @@ export default function UiUxPage() {
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Georgia, serif" }}>
-                Professional UI/UX Design Services in Jaipur
+                Professional UI/UX Design Services in Alwar
               </h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                What is UI/UX design? Great design is about more than looks. It&apos;s about making a website or app easy to use. At StitchByte, we are a top design agency in Jaipur. We help businesses turn complex tools into simple, friendly screens. Our goal is to help your users find what they need and take action. This leads to more sales and happier customers.
+                What is UI/UX design? Great design is about more than looks. It&apos;s about making a website or app easy to use. At StitchByte, we are a top design agency in Alwar. We help businesses turn complex tools into simple, friendly screens. Our goal is to help your users find what they need and take action. This leads to more sales and happier customers.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Why is good design important for Jaipur businesses? Jaipur is a fast-growing city for tech and business. Your website is often the first thing a customer sees. If it&apos;s hard to use, they will leave for a competitor. Good design shows that your brand is professional and reliable. We help Jaipur startups and shops stand out with clean, modern interfaces.
+                Why is good design important for Alwar businesses? Jaipur is a fast-growing city for tech and business. Your website is often the first thing a customer sees. If it&apos;s hard to use, they will leave for a competitor. Good design shows that your brand is professional and reliable. We help Alwar startups and shops stand out with clean, modern interfaces.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
                 We start every project with deep research. We study your users and what they need. We map out how they will move through your app. This makes sure every button and screen has a purpose. We create simple sketches called wireframes first. Then, we build interactive models for you to test. This helps us get the experience right before we start building.

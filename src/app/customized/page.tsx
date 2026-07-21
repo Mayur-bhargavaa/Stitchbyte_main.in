@@ -367,13 +367,13 @@ export default function CustomizedPage() {
                     <div className="grid md:grid-cols-2 gap-12 items-start">
                         <div>
                             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                                Custom Web Development in Jaipur
+                                Custom Web Development in Alwar
                             </h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                What is custom web development? Basic templates might work for some, but your brand needs a unique digital experience. Customized development is the best path forward for growth. At StitchByte, we build tailored websites and web apps from scratch in Jaipur. We design software around your specific business needs and long-term goals.
+                                What is custom web development? Basic templates might work for some, but your brand needs a unique digital experience. Customized development is the best path forward for growth. At StitchByte, we build tailored websites and web apps from scratch in Alwar. We design software around your specific business needs and long-term goals.
                             </p>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                Why is this important for Jaipur businesses? Jaipur is a busy hub for business and tech. Local competition is growing fast. You need a fast and secure website to stand out. Customers expect smooth online experiences today. A slow website can drive clients to your competitors. Custom development helps you automate sales and provide a great user experience. It helps Jaipur businesses compete on a global scale.
+                                Why is this important for Alwar businesses? Jaipur is a busy hub for business and tech. Local competition is growing fast. You need a fast and secure website to stand out. Customers expect smooth online experiences today. A slow website can drive clients to your competitors. Custom development helps you automate sales and provide a great user experience. It helps Alwar businesses compete on a global scale.
                             </p>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 We focus on transparency and results. Every project starts with a clear plan. We learn about your audience and your goals before we write any code. Our team then creates designs for you to review. Once you approve, we build the site using modern tech like Next.js. We test everything thoroughly on all devices before we launch.

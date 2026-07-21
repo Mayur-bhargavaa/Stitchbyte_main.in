@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | StitchByte Jaipur",
+  title: "Terms & Conditions | StitchByte Alwar",
   description:
     "Read the Stitchbyte terms and conditions covering SEO, web development, UX/UI design, payment terms, IP rights, and project delivery.",
   alternates: {

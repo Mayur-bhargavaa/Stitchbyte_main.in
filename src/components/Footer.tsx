@@ -15,10 +15,13 @@ export default function Footer() {
                         <p className="text-gray-400 text-sm mb-1">Contact us at</p>
                         <a
                             href="mailto:info&#64;stitchbyte&#46;in"
-                            className="font-medium text-gray-900 mb-6 hover:text-gray-600 transition-colors block"
+                            className="font-medium text-gray-900 mb-2 hover:text-gray-600 transition-colors block"
                         >
                             <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span>
                         </a>
+                        <p className="text-gray-500 text-xs mb-6 leading-relaxed">
+                            Based in Alwar, Rajasthan (Delhi NCR) — Operating Exclusively from Alwar
+                        </p>
 
                         <div className="flex gap-2">
                             <input
@@ -116,6 +119,11 @@ export default function Footer() {
                                 <li>
                                     <Link href="/privacy" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                                         Privacy Policy
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/refund-policy" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
+                                        Refund Policy
                                     </Link>
                                 </li>
                             </ul>

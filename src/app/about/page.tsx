@@ -361,27 +361,27 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* Jaipur SEO Editorial Section */}
+                {/* Alwar SEO Editorial Section */}
                 <section className="py-24 border-t border-gray-100 bg-slate-50/20">
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="grid lg:grid-cols-12 gap-12 items-start">
                             {/* Left block - Editorial Text */}
                             <div className="lg:col-span-7 space-y-6">
                                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-                                    A Leading Digital Agency in Jaipur
+                                    A Leading Digital Agency in Alwar (Delhi NCR)
                                 </h2>
                                 <div className="space-y-6 text-gray-650 text-base leading-relaxed">
                                     <p>
-                                        What does a full-service digital agency do? At StitchByte, we help your business grow. We are based in Jaipur and offer complete digital solutions. We build websites, create mobile apps, and manage SEO. We also handle marketing and design. By putting everything under one roof, we save you time. Our goal is to help your brand succeed with clear results.
+                                        What does a full-service digital agency do? At StitchByte, we help your business grow. We are based in Alwar, Rajasthan (Delhi NCR), and operate exclusively from Alwar to deliver complete digital solutions. We build websites, create mobile apps, manage SEO, and handle marketing and design. By putting everything under one roof, we save you time and optimize communication.
                                     </p>
                                     <p>
-                                        Why is this approach good for Jaipur businesses? Jaipur is a fast-growing city for business and tech. Local competition is increasing every day. You cannot afford to have separate teams for design, SEO, and development. We bring everyone together to work as one. This leads to faster websites and better marketing results for you.
+                                        Why is this approach good for businesses? Alwar and the larger Delhi NCR region is a fast-growing hub for business and tech. Regional competition is increasing every day. You cannot afford to have separate teams for design, SEO, and development. We bring everyone together to work as one, leading to faster websites and better marketing results.
                                     </p>
                                     <p>
                                         We work with you every step of the way. We start by learning about your industry and your goals. We do not use generic templates. Instead, we build custom solutions that fit your needs. Whether you need an e-commerce site or a local SEO boost, we are here to help. We provide regular updates so you always know where your project stands.
                                     </p>
                                     <p>
-                                        Our mission is to help you scale your business. We combine expert engineering with creative marketing. This means your website will look great and attract more customers. You will have full ownership of your code with no hidden fees. StitchByte is a trusted partner for businesses in Jaipur looking to grow in the digital world.
+                                        Our mission is to help you scale your business. We combine expert engineering with creative marketing. This means your website will look great and attract more customers. You will have full ownership of your code with no hidden fees. StitchByte is a trusted partner for businesses in Alwar and globally looking to grow in the digital world.
                                     </p>
                                 </div>
                             </div>

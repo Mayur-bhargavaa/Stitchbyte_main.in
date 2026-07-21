@@ -103,7 +103,7 @@ export default function CareersPage() {
                     </h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                         Be part of a team that's building the future of digital solutions.
-                        We're always looking for passionate individuals to join our journey from Jaipur, Rajasthan.
+                        We're always looking for passionate individuals to join our journey from Alwar, Rajasthan.
                     </p>
                 </section>
 

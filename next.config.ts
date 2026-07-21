@@ -59,6 +59,107 @@ const nextConfig: NextConfig = {
         destination: "/customized",
         permanent: true,
       },
+      // Old pSEO path redirects to flat URLs
+      {
+        source: "/services/seo-company-in-:city",
+        destination: "/seo-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/digital-marketing-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/website-development-in-:city",
+        destination: "/website-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/shopify-development-in-:city",
+        destination: "/shopify-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/wordpress-development-in-:city",
+        destination: "/wordpress-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/ai-automation-in-:city",
+        destination: "/ai-automation-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/social-media-agency-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/google-ads-agency-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/meta-ads-agency-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/ui-ux-design-in-:city",
+        destination: "/ui-ux-design-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/mobile-app-development-in-:city",
+        destination: "/mobile-app-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/ecommerce-development-in-:city",
+        destination: "/shopify-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/branding-agency-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/lead-generation-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/react-development-in-:city",
+        destination: "/react-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/mern-stack-development-in-:city",
+        destination: "/mern-stack-development-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/custom-software-in-:city",
+        destination: "/custom-software-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/nextjs-development-in-:city",
+        destination: "/react-development-company-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/node-development-in-:city",
+        destination: "/custom-software-:city",
+        permanent: true,
+      },
+      {
+        source: "/services/performance-marketing-in-:city",
+        destination: "/digital-marketing-agency-:city",
+        permanent: true,
+      },
       // /cookie-policy → /privacy
       {
         source: "/cookie-policy",

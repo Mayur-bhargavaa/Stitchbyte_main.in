@@ -47,19 +47,19 @@ const defaultJobs: { [key: string]: Job } = {
         _id: "full-stack-developer",
         title: "Full Stack Developer",
         department: "Engineering",
-        location: "Remote / Jaipur, Rajasthan",
+        location: "Remote / Alwar, Rajasthan",
     },
     "ui-ux-designer": {
         _id: "ui-ux-designer",
         title: "UI/UX Designer",
         department: "Design",
-        location: "Remote / Jaipur, Rajasthan",
+        location: "Remote / Alwar, Rajasthan",
     },
     "business-development-executive": {
         _id: "business-development-executive",
         title: "Business Development Executive",
         department: "Sales",
-        location: "Jaipur, Rajasthan",
+        location: "Alwar, Rajasthan",
     },
 };
 
@@ -876,7 +876,7 @@ export default function ApplyPage() {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="text-sm font-medium text-gray-700 mb-2 block">Willing to Relocate to Jaipur? *</label>
+                                        <label className="text-sm font-medium text-gray-700 mb-2 block">Willing to Relocate to Alwar? *</label>
                                         <select
                                             required
                                             value={formData.willingToRelocate}
@@ -885,7 +885,7 @@ export default function ApplyPage() {
                                         >
                                             <option value="">Select Option</option>
                                             <option value="Yes">Yes, I can relocate</option>
-                                            <option value="Already in Jaipur">Already in Jaipur</option>
+                                            <option value="Already in Alwar">Already in Alwar</option>
                                             <option value="No">No</option>
                                             <option value="Remote preferred">Prefer remote work</option>
                                         </select>

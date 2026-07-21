@@ -277,19 +277,19 @@ export default function RestaurantLanding() {
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div>
             <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-              Restaurant Management System in Jaipur
+              Restaurant Management System in Alwar
             </h2>
             <p className="text-black/60 leading-relaxed mb-4">
               What is a modern restaurant management system, and why is it crucial? In today's fast-paced hospitality industry, relying on manual orders, paper menus, and disjointed kitchen operations is no longer viable. A comprehensive restaurant management system streamlines your entire workflow, from digital QR code ordering at the table to real-time kitchen displays and detailed sales analytics. At StitchByte, we provide an all-in-one software solution that empowers restaurant owners to optimize their daily operations, dramatically reduce wait times, and drastically improve order accuracy across the board.
             </p>
             <p className="text-black/60 leading-relaxed mb-4">
-              Why does this matter for Jaipur businesses? Jaipur is a massive culinary destination, bustling with local food enthusiasts and millions of international tourists every year. With hundreds of cafes, fine dining establishments, and quick-service restaurants competing for attention, customer experience is everything. If your patrons have to wait 20 minutes just to place an order or receive a bill, they might not return. By adopting our advanced restaurant management system in Jaipur, local restaurants can provide a frictionless, modern dining experience. It allows establishments in Jaipur to handle higher foot traffic efficiently, reduce staff workload, and ultimately increase table turnover rates and profitability.
+              Why does this matter for Alwar businesses? Jaipur is a massive culinary destination, bustling with local food enthusiasts and millions of international tourists every year. With hundreds of cafes, fine dining establishments, and quick-service restaurants competing for attention, customer experience is everything. If your patrons have to wait 20 minutes just to place an order or receive a bill, they might not return. By adopting our advanced restaurant management system in Alwar, local restaurants can provide a frictionless, modern dining experience. It allows establishments in Alwar to handle higher foot traffic efficiently, reduce staff workload, and ultimately increase table turnover rates and profitability.
             </p>
             <p className="text-black/60 leading-relaxed mb-4">
               Our setup process is designed to be incredibly fast and straightforward. First, you create an account and easily digitize your entire menu, adding high-quality photos, descriptions, and pricing. Next, the system instantly generates unique QR codes for every single table in your establishment. You simply place these codes on your tables. When customers arrive, they scan the code with their smartphone, browse the digital menu, and place orders directly without needing to download any app. The order instantly pings the kitchen display screen, completely eliminating communication errors.
             </p>
             <p className="text-black/60 leading-relaxed">
-              We also provide a powerful backend administrative dashboard. This allows restaurant managers in Jaipur to track live sales, identify their best-selling dishes, and manage employee access in real-time. Whether you run a small cozy cafe or a multi-story fine dining restaurant, our platform scales with your business needs, delivering enterprise-level technology at an accessible price point, ensuring you stay ahead of the competition.
+              We also provide a powerful backend administrative dashboard. This allows restaurant managers in Alwar to track live sales, identify their best-selling dishes, and manage employee access in real-time. Whether you run a small cozy cafe or a multi-story fine dining restaurant, our platform scales with your business needs, delivering enterprise-level technology at an accessible price point, ensuring you stay ahead of the competition.
             </p>
           </div>
           <div>

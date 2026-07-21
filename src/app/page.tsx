@@ -51,6 +51,7 @@ import {
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import HomepageFAQSchema from "@/components/HomepageFAQSchema";
 
 const iconMap: Record<string, LucideIcon> = {
   Smartphone,
@@ -162,7 +163,7 @@ const faqs = [
   },
   {
     question: "Where is Stitchbyte located?",
-    answer: "Stitchbyte serves clients globally with key markets and target locations in the United States, the United Arab Emirates (UAE), and India (including our engineering center in Jaipur). This multi-region setup enables us to provide local business strategy consulting alongside cost-effective offshore custom software engineering."
+    answer: "Stitchbyte serves clients globally with key markets and target locations in the United States, the United Arab Emirates (UAE), and India (including our engineering center in Alwar). This multi-region setup enables us to provide local business strategy consulting alongside cost-effective offshore custom software engineering."
   },
   {
     question: "Why should businesses choose Stitchbyte as their technology partner?",
@@ -1226,6 +1227,7 @@ export default function LandingPage() {
 
         {/* FAQ Section */}
         <section id="faq" className="relative py-24 bg-white">
+          <HomepageFAQSchema />
           <div
             className="absolute inset-0 opacity-30"
             style={{
@@ -1305,7 +1307,7 @@ export default function LandingPage() {
 
             {/* GEO & Search Association Links / Keywords in natural content block */}
             <div className="border-t border-gray-200/60 pt-8 flex flex-wrap gap-x-8 gap-y-4 text-xs text-gray-400">
-              <span><strong>Global Hubs:</strong> USA | UAE (Dubai) | India (Jaipur Center)</span>
+              <span><strong>Global Hubs:</strong> USA | UAE (Dubai) | India (Alwar Center)</span>
               <span><strong>Primary Specializations:</strong> Custom Software Company | Next.js Agency | AI Solutions Partner | React Development Company</span>
             </div>
           </div>

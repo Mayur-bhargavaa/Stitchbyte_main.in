@@ -437,13 +437,13 @@ export default function PrebuiltPage() {
                 <div className="grid md:grid-cols-2 gap-12 items-start">
                     <div>
                         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                            Prebuilt SaaS Solutions in Jaipur
+                            Prebuilt SaaS Solutions in Alwar
                         </h2>
                         <p className="text-gray-600 leading-relaxed mb-4">
-                            What are prebuilt SaaS solutions? Building a product from scratch can take months and cost a lot. At StitchByte, we offer production-ready platforms in Jaipur. Our solutions can be ready in just 48 hours. They come with SEO and mobile design built in. This helps you launch faster and save money.
+                            What are prebuilt SaaS solutions? Building a product from scratch can take months and cost a lot. At StitchByte, we offer production-ready platforms in Alwar. Our solutions can be ready in just 48 hours. They come with SEO and mobile design built in. This helps you launch faster and save money.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-4">
-                            Why is this good for Jaipur businesses? Jaipur is a fast-paced market. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
+                            Why is this good for Alwar businesses? Jaipur is a fast-paced market. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-4">
                             Our process is fast and clear. First, you pick a platform that fits your business. We have tools for restaurants, shops, and clinics. Next, we customize the design to match your brand. We test everything to make sure it works on all devices. Finally, we handle the launch for you. Your platform can be live in under two days.

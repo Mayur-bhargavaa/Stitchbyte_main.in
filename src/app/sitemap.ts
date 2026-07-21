@@ -5,6 +5,7 @@ import JobPosition from '@/models/JobPosition';
 import CustomProject from '@/models/CustomProject';
 import MarketingCaseStudy from '@/models/MarketingCaseStudy';
 import { connectToDatabase } from '@/lib/mongodb';
+import { SERVICES, CITIES } from '@/data/pseo-registry';
 
 const BASE_URL = 'https://stitchbyte.in';
 
@@ -15,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
         { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
         { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+        { url: `${BASE_URL}/refund-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
         { url: `${BASE_URL}/careers`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/customized`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/prebuilt`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -101,6 +103,57 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     } catch (error) {
         console.error('Error fetching prebuilt products for sitemap:', error);
     }
+
+    // Add City landing pages (50 URLs)
+    CITIES.forEach((city) => {
+        routes.push({
+            url: `${BASE_URL}/${city.id}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.8,
+        });
+    });
+
+    // Add Flat Service-City & National pages
+    const serviceIntents = [
+        "digital-marketing-agency",
+        "seo-company",
+        "shopify-development-company",
+        "wordpress-development-company",
+        "web-design-company",
+        "mobile-app-development-company",
+        "ui-ux-design-company",
+        "ai-automation-company",
+        "custom-software",
+        "react-development-company",
+        "mern-stack-development"
+    ];
+
+    serviceIntents.forEach((intent) => {
+        // Add national
+        routes.push({
+            url: `${BASE_URL}/${intent}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.7,
+        });
+        routes.push({
+            url: `${BASE_URL}/${intent}-india`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.7,
+        });
+
+        // Add city-specific
+        CITIES.forEach((city) => {
+            routes.push({
+                url: `${BASE_URL}/${intent}-${city.id}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly',
+                priority: 0.6,
+            });
+        });
+    });
 
     return routes;
 }

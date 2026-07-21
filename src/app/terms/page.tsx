@@ -162,7 +162,7 @@ export default function TermsPage() {
                                 Governing Law
                             </h2>
                             <p className="text-gray-600 leading-relaxed">
-                                These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Jaipur, Rajasthan.
+                                These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Alwar, Rajasthan.
                             </p>
                         </div>
 
