@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, use } from "react";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, Clock, User, Share2, Loader2, Link as LinkIcon, Download } from "lucide-react";
@@ -106,12 +107,7 @@ export default function SingleBlogPage({ params }: { params: Promise<{ slug: str
                     <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
                 </div>
             ) : !blog ? (
-                <div className="flex flex-col justify-center items-center min-h-screen pt-20">
-                    <h1 className="text-3xl font-bold mb-4">Blog Post Not Found</h1>
-                    <Link href="/blog" className="text-indigo-600 hover:underline flex items-center gap-2">
-                        <ArrowLeft className="w-4 h-4" /> Back to Blogs
-                    </Link>
-                </div>
+                notFound()
             ) : (
                 <>
                     {/* Main Content */}

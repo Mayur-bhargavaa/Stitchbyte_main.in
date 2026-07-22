@@ -342,7 +342,7 @@ export default function WorkPage() {
                 What makes a digital project successful? At StitchByte, we believe our work speaks for itself. We have helped many businesses in fields like health, education, and real estate. Our team builds websites, mobile apps, and manages SEO. We also create marketing plans and great designs. We tailor every project to fit your specific business goals and audience.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Why is an expert partner important for Alwar businesses? Jaipur is a major business hub with more competition than ever. To stand out, you need more than a basic website. You need a partner who understands your goals. We help startups and old brands alike with high-quality tech and design. Our goal is to help you compete on a national level with fast and beautiful digital products.
+                Why is an expert partner important for Alwar businesses? Alwar is a major business and industrial hub in the Delhi NCR region with growing market competition. To stand out, you need more than a basic website. You need a partner who understands your goals. We help startups and old brands alike with high-quality tech and design. Our goal is to help you compete on a national level with fast and beautiful digital products.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
                 We focus on results. Every project in our portfolio shows a real problem we solved. We use smart thinking and expert tech to help our clients. Before we start, we study your business model and your audience. This makes sure the final product looks great and drives real sales for you.

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { 
@@ -113,15 +113,7 @@ export default function CustomizedAppDetailPage() {
     }
 
     if (error || !project) {
-        return (
-            <div className="min-h-screen bg-white flex flex-col items-center justify-center">
-                <Navbar />
-                <p className="text-red-500 text-lg mb-4">{error}</p>
-                <Link href="/customized" className="px-6 py-3 bg-gray-900 text-white rounded-full">
-                    Back to Customized Apps
-                </Link>
-            </div>
-        );
+        notFound();
     }
 
     return (

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import {
     ArrowRight,
@@ -296,17 +296,7 @@ export default function ProductDetailPage() {
 
     // Error state
     if (error || !product) {
-        return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-                    <p className="text-gray-600 mb-8">{error || "The product you're looking for doesn't exist."}</p>
-                    <Link href="/prebuilt" className="px-6 py-3 bg-gray-900 text-white rounded-full">
-                        Back to Products
-                    </Link>
-                </div>
-            </div>
-        );
+        notFound();
     }
 
     // Get product images or use placeholders

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -267,12 +267,16 @@ export default function JobDetailPage() {
         fetchJob();
     }, [jobId]);
 
-    if (!job) {
+    if (loading) {
         return (
             <div className="min-h-screen bg-white flex items-center justify-center">
                 <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
             </div>
         );
+    }
+
+    if (!job) {
+        notFound();
     }
 
     return (

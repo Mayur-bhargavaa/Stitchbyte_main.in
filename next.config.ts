@@ -160,16 +160,65 @@ const nextConfig: NextConfig = {
         destination: "/digital-marketing-agency-:city",
         permanent: true,
       },
+      // Catch-all fallback for any unmapped /services/ path
+      {
+        source: "/services/:path*",
+        destination: "/customized",
+        permanent: true,
+      },
+      // Catch-all fallback for /product/:path*
+      {
+        source: "/product/:path*",
+        destination: "/prebuilt",
+        permanent: true,
+      },
+      // Catch-all fallback for /projects/:path* and /case-studies/:path*
+      {
+        source: "/projects/:path*",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/:path*",
+        destination: "/work",
+        permanent: true,
+      },
+      // Catch-all fallback for legacy blog path aliases
+      {
+        source: "/blog-posts/:path*",
+        destination: "/blog",
+        permanent: true,
+      },
+      // Common legacy aliases
+      {
+        source: "/contact-us",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/about-us",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/privacy-policy",
+        destination: "/privacy",
+        permanent: true,
+      },
+      {
+        source: "/terms-and-conditions",
+        destination: "/terms",
+        permanent: true,
+      },
+      {
+        source: "/refunds",
+        destination: "/refund-policy",
+        permanent: true,
+      },
       // /cookie-policy → /privacy
       {
         source: "/cookie-policy",
         destination: "/privacy",
-        permanent: true,
-      },
-      // /projects → /work
-      {
-        source: "/projects",
-        destination: "/work",
         permanent: true,
       },
       // /support → /contact

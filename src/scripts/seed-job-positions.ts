@@ -33,7 +33,7 @@ const jobPositions = [
         slug: 'full-stack-developer',
         title: 'Full Stack Developer',
         department: 'Engineering',
-        location: 'Remote / Jaipur, Rajasthan',
+        location: 'Remote / Alwar, Rajasthan',
         type: 'Full-time',
         description: 'Join our engineering team to build innovative web applications using Next.js, React, and Node.js. You will work on exciting projects for clients across various industries.',
         responsibilities: [
@@ -77,7 +77,7 @@ const jobPositions = [
         slug: 'ui-ux-designer',
         title: 'UI/UX Designer',
         department: 'Design',
-        location: 'Remote / Jaipur, Rajasthan',
+        location: 'Remote / Alwar, Rajasthan',
         type: 'Full-time',
         description: 'Create beautiful, intuitive user experiences for our pre-built and custom solutions. Work closely with developers to bring designs to life.',
         responsibilities: [
@@ -121,7 +121,7 @@ const jobPositions = [
         slug: 'business-development-executive',
         title: 'Business Development Executive',
         department: 'Sales',
-        location: 'Jaipur, Rajasthan',
+        location: 'Alwar, Rajasthan',
         type: 'Full-time',
         description: 'Drive growth by identifying new business opportunities and building client relationships. Help us expand our client base and revenue.',
         responsibilities: [

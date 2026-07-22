@@ -27,7 +27,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     {
         keywords: ["what is stitchbyte", "tell me about stitchbyte", "about stitchbyte", "what is stitch", "about stitch", "stitch", "sb"],
         question: "What is StitchByte?",
-        answer: "StitchByte (often called 'Stitch') is a full-stack digital solutions partner based in Jaipur, Rajasthan, serving awesome clients globally.\n\nWe build websites that fly, apps that rule, designs that look absolute fire, and SEO that commands Google like a boss. 🚀\n\nWe deliver both **pre-built solutions** (for fast launches) and **custom development**, with SEO and UI/UX integrated from day one!",
+        answer: "StitchByte (often called 'Stitch') is a full-stack digital solutions partner based in Alwar, Rajasthan (Delhi NCR), serving awesome clients globally.\n\nWe build websites that fly, apps that rule, designs that look absolute fire, and SEO that commands Google like a boss. 🚀\n\nWe deliver both **pre-built solutions** (for fast launches) and **custom development**, with SEO and UI/UX integrated from day one!",
         category: "general",
         priority: 95
     },
@@ -88,9 +88,9 @@ export const FAQ_DATABASE: FAQItem[] = [
         priority: 80
     },
     {
-        keywords: ["location", "where", "based", "office", "jaipur", "rajasthan", "address"],
+        keywords: ["location", "where", "based", "office", "alwar", "rajasthan", "address"],
         question: "Where are you located?",
-        answer: "Our core tech headquarters is located in the beautiful pink city of **Jaipur, Rajasthan, India** 🇮🇳, but our teams serve ambitious brands globally across the USA, Dubai, UK, and beyond! 🌍",
+        answer: "Our core tech headquarters is located in **Alwar, Rajasthan (Delhi NCR), India** 🇮🇳, operating exclusively from Alwar, while serving ambitious brands globally across the USA, Dubai, UK, and beyond! 🌍",
         category: "general",
         priority: 80
     },
@@ -124,7 +124,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     }
 ];
 
-export const DEFAULT_RESPONSE = "Ayy, I didn't quite catch that. My programming is cool, but sometimes I glitch! 🤖💥\n\n**Try asking me about:**\n• Our web/app services\n• The wizards behind StitchByte (Mayur, Dhruv, Mayank)\n• Our case studies (Lal Sweets, Tradescribe, etc.)\n• Ballpark pricing & timelines\n• Our Jaipur location\n\nOr just type **'contact'** and I'll notify the humans!";
+export const DEFAULT_RESPONSE = "Ayy, I didn't quite catch that. My programming is cool, but sometimes I glitch! 🤖💥\n\n**Try asking me about:**\n• Our web/app services\n• The wizards behind StitchByte (Mayur, Dhruv, Mayank)\n• Our case studies (Lal Sweets, Tradescribe, etc.)\n• Ballpark pricing & timelines\n• Our Alwar location\n\nOr just type **'contact'** and I'll notify the humans!";
 
 export const QUICK_REPLIES = [
     "What services do you offer?",

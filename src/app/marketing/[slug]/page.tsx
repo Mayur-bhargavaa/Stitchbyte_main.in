@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -82,18 +82,7 @@ export default function MarketingCaseStudyDetailPage() {
   }
 
   if (error || !study) {
-    return (
-      <div className="min-h-screen bg-white text-gray-900">
-        <Navbar />
-        <div className="text-center py-32 space-y-4">
-          <AlertTriangle className="w-10 h-10 text-red-400 mx-auto" />
-          <p className="text-red-500 text-base">{error || "Case study not found."}</p>
-          <Link href="/work" className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all">
-            Back to Case Studies
-          </Link>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   const allMetrics = [

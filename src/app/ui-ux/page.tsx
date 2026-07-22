@@ -284,13 +284,13 @@ export default function UiUxPage() {
                 What is UI/UX design? Great design is about more than looks. It&apos;s about making a website or app easy to use. At StitchByte, we are a top design agency in Alwar. We help businesses turn complex tools into simple, friendly screens. Our goal is to help your users find what they need and take action. This leads to more sales and happier customers.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Why is good design important for Alwar businesses? Jaipur is a fast-growing city for tech and business. Your website is often the first thing a customer sees. If it&apos;s hard to use, they will leave for a competitor. Good design shows that your brand is professional and reliable. We help Alwar startups and shops stand out with clean, modern interfaces.
+                Why is good design important for Alwar businesses? Alwar is a fast-growing commercial hub across the Delhi NCR region. Your website is often the first thing a customer sees. If it&apos;s hard to use, they will leave for a competitor. Good design shows that your brand is professional and reliable. We help Alwar startups and shops stand out with clean, modern interfaces.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
                 We start every project with deep research. We study your users and what they need. We map out how they will move through your app. This makes sure every button and screen has a purpose. We create simple sketches called wireframes first. Then, we build interactive models for you to test. This helps us get the experience right before we start building.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                We build complete design systems, not just single screens. We create sets of buttons, fonts, and colors that work together. This keeps your brand looking consistent everywhere. It also makes future updates faster and cheaper. Whether you need a redesign or a new app, our Jaipur team builds products that look premium and work perfectly.
+                We build complete design systems, not just single screens. We create sets of buttons, fonts, and colors that work together. This keeps your brand looking consistent everywhere. It also makes future updates faster and cheaper. Whether you need a redesign or a new app, our Alwar team builds products that look premium and work perfectly.
               </p>
             </div>
             <div>

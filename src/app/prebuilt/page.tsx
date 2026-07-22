@@ -443,13 +443,13 @@ export default function PrebuiltPage() {
                             What are prebuilt SaaS solutions? Building a product from scratch can take months and cost a lot. At StitchByte, we offer production-ready platforms in Alwar. Our solutions can be ready in just 48 hours. They come with SEO and mobile design built in. This helps you launch faster and save money.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-4">
-                            Why is this good for Alwar businesses? Jaipur is a fast-paced market. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
+                            Why is this good for Alwar businesses? Alwar is a fast-paced market across the Delhi NCR region. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-4">
                             Our process is fast and clear. First, you pick a platform that fits your business. We have tools for restaurants, shops, and clinics. Next, we customize the design to match your brand. We test everything to make sure it works on all devices. Finally, we handle the launch for you. Your platform can be live in under two days.
                         </p>
                         <p className="text-gray-600 leading-relaxed">
-                            Our products include more than just design. They come with full backend logic and admin panels. You can manage your orders and users easily. You also own 100% of the source code. There are no hidden fees or monthly licenses. This gives you the freedom to grow your Jaipur business your way.
+                            Our products include more than just design. They come with full backend logic and admin panels. You can manage your orders and users easily. You also own 100% of the source code. There are no hidden fees or monthly licenses. This gives you the freedom to grow your Alwar business your way.
                         </p>
                     </div>
                     <div>

@@ -555,7 +555,7 @@ export default function ApplyPage() {
                                             value={formData.currentCity}
                                             onChange={(e) => handleInputChange('currentCity', e.target.value)}
                                             className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 ${errors.currentCity ? 'border-red-500' : 'border-gray-200'}`}
-                                            placeholder="Jaipur"
+                                            placeholder="Alwar"
                                         />
                                         {errors.currentCity && <p className="text-red-500 text-xs mt-1">{errors.currentCity}</p>}
                                     </div>
