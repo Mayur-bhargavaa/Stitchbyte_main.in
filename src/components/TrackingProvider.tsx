@@ -39,6 +39,26 @@ export default function TrackingProvider() {
             }
 
             localStorage.setItem('stitchbyte_tracking', JSON.stringify(trackingData));
+
+            // Log visit to server analytics
+            fetch("/api/analytics/track", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    utmSource: trackingData.utmSource,
+                    utmMedium: trackingData.utmMedium,
+                    utmCampaign: trackingData.utmCampaign,
+                    utmTerm: trackingData.utmTerm,
+                    utmContent: trackingData.utmContent,
+                    referrer: trackingData.referrer,
+                    landingPage: trackingData.landingPage,
+                    pathname: pathname,
+                }),
+            }).catch(() => {
+                // Silently fail to protect visitor experience
+            });
         } catch (err) {
             console.error("Tracking setup failed:", err);
         }

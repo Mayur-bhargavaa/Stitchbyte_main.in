@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limiter';
 import Fuse from 'fuse.js';
 import { FAQ_DATABASE, DEFAULT_RESPONSE, FAQItem } from '@/data/faq-database';
 import { saveUnansweredQuestion } from '@/lib/mongodb';
+
+const ChatSchema = z.object({
+  message: z.string().trim().min(1, "Message is required").max(1000),
+  userInfo: z.object({
+    name: z.string().trim().max(100).optional().nullable(),
+    email: z.string().trim().email("Invalid email address").optional().or(z.literal("")).nullable(),
+    phone: z.string().trim().max(20).optional().nullable(),
+  }).optional().nullable(),
+});
 
 // Initialize Fuse.js for fuzzy search fallback
 const fuse = new Fuse(FAQ_DATABASE, {
@@ -169,12 +180,28 @@ Rules:
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { message, userInfo } = body;
-
-        if (!message) {
-            return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+        // Rate Limiting: max 15 requests per minute per IP
+        const ip = getClientIp(request);
+        const rateLimitResult = checkRateLimit(ip, 15, 60000);
+        if (!rateLimitResult.success) {
+            return NextResponse.json(
+                { error: "Too many chat messages. Please slow down." },
+                { status: 429 }
+            );
         }
+
+        const body = await request.json();
+        
+        // Zod validation
+        const validation = ChatSchema.safeParse(body);
+        if (!validation.success) {
+            return NextResponse.json(
+                { error: validation.error.issues[0].message },
+                { status: 400 }
+            );
+        }
+
+        const { message, userInfo } = validation.data;
 
         const apiKey = process.env.GEMINI_API_KEY;
         let answer = "";
@@ -208,7 +235,11 @@ export async function POST(request: NextRequest) {
                 await saveUnansweredQuestion({
                     question: message,
                     timestamp: new Date(),
-                    userInfo: userInfo
+                    userInfo: {
+                        name: userInfo.name ?? undefined,
+                        email: userInfo.email ?? undefined,
+                        phone: userInfo.phone ?? undefined,
+                    }
                 });
             } catch (dbError) {
                 console.error('Failed to save lead info:', dbError);

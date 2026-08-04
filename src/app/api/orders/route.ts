@@ -1,10 +1,39 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { z } from "zod";
+
+const OrderItemSchema = z.object({
+  menuItemId: z.string().trim().min(1, "menuItemId is required"),
+  name: z.string().trim().min(1, "name is required"),
+  quantity: z.number().int().positive("quantity must be positive"),
+  unitPrice: z.number().nonnegative("unitPrice cannot be negative"),
+});
+
+const OrderSchema = z.object({
+  restaurantId: z.string().trim().min(1, "restaurantId is required"),
+  tableId: z.string().trim().min(1, "tableId is required"),
+  items: z.array(OrderItemSchema).min(1, "At least one item is required"),
+  paymentMode: z.string().trim().min(1, "paymentMode is required"),
+  customerName: z.string().trim().max(100).optional().nullable(),
+  customerPhone: z.string().trim().min(5, "Phone number is too short").max(20),
+  customerEmail: z.string().trim().email("Invalid email").optional().or(z.literal("")).nullable(),
+  marketingConsent: z.boolean().optional(),
+  couponCode: z.string().trim().max(50).optional().nullable(),
+});
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    
+    const validation = OrderSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: validation.error.issues[0].message },
+        { status: 400 }
+      );
+    }
+
     const {
       restaurantId,
       tableId,
@@ -15,15 +44,7 @@ export async function POST(req: Request) {
       customerEmail,
       marketingConsent,
       couponCode,
-    } = body;
-
-    // Validate required fields
-    if (!restaurantId || !tableId || !items?.length || !paymentMode || !customerPhone) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    } = validation.data;
 
     // Verify restaurant and table exist
     const restaurant = await prisma.restaurant.findUnique({

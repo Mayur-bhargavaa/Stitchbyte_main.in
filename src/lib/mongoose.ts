@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = "mongodb+srv://DBmayur:Mayur%402608@cluster0.ytcpzbb.mongodb.net/stitchbyte_chatbot";
+const MONGODB_URI = process.env.BLOG_DATABASE_URL || process.env.MONGODB_URI || process.env.DATABASE_URL;
+
+if (!MONGODB_URI) {
+    throw new Error('Please define the DATABASE_URL or MONGODB_URI environment variable inside .env');
+}
 
 let cached = (global as unknown as { mongoose: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null } }).mongoose;
 
@@ -18,7 +22,7 @@ async function connectDB() {
             bufferCommands: false,
         };
 
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+        cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
             return mongoose;
         });
     }

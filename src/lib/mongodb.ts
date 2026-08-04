@@ -1,7 +1,11 @@
 import { MongoClient, Db } from 'mongodb';
 
-const MONGODB_URI = "mongodb+srv://DBmayur:Mayur%402608@cluster0.ytcpzbb.mongodb.net/";
-const DB_NAME = "stitchbyte_chatbot";
+const MONGODB_URI = process.env.BLOG_DATABASE_URL || process.env.MONGODB_URI || process.env.DATABASE_URL;
+const DB_NAME = process.env.MONGODB_DB_NAME || "stitchbyte_chatbot";
+
+if (!MONGODB_URI) {
+    throw new Error('Please define the DATABASE_URL or MONGODB_URI environment variable inside .env');
+}
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
@@ -11,7 +15,7 @@ export async function connectToDatabase() {
         return { client: cachedClient, db: cachedDb };
     }
 
-    const client = new MongoClient(MONGODB_URI);
+    const client = new MongoClient(MONGODB_URI!);
     await client.connect();
     const db = client.db(DB_NAME);
 

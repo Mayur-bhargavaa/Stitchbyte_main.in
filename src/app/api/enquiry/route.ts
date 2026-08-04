@@ -1,18 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
+import { z } from "zod";
+import { checkRateLimit, getClientIp } from "@/lib/rate-limiter";
+import { auth } from "@/lib/auth";
+
+const EnquirySchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  phone: z.string().trim().min(5, "Phone number is too short").max(20),
+  email: z.string().trim().email("Invalid email address").optional().or(z.literal("")),
+  brand: z.string().trim().max(100).optional().nullable(),
+  message: z.string().trim().max(1000).optional().nullable(),
+  productId: z.string().trim().max(100).optional().nullable(),
+  productName: z.string().trim().max(100).optional().nullable(),
+  tracking: z.object({
+    utmSource: z.string().trim().max(100).optional().nullable(),
+    utmMedium: z.string().trim().max(100).optional().nullable(),
+    utmCampaign: z.string().trim().max(100).optional().nullable(),
+    utmTerm: z.string().trim().max(100).optional().nullable(),
+    utmContent: z.string().trim().max(100).optional().nullable(),
+    referrer: z.string().trim().max(500).optional().nullable(),
+    landingPage: z.string().trim().max(500).optional().nullable(),
+  }).optional().nullable(),
+});
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { name, phone, email, brand, message, productId, productName, tracking } = body;
-
-        // Validate required fields
-        if (!name || !phone) {
+        // Rate Limiting: max 5 requests per minute per IP
+        const ip = getClientIp(request);
+        const rateLimitResult = checkRateLimit(ip, 5, 60000);
+        if (!rateLimitResult.success) {
             return NextResponse.json(
-                { error: "Name and phone number are required" },
+                { error: "Too many requests. Please try again in a minute." },
+                { status: 429 }
+            );
+        }
+
+        const body = await request.json();
+        
+        // Zod validation
+        const validation = EnquirySchema.safeParse(body);
+        if (!validation.success) {
+            return NextResponse.json(
+                { error: validation.error.issues[0].message },
                 { status: 400 }
             );
         }
+
+        const { name, phone, email, brand, message, productId, productName, tracking } = validation.data;
 
         // Connect to MongoDB
         const { db } = await connectToDatabase();
@@ -59,6 +93,16 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
     try {
+        // Authenticate the request
+        const session = await auth();
+        const user = session?.user as any;
+        if (!user || !["ADMIN", "MERCHANT"].includes(user.role)) {
+            return NextResponse.json(
+                { error: "Unauthorized access" },
+                { status: 401 }
+            );
+        }
+
         const { db } = await connectToDatabase();
         const collection = db.collection("product_enquiries");
 

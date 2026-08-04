@@ -1,0 +1,50 @@
+name: StitchByte CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint Code
+        run: npm run lint
+
+      - name: Check Types (TypeScript)
+        run: npx tsc --noEmit
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+      - name: Build Verification
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+          DATABASE_URL: "mongodb+srv://dummy:dummy@cluster.mongodb.net/dummy"
+          BLOG_DATABASE_URL: "mongodb+srv://dummy:dummy@cluster.mongodb.net/dummy"
+          NEXTAUTH_SECRET: "dummy_secret_for_ci_build"
+          NEXTAUTH_URL: "http://localhost:3000"
+          APP_URL: "http://localhost:3000"
+          ADMIN_API_URL: "http://localhost:3001"
+          CLOUDINARY_CLOUD_NAME: "dummy_cloud"
+          CLOUDINARY_API_KEY: "12345"
+          CLOUDINARY_API_SECRET: "dummy_secret"
+          AUTH_TRUST_HOST: "true"
+        run: npm run build

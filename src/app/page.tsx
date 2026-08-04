@@ -176,6 +176,10 @@ const faqs = [
   {
     question: "Do you provide the complete source code after development?",
     answer: "Yes. You receive complete ownership of the source code, databases, design assets, and cloud deployment scripts upon project delivery, ensuring zero vendor lock-in."
+  },
+  {
+    question: "Does Stitchbyte use Google user data or Google OAuth?",
+    answer: "Yes, Stitchbyte administrative portals and control hubs support secure login using Google OAuth authentication. We request access only to your basic Google profile details (name and email address) solely to verify administrator identity, authorize access to admin consoles, and manage site content (such as blogs, client reviews, and job listings). We do not share, sell, or use this data for any other purposes."
   }
 ];
 

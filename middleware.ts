@@ -30,6 +30,26 @@ export default auth((req) => {
     }
   }
 
+  // Protect admin API routes
+  if (pathname.startsWith("/api/admin")) {
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    if (user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+  }
+
+  // Protect merchant API routes
+  if (pathname.startsWith("/api/merchant")) {
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    if (!["ADMIN", "MERCHANT"].includes(user.role)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+  }
+
   // Protect admin routes
   if (pathname.startsWith("/restaurant/admin")) {
     if (!user) {
@@ -57,6 +77,8 @@ export const config = {
   matcher: [
     "/restaurant/admin/:path*",
     "/restaurant/merchant/:path*",
+    "/api/admin/:path*",
+    "/api/merchant/:path*",
     "/services/:path*"
   ],
 };
