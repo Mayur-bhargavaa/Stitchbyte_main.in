@@ -3,8 +3,61 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
+import { useState } from "react";
 
 export default function Footer() {
+    const [email, setEmail] = useState("");
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [errorMsg, setErrorMsg] = useState("");
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email) return;
+        setStatus("loading");
+        setErrorMsg("");
+
+        try {
+            let tracking = null;
+            try {
+                const stored = localStorage.getItem("stitchbyte_tracking");
+                if (stored) {
+                    tracking = JSON.parse(stored);
+                }
+            } catch (err) {
+                console.error("Error loading tracking data:", err);
+            }
+
+            const response = await fetch('/api/enquiry', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: "Newsletter Subscriber",
+                    phone: "00000",
+                    email: email,
+                    productName: "Newsletter Subscription",
+                    message: "Subscribed to newsletter from homepage footer",
+                    tracking,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to subscribe. Please try again.");
+            }
+
+            setStatus("success");
+            setEmail("");
+            setTimeout(() => setStatus("idle"), 5000);
+        } catch (err: any) {
+            console.error("Subscription failed:", err);
+            setErrorMsg(err.message || "Failed to subscribe. Please try again.");
+            setStatus("error");
+        }
+    };
+
     return (
         <footer className="bg-white border-t border-gray-100 pt-16 pb-8 relative overflow-hidden">
             <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -28,16 +81,32 @@ export default function Footer() {
                             This website serves as the homepage for the <span className="font-semibold text-gray-850">Stitchbyte</span> OAuth application. Our internal teams use this secure portal to manage content, track inquiries, and monitor deployment status. Read our <Link href="/privacy" className="underline hover:text-gray-800">Privacy Policy</Link> and <Link href="/terms" className="underline hover:text-gray-800">Terms & Conditions</Link> for details.
                         </div>
 
-                        <div className="flex gap-2">
-                            <input
-                                type="email"
-                                placeholder="Enter your email address"
-                                className="flex-1 px-5 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-300 bg-white text-gray-900"
-                            />
-                            <button className="px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors whitespace-nowrap">
-                                Subscribe
-                            </button>
-                        </div>
+                        <form onSubmit={handleSubscribe} className="space-y-2">
+                            <div className="flex gap-2">
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Enter your email address"
+                                    className="flex-1 px-5 py-3 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-gray-300 bg-white text-gray-900"
+                                    disabled={status === "loading"}
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={status === "loading"}
+                                    className="px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors whitespace-nowrap disabled:opacity-50"
+                                >
+                                    {status === "loading" ? "Subscribing..." : "Subscribe"}
+                                </button>
+                            </div>
+                            {status === "success" && (
+                                <p className="text-xs text-green-600 pl-2">Successfully subscribed to our newsletter!</p>
+                            )}
+                            {status === "error" && (
+                                <p className="text-xs text-red-600 pl-2">{errorMsg || "Failed to subscribe. Please try again."}</p>
+                            )}
+                        </form>
 
                         {/* Social Icons */}
                         <div className="flex items-center gap-4 mt-8">

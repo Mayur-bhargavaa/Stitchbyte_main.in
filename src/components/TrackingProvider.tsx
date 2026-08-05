@@ -1,13 +1,37 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, usePathname } from "next/navigation";
 
 export default function TrackingProvider() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const [consent, setConsent] = useState<string | null>(null);
+
+    // Load initial consent state and listen to changes
+    useEffect(() => {
+        const updateConsent = () => {
+            try {
+                const saved = localStorage.getItem("stitchbyte_cookie_consent");
+                setConsent(saved);
+            } catch (e) {
+                console.error("Failed to load cookie consent status:", e);
+            }
+        };
+
+        updateConsent();
+        window.addEventListener("cookieConsentChanged", updateConsent);
+        return () => {
+            window.removeEventListener("cookieConsentChanged", updateConsent);
+        };
+    }, []);
 
     useEffect(() => {
+        // Run tracking ONLY if cookie consent has been explicitly accepted
+        if (consent !== "accepted") {
+            return;
+        }
+
         try {
             const params = {
                 utmSource: searchParams?.get('utm_source') || searchParams?.get('source'),
@@ -62,7 +86,7 @@ export default function TrackingProvider() {
         } catch (err) {
             console.error("Tracking setup failed:", err);
         }
-    }, [searchParams, pathname]);
+    }, [searchParams, pathname, consent]);
 
     return null; // Invisible component
 }

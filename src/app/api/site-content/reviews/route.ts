@@ -40,3 +40,53 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    await connectDB();
+    const body = await request.json();
+
+    if (!body.instagramReelUrl || typeof body.instagramReelUrl !== "string") {
+      return NextResponse.json(
+        { success: false, error: "instagramReelUrl is required as a string" },
+        { status: 400 }
+      );
+    }
+
+    const reelUrl = body.instagramReelUrl.trim();
+
+    const updateFields: any = {
+      instagramReelUrl: reelUrl,
+      mediaType: "instagram",
+      updatedAt: new Date()
+    };
+
+    const updateResult = await SiteContentSettings.updateOne(
+      { key: "homepage" },
+      {
+        $set: updateFields,
+        $setOnInsert: {
+          createdAt: new Date(),
+        },
+      },
+      { upsert: true }
+    );
+
+    return NextResponse.json({
+      success: true,
+      message: "Featured Reel URL updated successfully via open API push",
+      instagramReelUrl: reelUrl,
+      result: updateResult
+    });
+  } catch (error: any) {
+    console.error("Error pushing featured reel url:", error);
+    return NextResponse.json(
+      { success: false, error: error.message || "Failed to update featured reel url" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  return POST(request);
+}

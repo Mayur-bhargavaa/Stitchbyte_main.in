@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ChatbotVisibility from "@/components/ChatbotVisibility";
 import TrackingProvider from "@/components/TrackingProvider";
+import CookieConsent from "@/components/CookieConsent";
 import { Suspense } from "react";
 import Script from "next/script";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
@@ -363,8 +364,35 @@ export default function RootLayout({
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
+              
+              var initialConsent = 'denied';
+              try {
+                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
+                  initialConsent = 'granted';
+                }
+              } catch (e) {}
+              
+              gtag('consent', 'default', {
+                'ad_storage': initialConsent,
+                'analytics_storage': initialConsent,
+                'ad_user_data': initialConsent,
+                'ad_personalization': initialConsent
+              });
+              
               gtag('js', new Date());
               gtag('config', 'G-H27QKB00PJ');
+              
+              window.addEventListener('cookieConsentChanged', function() {
+                try {
+                  var updatedConsent = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'granted' : 'denied';
+                  gtag('consent', 'update', {
+                    'ad_storage': updatedConsent,
+                    'analytics_storage': updatedConsent,
+                    'ad_user_data': updatedConsent,
+                    'ad_personalization': updatedConsent
+                  });
+                } catch (e) {}
+              });
             `,
           }}
         />
@@ -382,8 +410,24 @@ export default function RootLayout({
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
+              
+              var fbConsent = 'revoke';
+              try {
+                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
+                  fbConsent = 'grant';
+                }
+              } catch (e) {}
+              
+              fbq('consent', fbConsent);
               fbq('init', '${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}');
               fbq('track', 'PageView');
+              
+              window.addEventListener('cookieConsentChanged', function() {
+                try {
+                  var updatedFb = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'grant' : 'revoke';
+                  fbq('consent', updatedFb);
+                } catch (e) {}
+              });
             `,
           }}
         />
@@ -415,6 +459,7 @@ export default function RootLayout({
         <ChatbotVisibility />
         <Suspense fallback={null}>
           <TrackingProvider />
+          <CookieConsent />
         </Suspense>
       </body>
     </html>
