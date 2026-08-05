@@ -34,19 +34,59 @@ export default function ContactPage() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
+  const [errorText, setErrorText] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    setErrorText("");
 
-    // Simulate sending - replace with actual API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      let tracking = null;
+      try {
+        const stored = localStorage.getItem("stitchbyte_tracking");
+        if (stored) {
+          tracking = JSON.parse(stored);
+        }
+      } catch (err) {
+        console.error("Error loading tracking data:", err);
+      }
 
-    setSending(false);
-    setSent(true);
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      // Map subject and message to the API fields
+      const messageBody = formData.subject 
+        ? `[Subject: ${formData.subject}] ${formData.message}` 
+        : formData.message;
 
-    // Reset success message after 5 seconds
-    setTimeout(() => setSent(false), 5000);
+      const response = await fetch('/api/enquiry', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email || undefined,
+          message: messageBody,
+          tracking,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit enquiry. Please try again.");
+      }
+
+      setSent(true);
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+      // Reset success message after 5 seconds
+      setTimeout(() => setSent(false), 5000);
+    } catch (err: any) {
+      console.error("Error submitting contact form:", err);
+      setErrorText(err.message || "Failed to submit enquiry. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const [emailText, setEmailText] = useState("");
@@ -288,6 +328,12 @@ export default function ContactPage() {
                         placeholder="Share your business goals, current challenges, and what outcome you want..."
                       />
                     </div>
+
+                    {errorText && (
+                      <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100">
+                        {errorText}
+                      </div>
+                    )}
 
                     <button
                       type="submit"

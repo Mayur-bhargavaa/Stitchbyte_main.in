@@ -19,9 +19,14 @@ export default function Footer() {
                         >
                             <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span>
                         </a>
-                        <p className="text-gray-500 text-xs mb-6 leading-relaxed">
+                        <p className="text-gray-500 text-xs mb-4 leading-relaxed">
                             Based in Alwar, Rajasthan (Delhi NCR) — Operating Exclusively from Alwar
                         </p>
+
+                        <div className="mt-4 mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-100 text-xs text-gray-500 leading-relaxed max-w-sm">
+                            <p className="font-semibold text-gray-755 mb-1">Stitchbyte App Purpose</p>
+                            This website serves as the homepage for the <span className="font-semibold text-gray-850">Stitchbyte</span> OAuth application. Our internal teams use this secure portal to manage content, track inquiries, and monitor deployment status. Read our <Link href="/privacy" className="underline hover:text-gray-800">Privacy Policy</Link> and <Link href="/terms" className="underline hover:text-gray-800">Terms & Conditions</Link> for details.
+                        </div>
 
                         <div className="flex gap-2">
                             <input
