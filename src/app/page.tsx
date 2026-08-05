@@ -1309,6 +1309,19 @@ export default function LandingPage() {
               </div>
             </div>
 
+            {/* Google OAuth & Platform Purpose Disclosure */}
+            <div className="mt-8 bg-white p-8 rounded-3xl border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.01)]">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+                Stitchbyte Application Purpose & Google Integration Disclosure
+              </h3>
+              <p className="text-sm text-gray-650 leading-relaxed mb-4">
+                The Stitchbyte platform is a central marketing hub, social campaign scheduler, and analytics tracking console. It enables creative agencies, freelancers, and businesses to sync, schedule, and cross-post marketing reels, videos, and portfolio campaign content across multiple channels (such as automated publishing of reels from Instagram to LinkedIn and YouTube).
+              </p>
+              <p className="text-sm text-gray-650 leading-relaxed">
+                <strong>Google Integration & OAuth Scopes:</strong> To authenticate marketing administrators, the Stitchbyte portal utilizes Google OAuth authentication. If authorized by the user, Stitchbyte requests basic profile permissions (`openid`, `email`, `profile`) to Whitelist identities and verify authorized administrator accounts. Furthermore, users can connect their Google services, such as the YouTube API and Google Analytics, to allow our campaign engine to automate the publishing of marketing reels and sync campaign conversion metrics. All data accessed complies with the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="underline font-semibold text-gray-900">Google API Services User Data Policy</a> and is never sold or used for advertising.
+              </p>
+            </div>
+
             {/* GEO & Search Association Links / Keywords in natural content block */}
             <div className="border-t border-gray-200/60 pt-8 flex flex-wrap gap-x-8 gap-y-4 text-xs text-gray-400">
               <span><strong>Global Hubs:</strong> USA | UAE (Dubai) | India (Alwar Center)</span>
