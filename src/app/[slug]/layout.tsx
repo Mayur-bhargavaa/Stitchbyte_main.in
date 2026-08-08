@@ -39,6 +39,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: descText,
     alternates: {
       canonical: `https://stitchbyte.in/${slug}`,
+      languages: {
+        "en": `https://stitchbyte.in/${slug}`,
+        "x-default": `https://stitchbyte.in/${slug}`,
+      },
     },
     openGraph: {
       title: titleText,

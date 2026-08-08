@@ -73,13 +73,10 @@ export const metadata: Metadata = {
     ],
     apple: "/favicon/apple-touch-icon.png",
   },
-  alternates: {
-    canonical: "https://stitchbyte.in",
-    languages: {
-      "en": "https://stitchbyte.in",
-      "x-default": "https://stitchbyte.in",
-    },
-  },
+  // NOTE: Do NOT set a global canonical here — each page sets its own via generateMetadata.
+  // A global canonical pointing to the homepage causes Google to mark all other pages
+  // as "Alternate page with proper canonical tag" and refuse to index them.
+  // The homepage sets its own canonical via the (home)/layout.tsx wrapper below.
   openGraph: {
     type: "website",
     locale: "en_US",
