@@ -15,7 +15,146 @@ const nextConfig: NextConfig = {
   // 301 redirects — fix Google Search Console 404 errors
   async redirects() {
     return [
-      // /faq → homepage (FAQ section is on homepage)
+      // ── Old numeric blog IDs → /blog ──────────────────────────────────────
+      // Covers: /blog/4, /blog/5, /blog/6, /blog/8, /blog/9, /blog/10 etc.
+      {
+        source: "/blog/:id(\\d+)",
+        destination: "/blog",
+        permanent: true,
+      },
+      // Trailing slash variants of numeric blog IDs
+      {
+        source: "/blog/:id(\\d+)/",
+        destination: "/blog",
+        permanent: true,
+      },
+
+      // ── Trailing slash fixes ───────────────────────────────────────────────
+      {
+        source: "/about/",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/careers/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/blog/",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/work/",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/contact/",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/privacy/",
+        destination: "/privacy",
+        permanent: true,
+      },
+      {
+        source: "/terms/",
+        destination: "/terms",
+        permanent: true,
+      },
+
+      // ── Deleted career pages → /careers ───────────────────────────────────
+      // These positions no longer exist — redirect to careers listing
+      {
+        source: "/careers/devops-engineer",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/devops-engineer/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/content-writer",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/content-writer/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/sales-executive",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/sales-executive/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/ui-ux-designer",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/ui-ux-designer/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/backend-developer",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/backend-developer/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/frontend-intern",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/frontend-intern/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/marketing-intern",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/marketing-intern/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/project-manager",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/project-manager/",
+        destination: "/careers",
+        permanent: true,
+      },
+      {
+        source: "/careers/digital-marketing-manager/",
+        destination: "/careers",
+        permanent: true,
+      },
+
+      // ── /faq → homepage (FAQ section is on homepage) ──────────────────────
       {
         source: "/faq",
         destination: "/#faq",
@@ -267,6 +406,12 @@ const nextConfig: NextConfig = {
       {
         source: "/custom-projects",
         destination: "/customized",
+        permanent: true,
+      },
+      // Catch-all: any /careers/:slug/ with trailing slash → /careers/:slug
+      {
+        source: "/careers/:slug/",
+        destination: "/careers/:slug",
         permanent: true,
       },
     ];
