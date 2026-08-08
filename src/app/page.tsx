@@ -943,9 +943,9 @@ export default function LandingPage() {
                   <BadgeCheck className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 tracking-tight">Trusted Partner</h3>
-                <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
-                  Over 1.3k+ clients rely on our ecosystem for their daily digital operations and growth.
-                </p>
+                 <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                   We are committed to delivering reliable, results-driven digital solutions that support your long-term growth.
+                 </p>
               </div>
             </div>
           </div>
