@@ -227,6 +227,48 @@ const nextConfig: NextConfig = {
         destination: "/contact",
         permanent: true,
       },
+      // Trailing slash variants — Google crawls both with and without trailing slash
+      {
+        source: "/faq/",
+        destination: "/#faq",
+        permanent: true,
+      },
+      {
+        source: "/product-workflow/",
+        destination: "/#how-we-work",
+        permanent: true,
+      },
+      {
+        source: "/case-studies/",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/projects/",
+        destination: "/work",
+        permanent: true,
+      },
+      {
+        source: "/support/",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/cookie-policy/",
+        destination: "/privacy",
+        permanent: true,
+      },
+      // /custom-projects/* → /customized/* (old route name)
+      {
+        source: "/custom-projects/:slug",
+        destination: "/customized/:slug",
+        permanent: true,
+      },
+      {
+        source: "/custom-projects",
+        destination: "/customized",
+        permanent: true,
+      },
     ];
   },
 
