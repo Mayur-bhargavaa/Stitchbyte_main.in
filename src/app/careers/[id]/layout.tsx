@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import JobPosition from "@/models/JobPosition";
 
@@ -18,67 +19,68 @@ const staticJobTitles: Record<string, string> = {
     "social-media-manager": "Social Media Manager",
 };
 
+// ── Check if a job exists ────────────────────────────────────────────────────
+async function checkJobExists(id: string) {
+    if (staticJobTitles[id]) return { title: staticJobTitles[id], isActive: true };
+
+    try {
+        await connectDB();
+        const job = await JobPosition.findOne({ slug: id }).select("title isActive").lean() as { title: string; isActive: boolean } | null;
+        return job;
+    } catch {
+        return null;
+    }
+}
+
+// ── SEO Metadata (server-rendered) ─────────────────────────────────────────
 export async function generateMetadata(
     { params }: { params: Promise<{ id: string }> }
 ): Promise<Metadata> {
     const { id } = await params;
+    const job = await checkJobExists(id);
 
-    let title = staticJobTitles[id] || null;
-    let description = `Apply for ${title || id.replace(/-/g, " ")} at StitchByte. Join our growing team in Alwar, Rajasthan.`;
-
-    // Try to fetch live job from DB
-    try {
-        await connectDB();
-        const job = await JobPosition.findOne({ slug: id }).select("title description isActive").lean() as { title: string; description: string; isActive: boolean } | null;
-        if (job) {
-            title = job.title;
-            description = (job.description || description).slice(0, 160);
-
-            // If job is no longer active, set noindex
-            if (!job.isActive) {
-                return {
-                    title: `${title} | Careers at StitchByte`,
-                    robots: { index: false },
-                    alternates: { canonical: `${BASE_URL}/careers` },
-                };
-            }
-        }
-    } catch {
-        // DB unavailable — use static fallback
+    if (!job) {
+        return {
+            title: "Career Opportunity Not Found | StitchByte",
+            robots: { index: false },
+        };
     }
 
-    // If no job found at all → redirect to /careers handled by next.config.ts
-    if (!title) {
+    if (!job.isActive) {
         return {
-            title: "Career Opportunity | StitchByte",
+            title: `${job.title} (Closed) | StitchByte`,
             robots: { index: false },
-            alternates: { canonical: `${BASE_URL}/careers` },
         };
     }
 
     const canonicalUrl = `${BASE_URL}/careers/${id}`;
 
     return {
-        title: `${title} | Careers at StitchByte`,
-        description,
+        title: `${job.title} | Careers at StitchByte`,
+        description: `Apply for the ${job.title} position at StitchByte. Join our growing team in Alwar, Rajasthan.`,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
-            title: `${title} — Join StitchByte`,
-            description,
+            title: `${job.title} — Join StitchByte`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
         },
-        twitter: {
-            card: "summary",
-            title: `${title} | StitchByte Careers`,
-            description,
-        },
     };
 }
 
-export default function CareerLayout({ children }: { children: React.ReactNode }) {
+// ── Layout (Server Component) ────────────────────────────────────────────────
+// If job doesn't exist, we call notFound() on the server to return a real 404
+export default async function CareerLayout(
+    { children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }
+) {
+    const { id } = await params;
+    const job = await checkJobExists(id);
+
+    if (!job) {
+        notFound();
+    }
+
     return <>{children}</>;
 }
