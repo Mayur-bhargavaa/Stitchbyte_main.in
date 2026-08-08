@@ -235,6 +235,7 @@ function FAQItem({ question, answer, isOpen, onClick }: { question: string; answ
 function SpotlightVideoCard({ videoUrl }: { videoUrl: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -252,6 +253,11 @@ function SpotlightVideoCard({ videoUrl }: { videoUrl: string }) {
   };
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
     const video = videoRef.current;
     if (!video) return;
 
@@ -265,20 +271,26 @@ function SpotlightVideoCard({ videoUrl }: { videoUrl: string }) {
       video.removeEventListener("play", handlePlay);
       video.removeEventListener("pause", handlePause);
     };
-  }, []);
+  }, [isMounted]);
 
   return (
     <div 
       className="w-full aspect-[9/16] rounded-[2rem] overflow-hidden border border-gray-200 shadow-2xl bg-black relative group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
       onClick={togglePlay}
     >
-      <video
-        ref={videoRef}
-        src={videoUrl}
-        className="w-full h-full object-cover"
-        loop
-        playsInline
-      />
+      {isMounted ? (
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          className="w-full h-full object-cover"
+          loop
+          playsInline
+        />
+      ) : (
+        <div className="w-full h-full bg-slate-900 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
+        </div>
+      )}
       {/* Premium Glassmorphic Play/Pause Button Overlay */}
       <div className={`absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition-all duration-300 ${
         isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
