@@ -115,6 +115,8 @@ function ImageCard({ item, onSelect }: { item: MediaItem; onSelect: () => void }
           fill
           sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+          placeholder="blur"
+          blurDataURL={getBlurDataUrl(item.src)}
           priority
         />
 
@@ -178,17 +180,28 @@ const getDetailedDescription = (category: string, title: string) => {
   return `Designed as a premium branding asset for the ${category} segment. Engineered to maximize visual brand authority and customer conversion.`;
 };
 
+const getBlurDataUrl = (src: string) => {
+  if (src.includes("res.cloudinary.com")) {
+    return src.replace("/upload/", "/upload/w_50,q_auto,e_blur:1000,c_scale/");
+  }
+  return "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjMiIHZpZXdCb3g9IjAgMCA0IDMiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjMiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4=";
+};
+
 export default function GalleryPage() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeMedia, setActiveMedia] = useState<MediaItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [imageLoading, setImageLoading] = useState(true);
   const detailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (detailsRef.current) {
       detailsRef.current.scrollTop = 0;
+    }
+    if (activeMedia) {
+      setImageLoading(true);
     }
   }, [activeMedia]);
 
@@ -379,12 +392,22 @@ export default function GalleryPage() {
                 />
               ) : (
                 <div className="relative w-full h-full flex items-center justify-center">
+                  {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center p-4 bg-black/10">
+                      <div className="w-[85%] h-[85%] rounded-[24px] bg-white/5 animate-pulse flex items-center justify-center border border-white/10">
+                        <Loader2 className="w-8 h-8 text-white/30 animate-spin" />
+                      </div>
+                    </div>
+                  )}
                   <Image
                     src={activeMedia.src}
                     alt={activeMedia.title}
                     fill
                     className="object-contain p-4 rounded-3xl"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    placeholder="blur"
+                    blurDataURL={getBlurDataUrl(activeMedia.src)}
+                    onLoad={() => setImageLoading(false)}
                   />
                 </div>
               )}
