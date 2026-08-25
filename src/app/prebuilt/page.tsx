@@ -72,6 +72,8 @@ interface Product {
     comingSoon?: boolean;
     features?: { description: string }[];
     offerings?: { description: string }[];
+    images?: string[];
+    category?: string;
 }
 
 // Marquee text items
