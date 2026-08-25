@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import {
@@ -287,29 +288,58 @@ export default function PrebuiltPage() {
                                         className={`grid md:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
                                     >
                                         {/* Product Preview Card */}
-                                        <div className={`${index % 2 === 1 ? 'md:order-2' : ''}`}>
-                                            <div className={`${product.gradient} rounded-3xl p-8 shadow-2xl`}>
-                                                {/* Header */}
-                                                <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 inline-block mb-4">
-                                                    <span className="text-sm font-semibold text-gray-800">{product.name}</span>
-                                                </div>
-
-                                                {/* Tagline */}
-                                                <p className="text-white/90 font-medium mb-2">{product.tagline}</p>
-                                                <p className="text-white font-bold text-lg mb-6">{product.shortDescription}</p>
-
-                                                {/* Preview Area */}
-                                                <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 sm:p-6 min-h-[180px] sm:min-h-[200px] flex items-center justify-center">
-                                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full">
-                                                        {product.highlights && product.highlights.map((highlight) => {
-                                                            const IconComponent = getIcon(highlight.icon);
-                                                            return (
-                                                                <div key={highlight.label} className="bg-white/30 backdrop-blur-sm rounded-xl p-2 sm:p-3 text-center">
-                                                                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white mx-auto mb-1" />
-                                                                    <span className="text-[10px] sm:text-xs text-white/90 leading-tight block">{highlight.label}</span>
+                                        <div className={`${index % 2 === 1 ? 'md:order-2' : ''} w-full`}>
+                                            <div className="bg-gray-50/80 rounded-[32px] p-5 sm:p-7 aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200/40 shadow-sm">
+                                                <div className="bg-white rounded-[24px] p-3 sm:p-4 shadow-lg border border-gray-100/80 w-full h-full flex flex-col justify-between">
+                                                    {/* Browser Chrome Header */}
+                                                    <div className="bg-gray-50/80 border-b border-gray-100/80 px-3 py-2 flex items-center justify-between select-none rounded-t-xl mb-3">
+                                                        <div className="flex gap-1.5">
+                                                            <div className="w-2 h-2 rounded-full bg-red-400/80" />
+                                                            <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
+                                                            <div className="w-2 h-2 rounded-full bg-green-400/80" />
+                                                        </div>
+                                                        <div className="h-4.5 w-32 bg-white border border-gray-100 rounded-md text-[8px] font-mono text-gray-400 flex items-center justify-center">
+                                                            {product.id}.stitchbyte.in
+                                                        </div>
+                                                        <div className="w-6" />
+                                                    </div>
+                                                    
+                                                    {/* Image Container / Preview Area */}
+                                                    <div className="relative flex-1 w-full bg-white flex items-center justify-center overflow-hidden rounded-lg border border-gray-100">
+                                                        {product.images && product.images.length > 0 && product.images[0] ? (
+                                                            <Image
+                                                                src={product.images[0]}
+                                                                alt={product.name}
+                                                                fill
+                                                                className="object-cover object-top"
+                                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                                onError={(e) => {
+                                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <div className={`absolute inset-0 ${product.gradient || 'bg-gradient-to-br from-indigo-500 to-violet-600'} p-6 flex flex-col justify-between text-white`}>
+                                                                <div>
+                                                                    <span className="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded">
+                                                                        {product.category || 'Saas'}
+                                                                    </span>
+                                                                    <h4 className="text-sm font-bold mt-2 leading-tight">{product.name}</h4>
+                                                                    <p className="text-[10px] text-white/80 line-clamp-2 mt-1 leading-normal">{product.tagline}</p>
                                                                 </div>
-                                                            );
-                                                        })}
+                                                                
+                                                                <div className="grid grid-cols-2 gap-1.5 w-full mt-2">
+                                                                    {product.highlights && product.highlights.slice(0, 2).map((highlight) => {
+                                                                        const IconComponent = getIcon(highlight.icon);
+                                                                        return (
+                                                                            <div key={highlight.label} className="bg-white/20 backdrop-blur-sm rounded-lg p-1.5 text-center">
+                                                                                <IconComponent className="w-3.5 h-3.5 text-white mx-auto mb-0.5" />
+                                                                                <span className="text-[8px] text-white/90 leading-tight block truncate">{highlight.label}</span>
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>

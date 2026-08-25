@@ -397,6 +397,17 @@ const nextConfig: NextConfig = {
         destination: "/privacy",
         permanent: true,
       },
+      // Redirect old reverie slugs to bestreverie-tech
+      {
+        source: "/custom-projects/reverie",
+        destination: "/customized/bestreverie-tech",
+        permanent: true,
+      },
+      {
+        source: "/customized/reverie",
+        destination: "/customized/bestreverie-tech",
+        permanent: true,
+      },
       // /custom-projects/* → /customized/* (old route name)
       {
         source: "/custom-projects/:slug",
