@@ -73,14 +73,15 @@ export default function CustomizedAppDetailPage() {
         async function fetchProject() {
             try {
                 setLoading(true);
-                // We'll fetch all projects and find the matching slug.
-                // Alternatively, if there's a specific endpoint for slug, we could use it, 
-                // but fetching the category matching one or all is quick enough for now.
                 const response = await fetch(`/api/custom-projects`);
                 const data = await response.json();
 
                 if (data.success) {
-                    const found = data.data.find((p: Project) => p.slug === slug);
+                    // Decode URL-encoded slug (e.g. %E2%80%94 → —) for robust matching
+                    const decodedSlug = slug ? decodeURIComponent(slug as string) : "";
+                    const found = data.data.find((p: Project) =>
+                        p.slug === decodedSlug || p.slug === slug
+                    );
                     if (found) {
                         setProject(found);
                     } else {
