@@ -397,9 +397,14 @@ const nextConfig: NextConfig = {
         destination: "/privacy",
         permanent: true,
       },
-      // Redirect old WeCare slug (had em dash + ampersand) → clean slug
+      // Redirect old WeCare slug variants → clean slug
       {
-        source: "/customized/wecare-:rest*",
+        source: "/customized/wecare",
+        destination: "/customized/wecare-trusted-nanny-caregiver-booking-platform",
+        permanent: true,
+      },
+      {
+        source: "/customized/wecare%E2%80%94trusted-nanny-%26-caregiver-booking-platform",
         destination: "/customized/wecare-trusted-nanny-caregiver-booking-platform",
         permanent: true,
       },
