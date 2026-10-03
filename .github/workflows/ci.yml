@@ -90,7 +90,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           overwrite: true
-          source: ".next,public,package.json,package-lock.json,next.config.js,next.config.ts"
+          source: ".next,public,package.json,package-lock.json,next.config.js,next.config.ts,prisma"
           target: "/home/ubuntu/apps/stitchbyte"
 
       - name: Deploy On Oracle VM
@@ -103,7 +103,21 @@ jobs:
           command_timeout: 30m
           script: |
             cd ~/apps/stitchbyte
+
+            export NODE_OPTIONS="--max-old-space-size=768"
+
             npm ci --omit=dev
-            pm2 restart stitchbyte || pm2 start npm --name stitchbyte -- start
+
+            npx prisma generate || true
+
+            # Kill any orphaned process lingering on port 3000
+            fuser -k 3000/tcp || true
+
+            # Clean PM2 process recreation to pick up fresh environment and prevent zombie locks
+            pm2 delete stitchbyte || true
+            pm2 start npm --name stitchbyte --update-env -- start
+
             pm2 save
+            sleep 4
             pm2 status
+            pm2 logs stitchbyte --lines 20 --nostream
