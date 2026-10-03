@@ -98,12 +98,12 @@ export default function CareersPage() {
                         <Briefcase className="w-4 h-4" />
                         We're Hiring
                     </span>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
                         Join Our Team
                     </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Be part of a team that's building the future of digital solutions.
-                        We're always looking for passionate individuals to join our journey from Alwar, Rajasthan.
+                    <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
+                        Be part of a team that&apos;s building the future of digital solutions.
+                        We&apos;re always looking for passionate individuals to join our journey from Alwar, Rajasthan.
                     </p>
                 </section>
 

@@ -30,16 +30,16 @@ const CHAT_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
 
 const DEFAULT_MESSAGE: Message = {
     role: "bot",
-    content: "Yo! 👋 I'm StitchBot, your AI sidekick here at StitchByte!\n\nI can answer questions about:\n• Our web/app dev services\n• Our case studies (Lal Sweets, Tradescribe, etc.)\n• The wizards running our agency\n• WhatsApp CRM & Prebuilt SaaS\n\nWhat's on your mind? Ask away or type **/** for quick options! 🚀"
+    content: "Yo! 👋 I'm StitchBot, your AI sidekick here at StitchByte!\n\nI can answer questions about:\n• Our web/app dev services\n• StitchByte case studies & solutions\n• The wizards running our agency\n• WhatsApp CRM & Prebuilt SaaS\n\nWhat's on your mind? Ask away or type **/** for quick options! 🚀"
 };
 
 const HELPER_BUBBLES = [
     "Psst... Stuck? Let's chat! ⚡",
-    "Ask about Lal Sweets case study! 🍬",
+    "Explore StitchByte services! 🚀",
     "How much does a website cost? 💼",
-    "Who is Mayur Bhargava? 🧙‍♂️",
+    "Ask about StitchByte solutions! 💡",
     "Type /joke for a laugh! 🤓",
-    "Check out the themes toggle! 🎨"
+    "Check out StitchBot AI! 🤖"
 ];
 
 // Web Audio API Synthesizer for Retro digital sounds
@@ -120,7 +120,6 @@ export default function Chatbot() {
     const [selectedCommandIdx, setSelectedCommandIdx] = useState(0);
 
     const triggerRef = useRef<HTMLDivElement>(null);
-    const [magneticOffset, setMagneticOffset] = useState({ x: 0, y: 0 });
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const QUICK_REPLIES = [
@@ -237,32 +236,7 @@ export default function Chatbot() {
         }
     }, [messages, isOpen]);
 
-    // Keyboard mouse tracking for trigger magnetic pull
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            if (isOpen || !triggerRef.current) {
-                setMagneticOffset({ x: 0, y: 0 });
-                return;
-            }
-            const rect = triggerRef.current.getBoundingClientRect();
-            const triggerX = rect.left + rect.width / 2;
-            const triggerY = rect.top + rect.height / 2;
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-
-            const dist = Math.hypot(mouseX - triggerX, mouseY - triggerY);
-            if (dist < 110) {
-                const pullX = (mouseX - triggerX) * 0.4;
-                const pullY = (mouseY - triggerY) * 0.4;
-                setMagneticOffset({ x: pullX, y: pullY });
-            } else {
-                setMagneticOffset({ x: 0, y: 0 });
-            }
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [isOpen]);
+    // Input handlers
 
     // Input handlers
     const handleInputChange = (val: string) => {
@@ -362,7 +336,7 @@ export default function Chatbot() {
             } else if (cleanCmd === "/team") {
                 replyContent = "🧙‍♂️ **Meet the StitchByte Wizards:**\n• **Mayur Bhargava** (CEO & Founder) - Master of codebase architecture.\n• **Dhruv** (Co-founder & AI/ML Specialist) - Wizard behind custom LLMs and databases.\n• **Mayank** (Designing Head) - Designer of beautiful pixel-perfect user journeys.";
             } else if (cleanCmd === "/projects") {
-                replyContent = "🏆 **StitchByte Masterpieces:**\n• 🍬 *Lal Sweets Ecom* (Next.js + MongoDB)\n• 💎 *Kirtilals Luxury* (React + PostgreSQL)\n• 📈 *Tradescribe Platform* (React Native + Python)\n• 👗 *Murzban Fashion* (Shopify + React)\n\nType the project name to get more details!";
+                replyContent = "🏆 **StitchByte Featured Solutions:**\n• 🚀 *High-Speed E-Commerce Platforms* (Next.js + MongoDB)\n• 💻 *Full-Stack SaaS Applications* (React + PostgreSQL)\n• 📈 *AI Analytics & Trading Dashboards* (React Native + Python)\n• ⚡ *High-Conversion Brand Web Experiences* (Shopify + Next.js)\n\nAsk about any StitchByte service or request a custom quote!";
             } else if (cleanCmd === "/joke") {
                 const jokes = [
                     "Why did the web developer go broke? Because he lost his domain! 💸",
@@ -808,20 +782,16 @@ export default function Chatbot() {
                 </div>
             )}
 
-            {/* Pulsing Floating Trigger Button */}
+            {/* Fixed Floating Trigger Button */}
             <div 
                 ref={triggerRef}
-                style={{
-                    transform: `translate(${magneticOffset.x}px, ${magneticOffset.y}px)`,
-                    transition: magneticOffset.x === 0 ? "transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)" : "none"
-                }}
                 className="fixed right-6 bottom-6 z-50 flex flex-col items-end gap-3.5 pointer-events-auto"
             >
                 {/* Floating Helper Speech Bubble */}
                 {showHelperBubble && !isOpen && (
                     <div 
                         onClick={handleTriggerClick}
-                        className="bg-black text-white hover:scale-103 active:scale-98 border border-zinc-800 text-xs px-4 py-2.5 rounded-2xl shadow-xl animate-fade-in cursor-pointer max-w-xs whitespace-nowrap z-50 select-none relative mb-1"
+                        className="bg-black text-white active:scale-98 border border-zinc-800 text-xs px-4 py-2.5 rounded-2xl shadow-xl animate-fade-in cursor-pointer max-w-xs whitespace-nowrap z-50 select-none relative mb-1"
                         style={{
                             boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.05)"
                         }}
@@ -837,15 +807,16 @@ export default function Chatbot() {
                     )}
                     <button
                         onClick={handleTriggerClick}
-                        className="relative w-14 h-14 bg-black hover:bg-zinc-900 border border-zinc-850 rounded-full flex items-center justify-center shadow-2xl hover:scale-108 active:scale-95 transition-all group"
+                        className="relative w-14 h-14 bg-black hover:bg-zinc-900 border border-zinc-850 rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-colors cursor-pointer group"
                         style={{
                             boxShadow: "0 0 30px rgba(255, 255, 255, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.2)"
                         }}
+                        aria-label="Toggle StitchBot Chat"
                     >
                         {isOpen ? (
                             <X className="w-5 h-5 text-white group-hover:rotate-90 transition-transform duration-300" />
                         ) : (
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white group-hover:scale-105 transition-transform">
+                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.457 5.704 1.458h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                             </svg>
                         )}

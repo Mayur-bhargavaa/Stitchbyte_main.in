@@ -173,15 +173,14 @@ export default function PrebuiltPage() {
                         Ready-to-Deploy Marketing + Product Solutions
                     </span>
 
-                    <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
                         Prebuilt Saas Software for
                         <br />
-                        <span className="text-gray-900">Growth-Focused Brands</span>
+                        Startups
                     </h1>
 
-                    <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-12">
-                        Skip long timelines and launch with confidence. Our prebuilt platforms combine
-                        web quality, SEO readiness, and user-friendly UX/UI to help you grow faster.
+                    <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
+                        Skip the long wait and high costs. Our prebuilt platforms help you go digital faster without compromising on quality.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -198,29 +197,6 @@ export default function PrebuiltPage() {
                         >
                             Contact Us
                         </Link>
-                    </div>
-
-                    {/* Stats */}
-                    <div className="flex flex-wrap justify-center gap-8 sm:gap-16 mt-16 pt-8 border-t border-gray-100">
-                        <div className="text-center">
-                            <p className="text-3xl sm:text-4xl font-bold text-gray-900">
-                                {loading ? (
-                                    <span className="animate-pulse">...</span>
-                                ) : (
-                                    products.length
-                                )}
-                                +
-                            </p>
-                            <p className="text-sm text-gray-500 mt-1">Product Categories</p>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-3xl sm:text-4xl font-bold text-gray-900">24h - 48h</p>
-                            <p className="text-sm text-gray-500 mt-1">Fast Go-to-Market</p>
-                        </div>
-                        <div className="text-center">
-                            <p className="text-3xl sm:text-4xl font-bold text-gray-900">100%</p>
-                            <p className="text-sm text-gray-500 mt-1">Source Code Ownership</p>
-                        </div>
                     </div>
                 </div>
 
@@ -245,7 +221,7 @@ export default function PrebuiltPage() {
                         <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6">
                             SaaS Products
                         </span>
-                        <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950 text-center mb-4">
                             Explore Our{' '}
                             {loading ? (
                                 <span className="animate-pulse inline-block w-8 h-8 bg-gray-200 rounded-lg translate-y-1"></span>
@@ -254,7 +230,7 @@ export default function PrebuiltPage() {
                             )}{' '}
                             Categories
                         </h2>
-                        <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+                        <p className="text-base sm:text-lg text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed text-center">
                             Choose ready-to-deploy solutions designed to attract, engage, and convert users across industries.
                         </p>
                     </div>
@@ -461,48 +437,6 @@ export default function PrebuiltPage() {
                             `}</style>
                         </div>
                     )}
-                </div>
-            </section>
-
-            {/* SEO Content Section */}
-            <section className="max-w-5xl mx-auto px-6 py-20">
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                    <div>
-                        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                            Prebuilt SaaS Solutions in Alwar
-                        </h2>
-                        <p className="text-gray-600 leading-relaxed mb-4">
-                            What are prebuilt SaaS solutions? Building a product from scratch can take months and cost a lot. At StitchByte, we offer production-ready platforms in Alwar. Our solutions can be ready in just 48 hours. They come with SEO and mobile design built in. This helps you launch faster and save money.
-                        </p>
-                        <p className="text-gray-600 leading-relaxed mb-4">
-                            Why is this good for Alwar businesses? Alwar is a fast-paced market across the Delhi NCR region. Speed is very important here. A restaurant or clinic that waits too long to launch loses money. Our prebuilt tools help you get online instantly. You get a high-quality platform without the high cost of custom work. This lets you compete with global brands right away.
-                        </p>
-                        <p className="text-gray-600 leading-relaxed mb-4">
-                            Our process is fast and clear. First, you pick a platform that fits your business. We have tools for restaurants, shops, and clinics. Next, we customize the design to match your brand. We test everything to make sure it works on all devices. Finally, we handle the launch for you. Your platform can be live in under two days.
-                        </p>
-                        <p className="text-gray-600 leading-relaxed">
-                            Our products include more than just design. They come with full backend logic and admin panels. You can manage your orders and users easily. You also own 100% of the source code. There are no hidden fees or monthly licenses. This gives you the freedom to grow your Alwar business your way.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                            What Every Prebuilt Product Includes
-                        </h3>
-                        <div className="space-y-4">
-                            {[
-                                { title: "SEO-Ready Foundation", desc: "We use clean links and meta tags so your site ranks well on Google. Your site is ready for search engines from day one." },
-                                { title: "Mobile-First Design", desc: "Every screen is built for phones, tablets, and desktops. Your users will have a smooth experience on any device." },
-                                { title: "Admin Dashboard", desc: "Manage your content and orders from a simple panel. You do not need a developer for day-to-day work." },
-                                { title: "Payment & Auth Integration", desc: "We include secure login and payment tools out of the box. Your business is ready to take orders safely." },
-                                { title: "Full Source Code", desc: "You own all the code. You can host it on your own servers and grow your platform without any limits." },
-                            ].map((item) => (
-                                <div key={item.title} className="bg-white border border-gray-200 rounded-xl p-5">
-                                    <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
-                                    <p className="text-sm text-gray-600 leading-relaxed">{item.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </section>
 

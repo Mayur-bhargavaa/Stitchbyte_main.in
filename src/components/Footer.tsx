@@ -72,14 +72,9 @@ export default function Footer() {
                         >
                             <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span>
                         </a>
-                        <p className="text-gray-500 text-xs mb-4 leading-relaxed">
+                        <p className="text-gray-500 text-xs mb-6 leading-relaxed">
                             Based in Alwar, Rajasthan (Delhi NCR) — Operating Exclusively from Alwar
                         </p>
-
-                        <div className="mt-4 mb-6 p-4 bg-gray-50 rounded-2xl border border-gray-100 text-xs text-gray-500 leading-relaxed max-w-sm">
-                            <p className="font-semibold text-gray-755 mb-1">Stitchbyte App Purpose</p>
-                            This website serves as the homepage for the <span className="font-semibold text-gray-850">Stitchbyte</span> OAuth application. Our internal teams use this secure portal to manage content, track inquiries, and monitor deployment status. Read our <Link href="/privacy" className="underline hover:text-gray-800">Privacy Policy</Link> and <Link href="/terms" className="underline hover:text-gray-800">Terms & Conditions</Link> for details.
-                        </div>
 
                         <form onSubmit={handleSubscribe} className="space-y-2">
                             <div className="flex gap-2">
@@ -134,38 +129,6 @@ export default function Footer() {
                             <p className="text-gray-400 text-sm mb-4">Links</p>
                             <ul className="space-y-2">
                                 <li>
-                                    <Link href="/" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/prebuilt" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
-                                        Prebuilt
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/customized" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
-                                        Customized
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/marketing" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
-                                        Marketing
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/marketing?category=seo" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
-                                        SEO
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-
-                        {/* More Resources */}
-                        <div className="text-center md:text-right">
-                            <p className="text-gray-400 text-sm mb-4">More Resources</p>
-                            <ul className="space-y-2">
-                                <li>
                                     <Link href="/blog" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                                         Blogs
                                     </Link>
@@ -183,6 +146,23 @@ export default function Footer() {
                                 <li>
                                     <Link href="/contact" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
                                         Contact
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* More Resources */}
+                        <div className="text-center md:text-right">
+                            <p className="text-gray-400 text-sm mb-4">More Resources</p>
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link href="/work" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
+                                        Case Studies
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/reviews" className="text-gray-600 hover:text-gray-900 text-sm transition-colors">
+                                        Reviews
                                     </Link>
                                 </li>
                                 <li>

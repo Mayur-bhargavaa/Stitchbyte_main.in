@@ -81,7 +81,7 @@ export default function AboutPage() {
                             About StitchByte
                         </div>
 
-                        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 text-gray-900 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
                             Building the{' '}
                             <span className="relative inline-block">
                                 <span className="relative z-10">Digital Future</span>
@@ -89,7 +89,7 @@ export default function AboutPage() {
                             </span>
                         </h1>
 
-                        <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                        <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
                             At StitchByte, we believe digital success is more than just code — it&apos;s SEO visibility, strong brand presence,
                             reliable web development, and intuitive UX/UI. We&apos;re a focused team helping businesses grow with clarity.
                         </p>
@@ -105,7 +105,7 @@ export default function AboutPage() {
                                 <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
                                     Who We Are
                                 </span>
-                                <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950 mb-6 leading-tight">
                                     A Team Dedicated to Growth & Digital Experience
                                 </h2>
                                 <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
@@ -138,7 +138,7 @@ export default function AboutPage() {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="col-span-2 bg-gradient-to-br from-gray-950 to-gray-900 rounded-2xl p-6 text-white">
                                             <Users2 className="w-10 h-10 mb-4 text-emerald-400 animate-pulse" />
-                                            <div className="text-2xl font-bold mb-1" style={{ fontFamily: 'Georgia, serif' }}>Creative Team</div>
+                                            <div className="text-2xl font-bold mb-1">Creative Team</div>
                                             <p className="text-gray-400 text-xs leading-relaxed">SEO Analysts, Developers, Visual Designers & Launch Strategists working together.</p>
                                         </div>
                                         {[
@@ -181,7 +181,7 @@ export default function AboutPage() {
                                 <Users className="w-4 h-4 text-emerald-600" />
                                 Our Team
                             </span>
-                            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950">
                                 Meet the Minds Behind StitchByte
                             </h2>
                             <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
@@ -229,7 +229,7 @@ export default function AboutPage() {
                                         <span className="text-xs font-bold text-emerald-650 tracking-wider uppercase mb-2 block">
                                             {member.role}
                                         </span>
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                                        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 mb-4">
                                             {member.name}
                                         </h3>
                                         <p className="text-gray-650 text-sm leading-relaxed mb-4 flex-1">
@@ -249,7 +249,7 @@ export default function AboutPage() {
                             <span className="inline-block px-4 py-1.5 bg-amber-50 text-amber-700 text-sm font-medium rounded-full mb-6 border border-amber-100">
                                 Philosophy
                             </span>
-                            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950">
                                 What Makes StitchByte Different
                             </h2>
                         </div>
@@ -262,7 +262,7 @@ export default function AboutPage() {
                                         <Target className="w-3.5 h-3.5" />
                                         Core Focus
                                     </span>
-                                    <h3 className="text-3xl font-bold mb-4" style={{ fontFamily: 'Georgia, serif' }}>Our Vision & Mission</h3>
+                                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Our Vision & Mission</h3>
                                     <p className="text-gray-300 text-sm leading-relaxed mb-6">
                                         To be the go-to growth partner for businesses worldwide — strengthening digital presence through search visibility, engineering excellence, and design purity.
                                     </p>
@@ -333,7 +333,7 @@ export default function AboutPage() {
                             <span className="inline-block px-4 py-1.5 bg-cyan-50 text-cyan-700 text-sm font-medium rounded-full mb-6 border border-cyan-100">
                                 Benefits
                             </span>
-                            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950">
                                 Benefits of Working With Us
                             </h2>
                         </div>
@@ -361,62 +361,6 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* Alwar SEO Editorial Section */}
-                <section className="py-24 border-t border-gray-100 bg-slate-50/20">
-                    <div className="max-w-7xl mx-auto px-6">
-                        <div className="grid lg:grid-cols-12 gap-12 items-start">
-                            {/* Left block - Editorial Text */}
-                            <div className="lg:col-span-7 space-y-6">
-                                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
-                                    A Leading Digital Agency in Alwar (Delhi NCR)
-                                </h2>
-                                <div className="space-y-6 text-gray-650 text-base leading-relaxed">
-                                    <p>
-                                        What does a full-service digital agency do? At StitchByte, we help your business grow. We are based in Alwar, Rajasthan (Delhi NCR), and operate exclusively from Alwar to deliver complete digital solutions. We build websites, create mobile apps, manage SEO, and handle marketing and design. By putting everything under one roof, we save you time and optimize communication.
-                                    </p>
-                                    <p>
-                                        Why is this approach good for businesses? Alwar and the larger Delhi NCR region is a fast-growing hub for business and tech. Regional competition is increasing every day. You cannot afford to have separate teams for design, SEO, and development. We bring everyone together to work as one, leading to faster websites and better marketing results.
-                                    </p>
-                                    <p>
-                                        We work with you every step of the way. We start by learning about your industry and your goals. We do not use generic templates. Instead, we build custom solutions that fit your needs. Whether you need an e-commerce site or a local SEO boost, we are here to help. We provide regular updates so you always know where your project stands.
-                                    </p>
-                                    <p>
-                                        Our mission is to help you scale your business. We combine expert engineering with creative marketing. This means your website will look great and attract more customers. You will have full ownership of your code with no hidden fees. StitchByte is a trusted partner for businesses in Alwar and globally looking to grow in the digital world.
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Right block - Core Pillars */}
-                            <div className="lg:col-span-5 space-y-6">
-                                <h3 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                                    Core Pillars of Our Agency
-                                </h3>
-                                <div className="space-y-4">
-                                    {[
-                                        { title: "Strategic Digital Consulting", desc: "We study your business model and recommend the best tech and marketing for your goals." },
-                                        { title: "Full-Stack Engineering Excellence", desc: "Our team builds fast and secure apps using modern tech like React and Next.js." },
-                                        { title: "Data-Driven Marketing & SEO", desc: "We find new customers and leads through SEO and smart ad campaigns." },
-                                        { title: "Human-Centric UI/UX Design", desc: "We design beautiful interfaces that are easy to use and help you get more sales." },
-                                        { title: "Long-Term Growth Partnerships", desc: "We provide ongoing support to make sure your platform grows with your business." },
-                                    ].map((item, idx) => (
-                                        <div key={idx} className="bg-white border border-gray-150 rounded-2xl p-5 shadow-xs hover:border-gray-300 transition-all duration-350">
-                                            <div className="flex items-start gap-4">
-                                                <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-lg px-2 py-0.5 mt-0.5">
-                                                    0{idx + 1}
-                                                </span>
-                                                <div>
-                                                    <h4 className="font-semibold text-gray-900 mb-1 text-base">{item.title}</h4>
-                                                    <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
                 {/* CTA Section */}
                 <section className="py-24 border-t border-gray-100 bg-white">
                     <div className="max-w-4xl mx-auto px-6 text-center">
@@ -426,7 +370,7 @@ export default function AboutPage() {
                                 <div className="absolute -top-12 -right-12 w-32 h-32 bg-violet-100 rounded-full blur-2xl opacity-60 pointer-events-none" />
                                 <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-emerald-100 rounded-full blur-2xl opacity-60 pointer-events-none" />
 
-                                <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-gray-950">
                                     Ready to Build Your Digital Future?
                                 </h2>
                                 <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">

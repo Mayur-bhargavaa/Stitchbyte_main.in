@@ -116,10 +116,7 @@ export default function CaseStudiesPage() {
               Client Success Stories
             </span>
 
-            <h1
-              className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 text-gray-900 leading-tight"
-              style={{ fontFamily: "Georgia, serif" }}
-            >
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
               Our{" "}
               <span className="relative inline-block">
                 <span className="relative z-10">Case Studies</span>
@@ -127,7 +124,7 @@ export default function CaseStudiesPage() {
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
               Real results from real businesses. See how we help brands grow
               through performance marketing, SEO, and strategic digital
               execution.

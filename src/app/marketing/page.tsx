@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProgressiveImageModalViewer from "@/components/ProgressiveImageModalViewer";
 
 interface MediaItem {
   id: string;
@@ -336,10 +337,10 @@ export default function GalleryPage() {
               <Sparkles className="w-3.5 h-3.5" />
               Creative Asset Showcase
             </span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight leading-none mb-4" style={{ fontFamily: "Georgia, serif" }}>
-              Graphics & Media <span className="text-slate-400 font-light italic">Showcase</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 leading-[1.1] mb-4">
+              Graphics & Media Showcase
             </h1>
-            <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal leading-relaxed">
               Browse our creative portfolios and marketing graphics across various industries.
             </p>
           </div>
@@ -446,26 +447,11 @@ export default function GalleryPage() {
                   className="max-w-full max-h-full object-contain rounded-xl"
                 />
               ) : (
-                <div className="relative w-full h-full flex items-center justify-center">
-                  {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center p-4 bg-black/10">
-                      <div className="w-[85%] h-[85%] rounded-[24px] bg-white/5 animate-pulse flex items-center justify-center border border-white/10">
-                        <Loader2 className="w-8 h-8 text-white/30 animate-spin" />
-                      </div>
-                    </div>
-                  )}
-                  <Image
-                    src={getThumbUrl(activeMedia.src, 1200)}
-                    alt={activeMedia.title}
-                    fill
-                    className="object-contain p-4 rounded-3xl"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    placeholder="blur"
-                    blurDataURL={getBlurDataUrl(activeMedia.src)}
-                    onLoad={() => setImageLoading(false)}
-                    priority
-                  />
-                </div>
+                <ProgressiveImageModalViewer
+                  src={activeMedia.src}
+                  alt={activeMedia.title}
+                  thumbnailSrc={getThumbUrl(activeMedia.src, 600)}
+                />
               )}
             </div>
 

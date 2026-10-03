@@ -7,7 +7,26 @@ export function PWARegister() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
-    // Register service worker
+    // In development, unregister service workers and clear cache to prevent hydration mismatch
+    if (process.env.NODE_ENV !== "production") {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const registration of registrations) {
+            registration.unregister();
+          }
+        });
+        if (typeof window !== "undefined" && "caches" in window) {
+          caches.keys().then((names) => {
+            for (const name of names) {
+              caches.delete(name);
+            }
+          });
+        }
+      }
+      return;
+    }
+
+    // Register service worker in production only
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/sw.js")

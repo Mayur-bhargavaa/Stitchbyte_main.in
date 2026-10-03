@@ -1,11 +1,11 @@
 const CACHE_NAME = 'qr-restaurant-v1';
-const OFFLINE_URL = '/offline';
+const OFFLINE_URL = '/restaurant/offline';
 
 // Assets to cache immediately on install
 const PRECACHE_ASSETS = [
   '/',
-  '/offline',
-  '/signin',
+  '/restaurant/offline',
+  '/restaurant/signin',
   '/manifest.json',
 ];
 

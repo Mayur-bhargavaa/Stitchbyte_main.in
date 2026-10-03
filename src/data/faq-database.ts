@@ -39,16 +39,16 @@ export const FAQ_DATABASE: FAQItem[] = [
         priority: 90
     },
     {
-        keywords: ["case studies", "projects", "work", "portfolio", "websites you built", "what have you built", "lal sweets", "kirtilals", "tradescribe", "murzban", "clients", "portfolio"],
+        keywords: ["case studies", "projects", "work", "portfolio", "websites you built", "what have you built", "solutions", "clients"],
         question: "What projects or case studies have you done?",
-        answer: "Oh, we've built some absolute masterpieces! 🏆 Here are our heavy-hitters:\n\n• 🍬 **Lal Sweets Ecom**: High-speed sweets store with smart combo building. (Tech: Next.js + MongoDB)\n• 💎 **Kirtilals Luxury**: High-end diamond jewelry portal with 1,500+ designs. (Tech: React + PostgreSQL)\n• 📈 **Tradescribe Platform**: Trading journal & AI analytics platform. (Tech: React Native + Python)\n• 👗 **Murzban Luxury**: Men's & women's designer fashion storefront. (Tech: Shopify + React)\n\nWant us to craft a masterpiece for you? Type `/quote` or hit us up! 🚀",
+        answer: "Oh, we've built some absolute masterpieces! 🏆 Here are our heavy-hitters:\n\n• 🛍️ **High-Speed E-Commerce Platforms**: Next.js & Shopify stores with ultra-fast checkouts and custom product customizers.\n• 💎 **Luxury Web Portals**: High-end interactive catalogs with bespoke animations and premium UI/UX.\n• 📈 **AI Analytics & SaaS Systems**: Real-time trading dashboards, automation workflows, and custom AI engines.\n• ⚡ **Full-Stack Web & Mobile Apps**: Scalable cloud architectures engineered for high concurrency and zero downtime.\n\nWant us to craft a masterpiece for you? Type `/quote` or hit us up! 🚀",
         category: "projects",
         priority: 95
     },
     {
         keywords: ["hi", "hello", "hey", "hii", "yo", "wassup", "greetings", "helloo"],
         question: "Greeting",
-        answer: "Yo! 👋 Welcome to StitchByte!\n\nI'm StitchBot, your AI sidekick. What can I do for you today?\n\nAsk me about:\n• Our web/app services\n• Pricing & timelines\n• Our case studies (like Lal Sweets or Tradescribe)\n• How to get started",
+        answer: "Yo! 👋 Welcome to StitchByte!\n\nI'm StitchBot, your AI sidekick. What can I do for you today?\n\nAsk me about:\n• Our web/app services\n• Pricing & timelines\n• StitchByte case studies & solutions\n• How to get started",
         category: "greeting",
         priority: 85
     },
@@ -124,7 +124,7 @@ export const FAQ_DATABASE: FAQItem[] = [
     }
 ];
 
-export const DEFAULT_RESPONSE = "Ayy, I didn't quite catch that. My programming is cool, but sometimes I glitch! 🤖💥\n\n**Try asking me about:**\n• Our web/app services\n• The wizards behind StitchByte (Mayur, Dhruv, Mayank)\n• Our case studies (Lal Sweets, Tradescribe, etc.)\n• Ballpark pricing & timelines\n• Our Alwar location\n\nOr just type **'contact'** and I'll notify the humans!";
+export const DEFAULT_RESPONSE = "Ayy, I didn't quite catch that. My programming is cool, but sometimes I glitch! 🤖💥\n\n**Try asking me about:**\n• Our web/app services\n• The wizards behind StitchByte (Mayur, Dhruv, Mayank)\n• StitchByte case studies & solutions\n• Ballpark pricing & timelines\n• Our Alwar location\n\nOr just type **'contact'** and I'll notify the humans!";
 
 export const QUICK_REPLIES = [
     "What services do you offer?",

@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ProgressiveImageModalViewer from "@/components/ProgressiveImageModalViewer";
 
 interface MediaItem {
   id: string;
@@ -365,15 +366,11 @@ export default function GalleryPage() {
                   className="max-w-full max-h-full object-contain rounded-xl"
                 />
               ) : (
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <Image
-                    src={activeMedia.src}
-                    alt={activeMedia.title}
-                    fill
-                    className="object-contain p-4 rounded-3xl"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
+                <ProgressiveImageModalViewer
+                  src={activeMedia.src}
+                  alt={activeMedia.title}
+                  thumbnailSrc={activeMedia.src}
+                />
               )}
             </div>
 
