@@ -1,24 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import {
   Mail,
   Phone,
   MapPin,
   Send,
-  Github,
-  Globe,
   Linkedin,
-  Twitter,
-  ArrowLeft,
   CheckCircle,
   Loader2,
   MessageSquare,
   Clock,
   Users,
-  Sparkles,
   Instagram,
+  ArrowRight,
+  User,
+  AtSign,
+  Paperclip,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -33,7 +31,6 @@ export default function ContactPage() {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-
   const [errorText, setErrorText] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,23 +42,18 @@ export default function ContactPage() {
       let tracking = null;
       try {
         const stored = localStorage.getItem("stitchbyte_tracking");
-        if (stored) {
-          tracking = JSON.parse(stored);
-        }
+        if (stored) tracking = JSON.parse(stored);
       } catch (err) {
         console.error("Error loading tracking data:", err);
       }
 
-      // Map subject and message to the API fields
-      const messageBody = formData.subject 
-        ? `[Subject: ${formData.subject}] ${formData.message}` 
+      const messageBody = formData.subject
+        ? `[Subject: ${formData.subject}] ${formData.message}`
         : formData.message;
 
-      const response = await fetch('/api/enquiry', {
+      const response = await fetch("/api/enquiry", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
@@ -72,14 +64,10 @@ export default function ContactPage() {
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit enquiry. Please try again.");
-      }
+      if (!response.ok) throw new Error(data.error || "Failed to submit enquiry. Please try again.");
 
       setSent(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      // Reset success message after 5 seconds
       setTimeout(() => setSent(false), 5000);
     } catch (err: any) {
       console.error("Error submitting contact form:", err);
@@ -90,7 +78,6 @@ export default function ContactPage() {
   };
 
   const [emailText, setEmailText] = useState("");
-  
   useEffect(() => {
     setEmailText("info" + "@" + "stitchbyte.in");
   }, []);
@@ -125,54 +112,65 @@ export default function ContactPage() {
       ),
       href: "https://wa.me/919414292675",
       label: "WhatsApp",
+      color: "text-green-500",
     },
-    { icon: Linkedin, href: "https://www.linkedin.com/company/stitchbyte1", label: "LinkedIn" },
-    { icon: Instagram, href: "https://www.instagram.com/stitchbyte/", label: "Instagram" },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/company/stitchbyte1",
+      label: "LinkedIn",
+      color: "text-blue-600",
+    },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/stitchbyte/",
+      label: "Instagram",
+      color: "text-pink-500",
+    },
   ];
 
   const features = [
     {
       icon: MessageSquare,
       title: "Focused Discovery",
-      description: "Share your goals for SEO, web, or UX/UI and we map next steps",
+      description: "Share your goals for SEO, web, or UX/UI and we map next steps.",
+      iconBg: "bg-blue-50",
+      iconColor: "text-blue-500",
     },
     {
       icon: Users,
       title: "Cross-Functional Team",
-      description: "Work with strategists, developers, and designers in one flow",
+      description: "Work with strategists, developers, and designers in one flow.",
+      iconBg: "bg-purple-50",
+      iconColor: "text-purple-500",
     },
     {
       icon: Clock,
       title: "Quick Turnaround",
-      description: "Get clear timelines and practical execution from day one",
+      description: "Get clear timelines and practical execution from day one.",
+      iconBg: "bg-red-50",
+      iconColor: "text-red-500",
     },
   ];
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      {/* Global Grid Background - Same as Home Page */}
+      {/* Grid background */}
       <div
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px'
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
         }}
       />
       <div
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
-          `,
-          backgroundSize: '240px 240px'
+          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)`,
+          backgroundSize: "240px 240px",
         }}
       />
 
-      {/* Decorative Corner Elements - Same as Home Page */}
+      {/* Decorative corners */}
       <div className="fixed top-20 left-10 w-40 h-40 z-0 pointer-events-none">
         <div className="w-full h-full border border-gray-200 rounded-3xl rotate-12 opacity-40" />
         <div className="absolute top-4 left-4 w-full h-full border border-gray-300 rounded-3xl rotate-12 opacity-30" />
@@ -181,57 +179,81 @@ export default function ContactPage() {
         <div className="w-full h-full border border-gray-200 rounded-full opacity-40" />
         <div className="absolute top-3 left-3 w-full h-full border border-gray-300 rounded-full opacity-30" />
       </div>
-      <div className="fixed top-1/3 right-20 w-4 h-4 bg-gray-900 rounded-full opacity-20 z-0 pointer-events-none" />
-      <div className="fixed top-1/2 left-16 w-3 h-3 bg-gray-900 rounded-full opacity-15 z-0 pointer-events-none" />
-      <div className="fixed bottom-1/3 right-1/4 w-2 h-2 bg-gray-900 rounded-full opacity-10 z-0 pointer-events-none" />
 
-      {/* Content */}
       <div className="relative z-10">
-        {/* Navigation */}
         <Navbar />
 
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-6 pt-32 pb-16 text-center">
+        {/* Hero */}
+        <section className="max-w-7xl mx-auto px-6 pt-32 pb-16 text-center relative">
+          {/* Handwritten annotation top-right */}
+          <div className="absolute right-8 top-32 text-right pointer-events-none hidden lg:block">
+            <p className="font-serif italic text-gray-400 text-sm leading-relaxed tracking-wide">
+              Ideas<br />People<br />Process<br />Impact
+            </p>
+            <svg className="mt-1 ml-auto w-10 h-10 text-gray-300" viewBox="0 0 40 40" fill="none">
+              <path d="M30 8 Q20 30 8 34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+              <path d="M4 32 L8 34 L10 30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+          </div>
+
+          {/* Decorative spark lines */}
+          <div className="absolute left-1/2 top-24 pointer-events-none hidden sm:block" style={{ marginLeft: "-20px" }}>
+            <svg width="30" height="20" viewBox="0 0 30 20" fill="none">
+              <line x1="0" y1="10" x2="12" y2="2" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="0" y1="10" x2="12" y2="18" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </div>
+
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
             <Mail className="w-4 h-4" />
             Get in Touch
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
-            Let&apos;s Talk
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 leading-[1.1] mb-6">
+            {"Let's "}
+            <span className="text-[#EF4444]">Talk</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
-            Tell us what you need — SEO growth, digital presence, web development, or UX/UI improvements.
-            We&apos;ll guide you with a clear plan and practical execution.
+
+          <p className="text-base sm:text-lg text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10">
+            Tell us what you need — SEO growth, digital presence, web development,
+            or UX/UI improvements. We&apos;ll guide you with a clear plan and practical execution.
           </p>
         </section>
 
-        {/* Features */}
+        {/* Feature cards */}
         <section className="max-w-7xl mx-auto px-6 pb-16">
           <div className="grid md:grid-cols-3 gap-6">
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="flex items-center gap-4 p-6 bg-white border border-gray-200 rounded-2xl hover:shadow-lg transition-shadow"
+                className="flex items-start gap-4 p-6 bg-white border border-gray-200 rounded-2xl hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <feature.icon className="w-5 h-5 text-gray-700" />
+                <div className={`w-12 h-12 ${feature.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                  <feature.icon className={`w-5 h-5 ${feature.iconColor}`} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-0.5">{feature.title}</h3>
-                  <p className="text-sm text-gray-500">{feature.description}</p>
+                  <h3 className="font-semibold text-gray-900 mb-1">{feature.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Main Content */}
+        {/* Main content */}
         <section className="max-w-7xl mx-auto px-6 pb-24">
           <div className="grid lg:grid-cols-5 gap-8">
+
             {/* Contact Form */}
             <div className="lg:col-span-3">
               <div className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tell Us About Your Goals</h2>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">Tell Us About Your Goals</h2>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-500 text-xs font-semibold rounded-full border border-red-100 uppercase tracking-wide">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block" />
+                    We Reply Within 24 Hours
+                  </span>
+                </div>
 
                 {sent ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -239,94 +261,87 @@ export default function ContactPage() {
                       <CheckCircle className="w-8 h-8 text-gray-900" />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent!</h3>
-                    <p className="text-gray-600">
-                      Thanks for reaching out. Our team will get back with next steps soon.
-                    </p>
+                    <p className="text-gray-600">Thanks for reaching out. Our team will get back with next steps soon.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Your Name
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                          }
-                          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
-                          placeholder="John Doe"
-                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                        <div className="relative">
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <input
+                            type="text"
+                            required
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            placeholder="John Doe"
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Email Address
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) =>
-                            setFormData({ ...formData, email: e.target.value })
-                          }
-                          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
-                          placeholder="john@example.com"
-                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <div className="relative">
+                          <AtSign className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <input
+                            type="email"
+                            required
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            placeholder="john@example.com"
+                          />
+                        </div>
                       </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Mobile Number
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          pattern="[0-9]{10}"
-                          title="Please enter a valid 10-digit mobile number"
-                          value={formData.phone}
-                          onChange={(e) =>
-                            setFormData({ ...formData, phone: e.target.value })
-                          }
-                          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
-                          placeholder="9876543210"
-                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
+                        <div className="relative">
+                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <input
+                            type="tel"
+                            required
+                            pattern="[0-9]{10}"
+                            title="Please enter a valid 10-digit mobile number"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            placeholder="9876543210"
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Subject
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.subject}
-                          onChange={(e) =>
-                            setFormData({ ...formData, subject: e.target.value })
-                          }
-                          className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
-                          placeholder="SEO, website, UX/UI, or digital growth support"
-                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                        <div className="relative">
+                          <Paperclip className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <input
+                            type="text"
+                            required
+                            value={formData.subject}
+                            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            placeholder="SEO, website, UX/UI, or digital growth support"
+                          />
+                        </div>
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Message
-                      </label>
-                      <textarea
-                        required
-                        rows={5}
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all resize-none"
-                        placeholder="Share your business goals, current challenges, and what outcome you want..."
-                      />
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                      <div className="relative">
+                        <MessageSquare className="absolute left-3.5 top-3.5 w-4 h-4 text-gray-400" />
+                        <textarea
+                          required
+                          rows={5}
+                          value={formData.message}
+                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                          className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all resize-none"
+                          placeholder="Share your business goals, current challenges, and what outcome you want..."
+                        />
+                      </div>
                     </div>
 
                     {errorText && (
@@ -348,7 +363,7 @@ export default function ContactPage() {
                       ) : (
                         <>
                           <Send className="w-5 h-5" />
-                          Send Message
+                          Send Message →
                         </>
                       )}
                     </button>
@@ -357,35 +372,33 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact Info */}
+            {/* Right Panel */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Contact Details */}
-              <div className="bg-white border border-gray-200 rounded-3xl p-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Contact Information</h2>
-                <div className="space-y-5">
+
+              {/* Contact Info */}
+              <div className="bg-white border border-gray-200 rounded-3xl p-8 overflow-hidden relative">
+                <h2 className="text-xl font-bold text-gray-900 mb-5">Contact Information</h2>
+                <div className="space-y-4">
                   {contactInfo.map((item, i) => (
-                    <a
-                      key={i}
-                      href={item.href}
-                      className="flex items-center gap-4 group"
-                    >
-                      <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                        <item.icon className="w-5 h-5 text-gray-600 group-hover:text-gray-900 transition-colors" />
+                    <a key={i} href={item.href} className="flex items-start gap-3 group">
+                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-gray-200 transition-colors">
+                        <item.icon className="w-4 h-4 text-gray-600" />
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">{item.label}</p>
-                        <p className="font-medium text-gray-900 group-hover:text-gray-700 transition-colors">
-                          {item.value}
-                        </p>
+                        <p className="text-xs text-gray-400 mb-0.5">{item.label}</p>
+                        <p className="font-medium text-gray-900 text-sm group-hover:text-gray-700 transition-colors">{item.value}</p>
                       </div>
                     </a>
                   ))}
                 </div>
+                <div className="absolute bottom-0 right-0 w-28 h-28 opacity-10 pointer-events-none">
+                  <div className="w-full h-full bg-gradient-to-tl from-gray-300 to-transparent rounded-tl-3xl" />
+                </div>
               </div>
 
-              {/* Social Links */}
-              <div className="bg-white border border-gray-200 rounded-3xl p-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Follow Us</h2>
+              {/* Follow Us */}
+              <div className="bg-white border border-gray-200 rounded-3xl p-8 relative">
+                <h2 className="text-xl font-bold text-gray-900 mb-5">Follow Us</h2>
                 <div className="grid grid-cols-2 gap-3">
                   {socialLinks.map((social, i) => (
                     <a
@@ -393,41 +406,33 @@ export default function ContactPage() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all group"
+                      className="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all group"
                     >
-                      <social.icon className="w-5 h-5 text-gray-600 group-hover:text-gray-900 transition-colors" />
-                      <span className="font-medium text-sm text-gray-700 group-hover:text-gray-900">{social.label}</span>
+                      <div className="flex items-center gap-2.5">
+                        <social.icon className={`w-4 h-4 ${social.color}`} />
+                        <span className="font-medium text-sm text-gray-700 group-hover:text-gray-900">{social.label}</span>
+                      </div>
+                      <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-700 group-hover:translate-x-0.5 transition-all" />
                     </a>
                   ))}
                 </div>
+
+                {/* Handwritten annotation */}
+                <div className="absolute -bottom-1 right-3 pointer-events-none hidden lg:block">
+                  <p className="font-serif italic text-gray-400 text-xs text-right leading-relaxed">
+                    {"Let's"}<br />Connect<br />Here
+                  </p>
+                  <svg className="ml-auto w-8 h-8 text-gray-300 -mt-1" viewBox="0 0 32 32" fill="none">
+                    <path d="M6 6 Q14 20 26 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+                    <path d="M22 22 L26 24 L24 28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  </svg>
+                </div>
               </div>
 
-              {/* Office Hours */}
-              <div className="bg-white border border-gray-200 rounded-3xl p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <Clock className="w-5 h-5 text-gray-700" />
-                  <h2 className="text-xl font-bold text-gray-900">Office Hours</h2>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Monday - Friday</span>
-                    <span className="font-medium text-gray-900">9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Saturday</span>
-                    <span className="font-medium text-gray-900">10:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Sunday</span>
-                    <span className="font-medium text-gray-500">Closed</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* Shared Footer Component */}
         <Footer />
       </div>
     </div>
