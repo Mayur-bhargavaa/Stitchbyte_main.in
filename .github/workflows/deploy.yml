@@ -1,13 +1,18 @@
 name: Deploy Stitchbyte
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - "StitchByte CI"
     branches:
       - main
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout Repository

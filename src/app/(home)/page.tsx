@@ -1633,9 +1633,8 @@ export default function LandingPage() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-gray-950">
                 Behind the Scenes at Stitch<span className="text-[#EF4444]">Byte</span>
               </h2>
-              {/* Decorative playful red spark lines // */}
-              <span className="absolute -top-3 -right-6 text-[#EF4444] text-xl font-bold select-none rotate-12">
-                //
+              <span className="absolute -top-3 -right-6 text-[#EF4444] text-xl font-bold select-none rotate-12" aria-hidden="true">
+                {'//'}
               </span>
             </div>
 
