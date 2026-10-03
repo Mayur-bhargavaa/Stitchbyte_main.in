@@ -268,28 +268,34 @@ export default function ContactPage() {
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-                        <div className="relative">
-                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <div className="flex items-center border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all">
+                          <span className="flex items-center justify-center w-11 h-11 flex-shrink-0">
+                            <User className="w-4 h-4 text-gray-400" />
+                          </span>
+                          <span className="w-px h-5 bg-gray-200 flex-shrink-0" />
                           <input
                             type="text"
                             required
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            className="flex-1 px-3 py-3 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none text-sm"
                             placeholder="John Doe"
                           />
                         </div>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                        <div className="relative">
-                          <AtSign className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <div className="flex items-center border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all">
+                          <span className="flex items-center justify-center w-11 h-11 flex-shrink-0">
+                            <AtSign className="w-4 h-4 text-gray-400" />
+                          </span>
+                          <span className="w-px h-5 bg-gray-200 flex-shrink-0" />
                           <input
                             type="email"
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            className="flex-1 px-3 py-3 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none text-sm"
                             placeholder="john@example.com"
                           />
                         </div>
@@ -299,8 +305,11 @@ export default function ContactPage() {
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
-                        <div className="relative">
-                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <div className="flex items-center border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all">
+                          <span className="flex items-center justify-center w-11 h-11 flex-shrink-0">
+                            <Phone className="w-4 h-4 text-gray-400" />
+                          </span>
+                          <span className="w-px h-5 bg-gray-200 flex-shrink-0" />
                           <input
                             type="tel"
                             required
@@ -308,21 +317,24 @@ export default function ContactPage() {
                             title="Please enter a valid 10-digit mobile number"
                             value={formData.phone}
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            className="flex-1 px-3 py-3 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none text-sm"
                             placeholder="9876543210"
                           />
                         </div>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                        <div className="relative">
-                          <Paperclip className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <div className="flex items-center border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all">
+                          <span className="flex items-center justify-center w-11 h-11 flex-shrink-0">
+                            <Paperclip className="w-4 h-4 text-gray-400" />
+                          </span>
+                          <span className="w-px h-5 bg-gray-200 flex-shrink-0" />
                           <input
                             type="text"
                             required
                             value={formData.subject}
                             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all"
+                            className="flex-1 px-3 py-3 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none text-sm"
                             placeholder="SEO, website, UX/UI, or digital growth support"
                           />
                         </div>
@@ -331,14 +343,17 @@ export default function ContactPage() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                      <div className="relative">
-                        <MessageSquare className="absolute left-3.5 top-3.5 w-4 h-4 text-gray-400" />
+                      <div className="flex items-start border border-gray-200 rounded-xl bg-white overflow-hidden focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all">
+                        <span className="flex items-start justify-center w-11 pt-3.5 flex-shrink-0">
+                          <MessageSquare className="w-4 h-4 text-gray-400" />
+                        </span>
+                        <span className="w-px bg-gray-200 flex-shrink-0 self-stretch" />
                         <textarea
                           required
                           rows={5}
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-900 focus:ring-1 focus:ring-gray-900 transition-all resize-none"
+                          className="flex-1 px-3 py-3 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none text-sm resize-none"
                           placeholder="Share your business goals, current challenges, and what outcome you want..."
                         />
                       </div>
