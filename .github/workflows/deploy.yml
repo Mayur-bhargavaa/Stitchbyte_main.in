@@ -5,7 +5,7 @@ on:
     workflows:
       - "StitchByte CI"
     branches:
-      - main
+      - _disabled_use_ci_yml_instead
     types:
       - completed
 
