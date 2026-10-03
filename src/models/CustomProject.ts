@@ -43,7 +43,6 @@ const CustomProjectSchema = new Schema<ICustomProject>(
 
 // Create indexes for faster queries
 CustomProjectSchema.index({ category: 1 });
-CustomProjectSchema.index({ slug: 1 });
 CustomProjectSchema.index({ isActive: 1 });
 CustomProjectSchema.index({ order: 1 });
 
