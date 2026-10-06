@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "Understand the cancellation and refund terms for web development, design, and SEO services at StitchByte.",
     type: "website",
     url: "https://stitchbyte.in/refund-policy",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "StitchByte Refund Policy" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "StitchByte Refund Policy" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Cancellation & Refund Policy | StitchByte",
     description:
       "Understand the cancellation and refund terms for web development, design, and SEO services at StitchByte.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

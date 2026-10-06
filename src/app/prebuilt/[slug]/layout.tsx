@@ -39,9 +39,17 @@ export async function generateMetadata(
         },
         openGraph: {
             title: `${product.name} — Prebuilt by StitchByte`,
+            description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
+            images: [{ url: product.image || "/og-image.png", width: 1200, height: 630, alt: product.name }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${product.name} — Prebuilt by StitchByte`,
+            description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
+            images: [product.image || "/og-image.png"],
         },
     };
 }

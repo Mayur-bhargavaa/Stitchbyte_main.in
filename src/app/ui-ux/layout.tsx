@@ -15,14 +15,14 @@ export const metadata: Metadata = {
       "Design user-first digital experiences with StitchByte UI & UX services, from research and flows to modern interface systems.",
     type: "website",
     url: "https://stitchbyte.in/ui-ux",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "UI & UX Design by StitchByte" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "UI & UX Design by StitchByte" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "UI & UX Design Services | StitchByte",
     description:
       "Design user-first digital experiences with StitchByte UI & UX services.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

@@ -40,9 +40,17 @@ export async function generateMetadata(
         },
         openGraph: {
             title: project.title,
+            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
+            images: [{ url: "/og-image.png", width: 1200, height: 630, alt: project.title }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: project.title,
+            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+            images: ["/og-image.png"],
         },
     };
 }

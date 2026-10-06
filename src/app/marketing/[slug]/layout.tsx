@@ -40,9 +40,17 @@ export async function generateMetadata(
         },
         openGraph: {
             title: `${study.brand} Case Study`,
+            description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
+            images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `${study.brand} Case Study` }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${study.brand} Case Study`,
+            description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
+            images: ["/og-image.png"],
         },
     };
 }

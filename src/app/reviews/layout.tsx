@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "Read real client reviews and testimonials about Stitchbyte's SEO, web development, UX/UI design, and digital marketing services.",
     type: "website",
     url: "https://stitchbyte.in/reviews",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "Stitchbyte Client Reviews" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Stitchbyte Client Reviews" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Client Reviews & Testimonials | Stitchbyte",
     description:
       "Read real client reviews and testimonials about Stitchbyte's SEO, web development, UX/UI design, and digital marketing services.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

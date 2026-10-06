@@ -87,7 +87,7 @@ export const metadata: Metadata = {
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: [
       {
-        url: "/logo-stitchbyte.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Stitchbyte — Custom Software & Digital Agency",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     title: "Stitchbyte | Custom Software & Digital Agency",
     description:
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

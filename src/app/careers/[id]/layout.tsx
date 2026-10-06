@@ -63,9 +63,17 @@ export async function generateMetadata(
         },
         openGraph: {
             title: `${job.title} — Join StitchByte`,
+            description: `Apply for the ${job.title} position at StitchByte.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
+            images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `${job.title} — Careers at StitchByte` }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${job.title} | Careers at StitchByte`,
+            description: `Apply for the ${job.title} position at StitchByte.`,
+            images: ["/og-image.png"],
         },
     };
 }

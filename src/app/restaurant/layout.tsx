@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "Launch your restaurant online with StitchByte's restaurant management system featuring QR-based menus, real-time ordering, and merchant dashboards.",
     type: "website",
     url: "https://stitchbyte.in/restaurant",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "StitchByte Restaurant System" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "StitchByte Restaurant System" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Restaurant Management System | StitchByte",
     description:
       "Launch your restaurant online with StitchByte's restaurant management system featuring QR-based menus, real-time ordering, and merchant dashboards.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

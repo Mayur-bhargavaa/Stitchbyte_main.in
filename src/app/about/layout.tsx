@@ -13,14 +13,14 @@ export const metadata: Metadata = {
       "Meet the Stitchbyte team helping brands grow through SEO strategy, digital presence, modern web development, and intuitive UX/UI.",
     type: "website",
     url: "https://stitchbyte.in/about",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "About Stitchbyte" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "About Stitchbyte" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "About Stitchbyte | SEO, Web Development & UX/UI Team",
     description:
       "Meet the Stitchbyte team helping brands grow through SEO strategy, digital presence, modern web development, and intuitive UX/UI.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

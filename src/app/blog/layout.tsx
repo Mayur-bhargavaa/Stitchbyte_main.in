@@ -14,14 +14,14 @@ export const metadata: Metadata = {
       "Read Stitchbyte insights on SEO, digital presence, web development, and UX/UI to help businesses grow online with practical strategies.",
     type: "website",
     url: "https://stitchbyte.in/blog",
-    images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: "Stitchbyte Blog" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Stitchbyte Blog" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Stitchbyte Blog | SEO, Web Development & UX/UI Insights",
     description:
       "Read Stitchbyte insights on SEO, digital presence, web development, and UX/UI to help businesses grow online with practical strategies.",
-    images: ["/logo-stitchbyte.png"],
+    images: ["/og-image.png"],
   },
 };
 

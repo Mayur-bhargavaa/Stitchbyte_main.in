@@ -54,12 +54,13 @@ export async function generateMetadata(
             publishedTime: blog.createdAt.toISOString(),
             modifiedTime: blog.updatedAt?.toISOString() || blog.createdAt.toISOString(),
             authors: [blog.author],
-            ...(blog.coverImage ? { images: [{ url: blog.coverImage, width: 1200, height: 630 }] } : {}),
+            images: [{ url: blog.coverImage || "/og-image.png", width: 1200, height: 630 }],
         },
         twitter: {
             card: "summary_large_image",
             title: blog.title,
             description: blog.excerpt || "",
+            images: [blog.coverImage || "/og-image.png"],
         },
     };
 }

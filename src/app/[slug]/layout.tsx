@@ -49,13 +49,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: descText,
       type: "website",
       url: `https://stitchbyte.in/${slug}`,
-      images: [{ url: "/logo-stitchbyte.png", width: 1200, height: 630, alt: titleText }],
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: titleText }],
     },
     twitter: {
       card: "summary_large_image",
       title: titleText,
       description: descText,
-      images: ["/logo-stitchbyte.png"],
+      images: ["/og-image.png"],
     },
   };
 }
