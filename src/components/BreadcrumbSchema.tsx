@@ -11,6 +11,7 @@ const pathLabels: Record<string, string> = {
   customized: "Customized Development",
   prebuilt: "Prebuilt Solutions",
   marketing: "Marketing Case Studies",
+  automation: "AI & Automation",
   "ui-ux": "UI & UX Design",
   work: "All Work",
   reviews: "Client Reviews",

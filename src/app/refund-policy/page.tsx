@@ -214,7 +214,7 @@ export default function RefundPolicyPage() {
                             <div className="mt-4 p-6 bg-gray-50 rounded-2xl border border-gray-100 max-w-xl">
                                 <p className="text-gray-900 font-semibold mb-2">STITCHBYTE LLP Billing Department</p>
                                 <p className="text-sm text-gray-600">Email: <strong>info@stitchbyte.in</strong></p>
-                                <p className="text-sm text-gray-600">Support helpline: +91 94142 92675</p>
+                                <p className="text-sm text-gray-600">Support helpline: +91 94613 30819</p>
                                 <p className="text-sm text-gray-600">Registered Office: 446, Inside Delhi Gate, near Jain Dispensary, Bhargava Bhawan, Alwar, Rajasthan, 301001, India</p>
                             </div>
                         </div>

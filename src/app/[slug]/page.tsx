@@ -85,7 +85,7 @@ export default async function SlugPage({ params }: PageProps) {
       "name": `StitchByte ${city.name}`,
       "image": "https://stitchbyte.in/logo-stitchbyte.png",
       "url": `https://stitchbyte.in/${city.id}`,
-      "telephone": "+91-94142-92675",
+      "telephone": "+91-94613-30819",
       "priceRange": "$$$",
       "address": {
         "@type": "PostalAddress",

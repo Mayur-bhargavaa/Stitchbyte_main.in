@@ -157,7 +157,7 @@ export default function RootLayout({
     "description": "Stitchbyte is a global custom software development agency and digital transformation partner. We build web applications, native mobile apps, and enterprise AI solutions.",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-94142-92675",
+      "telephone": "+91-94613-30819",
       "contactType": "sales",
       "email": "info@stitchbyte.in",
       "areaServed": ["IN", "AE", "US"],
@@ -165,7 +165,7 @@ export default function RootLayout({
     },
     "sameAs": [
       "https://www.facebook.com/profile.php?id=61563772072392",
-      "https://wa.me/919414292675",
+      "https://wa.me/919461330819",
       "https://www.instagram.com/stitchbyte/",
       "https://www.linkedin.com/company/stitchbyte1"
     ]
@@ -243,7 +243,7 @@ export default function RootLayout({
     "name": "Stitchbyte",
     "image": "https://stitchbyte.in/logo-stitchbyte.png",
     "priceRange": "$$$",
-    "telephone": "+91-94142-92675",
+    "telephone": "+91-94613-30819",
     "url": "https://stitchbyte.in",
     "address": {
       "@type": "PostalAddress",
@@ -273,7 +273,7 @@ export default function RootLayout({
     },
     "sameAs": [
       "https://www.facebook.com/profile.php?id=61563772072392",
-      "https://wa.me/919414292675",
+      "https://wa.me/919461330819",
       "https://www.instagram.com/stitchbyte/",
       "https://www.linkedin.com/company/stitchbyte1"
     ],

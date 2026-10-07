@@ -78,7 +78,7 @@ export default function BlogPage() {
                 <Navbar />
 
                 {/* Hero Section */}
-                <section className="max-w-4xl mx-auto px-6 pt-32 pb-16 text-center">
+                <section className="max-w-4xl mx-auto px-6 pt-40 sm:pt-48 md:pt-52 pb-12 sm:pb-16 text-center">
                     <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
                         Our Blog
                     </span>
@@ -91,7 +91,7 @@ export default function BlogPage() {
                 </section>
 
                 {/* Blog Posts Grid */}
-                <section className="max-w-6xl mx-auto px-6 pb-24">
+                <section className="max-w-7xl mx-auto px-6 pb-24">
                     {loading ? (
                         <div className="flex justify-center items-center py-20">
                             <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
@@ -101,24 +101,25 @@ export default function BlogPage() {
                             <p className="text-gray-500 text-lg">No blog posts found.</p>
                         </div>
                     ) : (
-                        <div className="grid md:grid-cols-2 gap-8">
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                             {blogPosts.map((post) => (
                                 <Link href={`/blog/${post.slug}`} key={post.id} className="block">
                                     <article className="bg-white border border-gray-200 rounded-3xl overflow-hidden hover:shadow-xl transition-all group h-full flex flex-col">
-                                        {/* Image Section (Optional) */}
+                                        {/* Image Section */}
                                         {post.coverImage && (
-                                            <div className="w-full h-48 relative overflow-hidden bg-gray-100">
+                                            <div className="w-full aspect-[16/9] relative overflow-hidden bg-neutral-100">
                                                 <Image
                                                     src={post.coverImage}
                                                     alt={post.title}
                                                     fill
                                                     className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                                 />
                                             </div>
                                         )}
 
                                         {/* Post Header */}
-                                        <div className="p-8 flex-1 flex flex-col">
+                                        <div className="p-6 sm:p-7 flex-1 flex flex-col">
                                             <div className="flex items-center gap-3 mb-4">
                                                 <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
                                                     {post.category}
@@ -129,7 +130,7 @@ export default function BlogPage() {
                                                 </span>
                                             </div>
 
-                                            <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors line-clamp-2">
+                                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors line-clamp-2">
                                                 {post.title}
                                             </h2>
 
@@ -137,23 +138,23 @@ export default function BlogPage() {
                                                 {post.excerpt}
                                             </p>
 
-                                            <div className="flex items-center justify-between mt-auto">
-                                                <div className="flex items-center gap-3">
+                                            <div className="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
+                                                <div className="flex items-center gap-2.5">
                                                     <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
                                                         <User className="w-4 h-4 text-gray-600" />
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-medium text-gray-900">{post.author}</p>
-                                                        <p className="text-xs text-gray-500">
-                                                            {new Date(post.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                        <p className="text-xs sm:text-sm font-medium text-gray-900">{post.author}</p>
+                                                        <p className="text-[11px] text-gray-500">
+                                                            {new Date(post.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <button className="flex items-center gap-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
+                                                <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 transition-colors">
                                                     Read More
-                                                    <ChevronRight className="w-4 h-4" />
-                                                </button>
+                                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                                                </span>
                                             </div>
                                         </div>
                                     </article>

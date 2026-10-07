@@ -21,10 +21,9 @@ export default function Navbar() {
     ];
 
     const desktopNavRight = [
-        { href: "/ui-ux", label: "UI & UX" },
+        { href: "/automation", label: "Automation" },
         { href: "/work", label: "Case Studies" },
         { href: "/about", label: "About Us" },
-        { href: "/contact", label: "Contact Us" },
     ];
 
     // Mobile nav contains all links
@@ -32,10 +31,9 @@ export default function Navbar() {
         { href: "/prebuilt", label: "Prebuilt" },
         { href: "/customized", label: "Customized" },
         { href: "/marketing", label: "Marketing" },
-        { href: "/ui-ux", label: "UI & UX" },
+        { href: "/automation", label: "Automation" },
         { href: "/work", label: "Case Studies" },
         { href: "/about", label: "About Us" },
-        { href: "/contact", label: "Contact Us" },
     ];
 
     return (

@@ -25,10 +25,10 @@ describe('Navbar Component', () => {
     expect(screen.getByText('Prebuilt')).toBeInTheDocument();
     expect(screen.getByText('Customized')).toBeInTheDocument();
     expect(screen.getByText('Marketing')).toBeInTheDocument();
-    expect(screen.getByText('UI & UX')).toBeInTheDocument();
+    expect(screen.getByText('Automation')).toBeInTheDocument();
     expect(screen.getByText('Case Studies')).toBeInTheDocument();
     expect(screen.getByText('About Us')).toBeInTheDocument();
-    expect(screen.getByText('Contact Us')).toBeInTheDocument();
+    expect(screen.queryByText('Contact Us')).not.toBeInTheDocument();
   });
 
   it('toggles mobile menu dropdown when hamburger button is clicked', () => {
