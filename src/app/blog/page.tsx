@@ -29,9 +29,16 @@ interface BlogPost {
     pdfUrl?: string;
 }
 
+const POSTS_PER_PAGE = 6;
+
 export default function BlogPage() {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const [visibleCount, setVisibleCount] = useState<number>(POSTS_PER_PAGE);
     const [loading, setLoading] = useState(true);
+
+    const handleLoadMore = () => {
+        setVisibleCount((prev) => prev + POSTS_PER_PAGE);
+    };
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -102,7 +109,7 @@ export default function BlogPage() {
                         </div>
                     ) : (
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                            {blogPosts.map((post) => (
+                            {blogPosts.slice(0, visibleCount).map((post) => (
                                 <Link href={`/blog/${post.slug}`} key={post.id} className="block">
                                     <article className="bg-white border border-gray-200 rounded-3xl overflow-hidden hover:shadow-xl transition-all group h-full flex flex-col">
                                         {/* Image Section */}
@@ -164,10 +171,17 @@ export default function BlogPage() {
                     )}
 
                     {/* Load More */}
-                    {blogPosts.length >= 6 && (
-                        <div className="text-center mt-12">
-                            <button className="px-8 py-4 bg-gray-100 text-gray-900 font-medium rounded-full border border-gray-200 hover:bg-gray-200 transition-all">
+                    {visibleCount < blogPosts.length && (
+                        <div className="text-center mt-12 sm:mt-16">
+                            <button
+                                type="button"
+                                onClick={handleLoadMore}
+                                className="inline-flex items-center gap-2 px-8 py-3.5 sm:py-4 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold rounded-full border border-gray-200 transition-all shadow-xs hover:shadow-sm text-sm sm:text-base cursor-pointer active:scale-95"
+                            >
                                 Load More Articles
+                                <span className="text-xs text-gray-500 font-normal">
+                                    ({blogPosts.length - visibleCount} more)
+                                </span>
                             </button>
                         </div>
                     )}

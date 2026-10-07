@@ -6,6 +6,18 @@ export async function GET() {
         const blogs = await blogPrisma.blog.findMany({
             where: { status: "published" },
             orderBy: { createdAt: "desc" },
+            select: {
+                id: true,
+                title: true,
+                slug: true,
+                excerpt: true,
+                author: true,
+                createdAt: true,
+                readTime: true,
+                category: true,
+                coverImage: true,
+                pdfUrl: true,
+            },
         });
 
         return NextResponse.json(blogs);
