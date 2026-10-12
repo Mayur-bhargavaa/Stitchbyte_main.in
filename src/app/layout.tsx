@@ -139,6 +139,9 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
+// Read at build time (NEXT_PUBLIC_*). No fallback ID: without it, no pixel is rendered.
+const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID?.trim();
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -393,7 +396,8 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Facebook Pixel */}
+        {/* Facebook Pixel — rendered only when NEXT_PUBLIC_FB_PIXEL_ID is set */}
+        {fbPixelId && (
         <Script
           id="fb-pixel"
           strategy="afterInteractive"
@@ -416,7 +420,7 @@ export default function RootLayout({
               } catch (e) {}
               
               fbq('consent', fbConsent);
-              fbq('init', '${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}');
+              fbq('init', '${fbPixelId}');
               fbq('track', 'PageView');
               
               window.addEventListener('cookieConsentChanged', function() {
@@ -428,6 +432,7 @@ export default function RootLayout({
             `,
           }}
         />
+        )}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -442,15 +447,17 @@ export default function RootLayout({
           />
         </noscript>
         {/* Facebook Pixel (noscript) */}
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}&ev=PageView&noscript=1`}
-            alt=""
-          />
-        </noscript>
+        {fbPixelId && (
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              src={`https://www.facebook.com/tr?id=${fbPixelId}&ev=PageView&noscript=1`}
+              alt=""
+            />
+          </noscript>
+        )}
         {children}
         <BreadcrumbSchema />
         <ChatbotVisibility />
