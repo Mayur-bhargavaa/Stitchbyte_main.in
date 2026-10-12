@@ -5,25 +5,36 @@ import JobPosition from '@/models/JobPosition';
 import CustomProject from '@/models/CustomProject';
 import MarketingCaseStudy from '@/models/MarketingCaseStudy';
 import { connectToDatabase } from '@/lib/mongodb';
+import { AUTOMATION_ITEMS } from '@/data/automation-items';
 
 const BASE_URL = 'https://stitchbyte.in';
 
+// Re-generate hourly so new posts/projects show up without a redeploy.
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const routes: MetadataRoute.Sitemap = [
-        { url: `${BASE_URL}/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
-        { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-        { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
-        { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-        { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-        { url: `${BASE_URL}/refund-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-        { url: `${BASE_URL}/careers`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/customized`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/prebuilt`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/ui-ux`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/work`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/marketing`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/restaurant`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${BASE_URL}/`, changeFrequency: 'monthly', priority: 1 },
+        { url: `${BASE_URL}/about`, changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${BASE_URL}/contact`, changeFrequency: 'yearly', priority: 0.5 },
+        { url: `${BASE_URL}/privacy`, changeFrequency: 'yearly', priority: 0.3 },
+        { url: `${BASE_URL}/terms`, changeFrequency: 'yearly', priority: 0.3 },
+        { url: `${BASE_URL}/refund-policy`, changeFrequency: 'yearly', priority: 0.3 },
+        { url: `${BASE_URL}/careers`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/customized`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/prebuilt`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/ui-ux`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/work`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/marketing`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/blog`, changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/restaurant`, changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${BASE_URL}/reviews`, changeFrequency: 'monthly', priority: 0.6 },
+        { url: `${BASE_URL}/automation`, changeFrequency: 'monthly', priority: 0.8 },
+        ...AUTOMATION_ITEMS.map((item) => ({
+            url: `${BASE_URL}/automation/${item.slug}`,
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+        })),
     ];
 
     // Try fetching Blogs
@@ -52,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         jobs.forEach((job) => {
             routes.push({
                 url: `${BASE_URL}/careers/${job.slug || job._id}`,
-                lastModified: job.updatedAt || new Date(),
+                lastModified: job.updatedAt,
                 changeFrequency: 'monthly',
                 priority: 0.7,
             });
@@ -63,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         projects.forEach((project) => {
             routes.push({
                 url: `${BASE_URL}/customized/${project.slug || project._id}`,
-                lastModified: project.updatedAt || new Date(),
+                lastModified: project.updatedAt,
                 changeFrequency: 'monthly',
                 priority: 0.7,
             });
@@ -74,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         studies.forEach((study) => {
             routes.push({
                 url: `${BASE_URL}/marketing/${study.slug || study._id}`,
-                lastModified: study.updatedAt || new Date(),
+                lastModified: study.updatedAt,
                 changeFrequency: 'monthly',
                 priority: 0.7,
             });
@@ -94,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         products.forEach((product) => {
             routes.push({
                 url: `${BASE_URL}/prebuilt/${product.id}`,
-                lastModified: product.updatedAt || new Date(),
+                lastModified: product.updatedAt,
                 changeFrequency: 'monthly',
                 priority: 0.7,
             });
