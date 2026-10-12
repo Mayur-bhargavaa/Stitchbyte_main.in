@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
-    default: "Stitchbyte | Custom Software & Digital Agency",
+    default: "StitchByte | Custom Software & Digital Agency",
     template: "%s | StitchByte",
   },
   description:
