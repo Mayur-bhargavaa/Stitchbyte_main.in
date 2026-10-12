@@ -1,13 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { 
     ArrowLeft, 
     ExternalLink, 
-    Loader2, 
     CheckCircle2,
     Smartphone,
     Shield,
@@ -20,6 +16,8 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ExpandableText from "@/components/ExpandableText";
+import { getCustomProject, getCustomProjects } from "@/lib/content";
 
 const featureIcons = [Smartphone, Shield, Zap, Sparkles, Clock, Layers, Cpu, Code];
 
@@ -49,71 +47,20 @@ const splitFeature = (featureText: string) => {
 };
 
 
-interface Project {
-    id: string;
-    title: string;
-    slug: string;
-    description?: string;
-    image: string;
-    videoUrl?: string;
-    features: string[];
-    link: string;
-    category: 'websites' | 'applications';
-    technologies: string[];
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+    const projects = await getCustomProjects();
+    return projects.map((p) => ({ slug: p.slug }));
 }
 
-export default function CustomizedAppDetailPage() {
-    const { slug } = useParams();
-    const [project, setProject] = useState<Project | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [isExpanded, setIsExpanded] = useState(false);
+export default async function CustomizedAppDetailPage(
+    { params }: { params: Promise<{ slug: string }> }
+) {
+    const { slug: rawSlug } = await params;
+    const project = await getCustomProject(decodeURIComponent(rawSlug));
 
-    useEffect(() => {
-        async function fetchProject() {
-            try {
-                setLoading(true);
-                const response = await fetch(`/api/custom-projects`);
-                const data = await response.json();
-
-                if (data.success) {
-                    // Decode URL-encoded slug (e.g. %E2%80%94 → —) for robust matching
-                    const decodedSlug = slug ? decodeURIComponent(slug as string) : "";
-                    const found = data.data.find((p: Project) =>
-                        p.slug === decodedSlug || p.slug === slug
-                    );
-                    if (found) {
-                        setProject(found);
-                    } else {
-                        setError("Project not found.");
-                    }
-                } else {
-                    setError("Failed to load project details.");
-                }
-            } catch (err) {
-                console.error(err);
-                setError("Failed to load project details.");
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        if (slug) fetchProject();
-    }, [slug]);
-
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <Navbar />
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="w-10 h-10 animate-spin text-gray-400" />
-                    <p className="text-gray-500 font-medium">Loading project details...</p>
-                </div>
-            </div>
-        );
-    }
-
-    if (error || !project) {
+    if (!project) {
         notFound();
     }
 
@@ -148,19 +95,7 @@ export default function CustomizedAppDetailPage() {
                                     {project.title}
                                 </h1>
                                 {project.description && (
-                                    <div className="mb-8">
-                                        <p className={`text-lg text-gray-600 leading-relaxed ${isExpanded ? "" : "line-clamp-3"}`}>
-                                            {project.description}
-                                        </p>
-                                        {project.description.length > 150 && (
-                                            <button
-                                                onClick={() => setIsExpanded(!isExpanded)}
-                                                className="text-gray-950 font-semibold hover:underline mt-2 text-sm focus:outline-none cursor-pointer flex items-center gap-1"
-                                            >
-                                                {isExpanded ? "Read Less" : "... Read More"}
-                                            </button>
-                                        )}
-                                    </div>
+                                    <ExpandableText text={project.description} />
                                 )}
 
                                 <div className="flex flex-wrap gap-2 mb-8">
