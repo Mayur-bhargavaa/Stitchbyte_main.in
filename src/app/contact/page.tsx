@@ -232,7 +232,7 @@ export default function ContactPage() {
                   <feature.icon className={`w-5 h-5 ${feature.iconColor}`} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">{feature.title}</h3>
+                  <h2 className="font-semibold text-gray-900 mb-1">{feature.title}</h2>
                   <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
                 </div>
               </div>

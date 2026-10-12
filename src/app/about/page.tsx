@@ -352,7 +352,7 @@ export default function AboutPage() {
                                         <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gray-900 group-hover:border-gray-900 transition-all duration-300">
                                             <item.icon className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors duration-300" />
                                         </div>
-                                        <h4 className="font-bold text-gray-900 text-base mb-1.5">{item.text}</h4>
+                                        <h3 className="font-bold text-gray-900 text-base mb-1.5">{item.text}</h3>
                                         <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                                     </div>
                                 </div>

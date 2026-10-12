@@ -115,7 +115,7 @@ export default function CareersPage() {
                                 <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                                     <benefit.icon className="w-6 h-6 text-gray-700" />
                                 </div>
-                                <h3 className="font-semibold text-gray-900">Career {benefit.title}</h3>
+                                <h2 className="font-semibold text-gray-900">Career {benefit.title}</h2>
                                 <p className="text-sm text-gray-500">{benefit.description}</p>
                             </div>
                         ))}

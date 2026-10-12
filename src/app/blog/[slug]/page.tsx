@@ -244,7 +244,7 @@ export default async function SingleBlogPage(
                                 {blog.author.slice(0, 2).toUpperCase()}
                             </div>
                             <div>
-                                <h3 className="text-sm font-bold text-gray-900">{blog.author}</h3>
+                                <p className="text-sm font-bold text-gray-900">{blog.author}</p>
                                 <p className="text-xs text-gray-500">StitchByte Engineering & Research</p>
                             </div>
                         </div>

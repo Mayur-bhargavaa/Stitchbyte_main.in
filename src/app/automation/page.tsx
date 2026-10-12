@@ -349,7 +349,7 @@ export default function AutomationPage() {
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
-                  <h4 className="text-base font-bold text-neutral-900 mb-2">{ws.title}</h4>
+                  <h3 className="text-base font-bold text-neutral-900 mb-2">{ws.title}</h3>
                   <p className="text-xs text-neutral-600 leading-relaxed">{ws.desc}</p>
                 </div>
               );
