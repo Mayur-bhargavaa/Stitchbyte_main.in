@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { getMarketingStudy, getMarketingStudies } from "@/lib/content";
 
 export const revalidate = 3600;
@@ -37,6 +38,11 @@ export default async function MarketingCaseStudyDetailPage(
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "All Work", path: "/work" },
+        { name: `${study.brand} Case Study`, path: `/marketing/${study.slug}` },
+      ])} />
       {/* Global Grid Background */}
       <div
         className="fixed inset-0 z-0 pointer-events-none"

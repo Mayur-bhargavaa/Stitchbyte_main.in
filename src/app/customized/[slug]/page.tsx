@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import ExpandableText from "@/components/ExpandableText";
 import { getCustomProject, getCustomProjects } from "@/lib/content";
 
@@ -66,6 +67,11 @@ export default async function CustomizedAppDetailPage(
 
     return (
         <div className="min-h-screen bg-white text-gray-900 flex flex-col">
+            <JsonLd data={breadcrumbJsonLd([
+                { name: "Home", path: "/" },
+                { name: "Customized Development", path: "/customized" },
+                { name: project.title, path: `/customized/${project.slug}` },
+            ])} />
             <Navbar />
 
             <main className="flex-1 pt-32 pb-24 relative z-10">

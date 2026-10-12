@@ -7,6 +7,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { Suspense } from "react";
 import Script from "next/script";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import JsonLd from "@/components/JsonLd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -303,32 +304,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* Local Business Schema */}
-        <Script
-          id="local-business-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
-          }}
-        />
+        <JsonLd id="local-business-schema" data={localBusinessSchema} />
         {/* Organization Schema */}
-        <Script
-          id="organization-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
+        <JsonLd id="organization-schema" data={organizationSchema} />
         {/* WebSite Schema */}
-        <Script
-          id="website-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteSchema),
-          }}
-        />
+        <JsonLd id="website-schema" data={websiteSchema} />
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
@@ -344,14 +324,7 @@ export default function RootLayout({
           }}
         />
         {/* Services Schema */}
-        <Script
-          id="services-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(serviceSchema),
-          }}
-        />
+        <JsonLd id="services-schema" data={serviceSchema} />
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"

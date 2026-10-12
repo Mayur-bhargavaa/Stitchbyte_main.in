@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import { metaDescription } from "@/lib/seo";
 import { blogSeoTitle } from "@/lib/blog-seo-titles";
 import { notFound } from "next/navigation";
@@ -164,10 +165,12 @@ export default async function SingleBlogPage(
             <ReadingProgressBar />
 
             {/* JSON-LD — rendered server-side, visible to Googlebot */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <JsonLd data={jsonLd} />
+            <JsonLd data={breadcrumbJsonLd([
+                { name: "Home", path: "/" },
+                { name: "Blog", path: "/blog" },
+                { name: blog.title, path: `/blog/${blog.slug}` },
+            ])} />
 
             {/* Modern StitchByte Grid Background */}
             <div

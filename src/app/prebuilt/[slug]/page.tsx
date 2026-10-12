@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPrebuiltProduct, getPrebuiltProducts } from "@/lib/content";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
 import ProductDetailClient, { type ProductData } from "./ProductDetailClient";
 
 export const revalidate = 3600;
@@ -19,5 +20,14 @@ export default async function ProductDetailPage(
         notFound();
     }
 
-    return <ProductDetailClient product={product} />;
+    return (
+        <>
+            <JsonLd data={breadcrumbJsonLd([
+                { name: "Home", path: "/" },
+                { name: "Prebuilt Solutions", path: "/prebuilt" },
+                { name: product.name, path: `/prebuilt/${product.id}` },
+            ])} />
+            <ProductDetailClient product={product} />
+        </>
+    );
 }

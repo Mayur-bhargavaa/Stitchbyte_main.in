@@ -24,6 +24,8 @@ export default function BreadcrumbSchema() {
   const pathname = usePathname();
 
   if (pathname === "/") return null;
+  // Detail pages render their own server-side BreadcrumbList (see JsonLd).
+  if (/^\/(blog|prebuilt|marketing|customized)\/[^/]+$/.test(pathname)) return null;
 
   const segments = pathname.split("/").filter(Boolean);
   const breadcrumbItems = [
