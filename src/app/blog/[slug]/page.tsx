@@ -308,12 +308,15 @@ export default async function SingleBlogPage(
                 ) : blog.coverImage && blog.coverImage !== "" ? (
                     <figure className="mb-12 rounded-3xl overflow-hidden border border-gray-200/80 bg-neutral-100/40 shadow-xs max-w-5xl">
                         <div className="w-full flex items-center justify-center p-2 sm:p-4 md:p-6 bg-gradient-to-b from-neutral-50 to-neutral-100/30">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            {/* Above-the-fold cover: intrinsic size reserves space; CSS (w-full h-auto) keeps the look. */}
+                            <Image
                                 src={blog.coverImage}
                                 alt={blog.title}
+                                width={1200}
+                                height={675}
+                                sizes="(max-width: 1024px) 100vw, 1024px"
+                                priority
                                 className="w-full h-auto max-h-[600px] object-contain rounded-2xl mx-auto"
-                                loading="eager"
                             />
                         </div>
                     </figure>
