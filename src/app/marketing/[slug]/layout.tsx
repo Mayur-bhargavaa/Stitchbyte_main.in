@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import MarketingCaseStudy from "@/models/MarketingCaseStudy";
@@ -34,7 +34,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/marketing/${slug}`;
 
     return {
-        title: `${study.brand} Marketing Case Study`,
+        title: withBrand(`${study.brand} Marketing Case Study`),
         description: metaDescription(study.summary) || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,

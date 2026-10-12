@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, withBrand } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { AUTOMATION_ITEMS } from "@/data/automation-items";
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${item.title} — Video Walkthrough & Architecture`,
+    title: withBrand(`${item.title} — Video Walkthrough & Architecture`),
     description: metaDescription(item.shortDescription),
     alternates: {
       canonical: `https://stitchbyte.in/automation/${item.slug}`,

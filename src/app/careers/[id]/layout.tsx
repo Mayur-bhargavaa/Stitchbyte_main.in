@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import JobPosition from "@/models/JobPosition";
@@ -56,7 +57,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/careers/${id}`;
 
     return {
-        title: `${job.title} | Careers`,
+        title: withBrand(`${job.title} | Careers`),
         description: `Apply for the ${job.title} position at StitchByte. Join our growing team in Alwar, Rajasthan.`,
         alternates: {
             canonical: canonicalUrl,

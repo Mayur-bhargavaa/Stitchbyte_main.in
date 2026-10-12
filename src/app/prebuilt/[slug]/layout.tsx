@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -33,7 +33,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/prebuilt/${slug}`;
 
     return {
-        title: `${product.name} | Prebuilt Software Solutions`,
+        title: withBrand(`${product.name} | Prebuilt Software Solutions`),
         description: metaDescription(product.description) || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,

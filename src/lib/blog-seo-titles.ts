@@ -20,5 +20,5 @@ const SEO_TITLES: Record<string, string> = {
 };
 
 export function blogSeoTitle(slug: string, title: string): string {
-    return SEO_TITLES[slug] ?? title;
+    return SEO_TITLES[slug] ?? title.trim();
 }

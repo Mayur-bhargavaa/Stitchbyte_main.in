@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { blogSeoTitle } from "@/lib/blog-seo-titles";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -87,7 +87,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/blog/${blog.slug}`;
 
     return {
-        title: blogSeoTitle(blog.slug, blog.title),
+        title: withBrand(blogSeoTitle(blog.slug, blog.title)),
         description: metaDescription(blog.excerpt) || `Read ${blog.title} on the StitchByte blog.`,
         authors: [{ name: blog.author }],
         keywords: blog.tags?.join(", "),
