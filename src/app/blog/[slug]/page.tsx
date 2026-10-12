@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { blogSeoTitle } from "@/lib/blog-seo-titles";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -86,7 +87,7 @@ export async function generateMetadata(
 
     return {
         title: blogSeoTitle(blog.slug, blog.title),
-        description: blog.excerpt || `Read ${blog.title} on the StitchByte blog.`,
+        description: metaDescription(blog.excerpt) || `Read ${blog.title} on the StitchByte blog.`,
         authors: [{ name: blog.author }],
         keywords: blog.tags?.join(", "),
         alternates: {

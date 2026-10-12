@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import CustomProject from "@/models/CustomProject";
@@ -34,13 +35,13 @@ export async function generateMetadata(
 
     return {
         title: `${project.title} | Custom Software Case Study`,
-        description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+        description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
             title: project.title,
-            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+            description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
@@ -49,7 +50,7 @@ export async function generateMetadata(
         twitter: {
             card: "summary_large_image",
             title: project.title,
-            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+            description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
             images: ["/og-image.png"],
         },
     };
