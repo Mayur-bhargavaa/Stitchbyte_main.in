@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | StitchByte Alwar",
+  title: "Privacy Policy",
   description:
     "Read the Stitchbyte privacy policy to understand how we collect, use, and protect your personal data across our SEO, web development, and UX/UI services.",
   alternates: {
     canonical: "https://stitchbyte.in/privacy",
   },
   openGraph: {
-    title: "Privacy Policy | Your Data Protection Rights - Stitchbyte",
+    title: "Privacy Policy | Your Data Protection Rights - StitchByte",
     description:
       "Read the Stitchbyte privacy policy to understand how we collect, use, and protect your personal data when using our SEO, web development, and UX/UI services.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy Policy | Stitchbyte",
+    title: "Privacy Policy | StitchByte",
     description:
       "Read the Stitchbyte privacy policy to understand how we collect, use, and protect your personal data.",
     images: ["/og-image.png"],

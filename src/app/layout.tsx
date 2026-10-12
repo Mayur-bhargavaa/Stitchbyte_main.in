@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
     default: "Stitchbyte | Custom Software & Digital Agency",
-    template: "%s | Stitchbyte",
+    template: "%s | StitchByte",
   },
   description:
     "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://stitchbyte.in",
     siteName: "Stitchbyte",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
     description:
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: [
@@ -96,7 +96,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
     description:
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: ["/og-image.png"],
@@ -115,7 +115,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
   },
   formatDetection: {
     telephone: true,

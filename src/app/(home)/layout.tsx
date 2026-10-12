@@ -7,7 +7,7 @@ export const metadata: Metadata = {
         canonical: "https://stitchbyte.in",
     },
     openGraph: {
-        title: "Stitchbyte | Custom Software & Digital Agency",
+        title: "StitchByte | Custom Software & Digital Agency",
         description:
             "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
         url: "https://stitchbyte.in",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Stitchbyte | Custom Software & Digital Agency",
+        title: "StitchByte | Custom Software & Digital Agency",
         description:
             "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
         images: ["/og-image.png"],

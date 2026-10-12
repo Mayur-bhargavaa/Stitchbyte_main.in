@@ -25,7 +25,7 @@ export async function generateMetadata(
 
     if (!study) {
         return {
-            title: "Case Study Not Found | StitchByte",
+            title: "Case Study Not Found",
             robots: { index: false },
         };
     }
@@ -33,7 +33,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/marketing/${slug}`;
 
     return {
-        title: `${study.brand} Case Study | StitchByte Marketing`,
+        title: `${study.brand} Marketing Case Study`,
         description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,

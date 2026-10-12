@@ -25,7 +25,7 @@ export async function generateMetadata(
 
     if (!project) {
         return {
-            title: "Project Not Found | StitchByte",
+            title: "Project Not Found",
             robots: { index: false },
         };
     }
@@ -33,7 +33,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/customized/${slug}`;
 
     return {
-        title: `${project.title} | Custom Software Case Study - StitchByte`,
+        title: `${project.title} | Custom Software Case Study`,
         description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
         alternates: {
             canonical: canonicalUrl,

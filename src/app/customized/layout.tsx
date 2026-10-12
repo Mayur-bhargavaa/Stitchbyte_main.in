@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Custom Web Development in Alwar | StitchByte",
+  title: "Custom Web Development in Alwar",
   description:
     "Get tailored digital solutions from Stitchbyte with SEO strategy, strong digital presence, custom web development, and intuitive UX/UI design.",
   alternates: {
     canonical: "https://stitchbyte.in/customized",
   },
   openGraph: {
-    title: "Customized Development | SEO, Web & UX/UI Services - Stitchbyte",
+    title: "Customized Development | SEO, Web & UX/UI Services - StitchByte",
     description:
       "Get tailored digital solutions from Stitchbyte with SEO strategy, strong digital presence, custom web development, and intuitive UX/UI design.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Customized Development | SEO, Web & UX/UI Services - Stitchbyte",
+    title: "Customized Development | SEO, Web & UX/UI Services - StitchByte",
     description:
       "Get tailored digital solutions from Stitchbyte with SEO strategy, strong digital presence, custom web development, and intuitive UX/UI design.",
     images: ["/og-image.png"],

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Cancellation & Refund Policy | StitchByte",
+  title: "Cancellation & Refund Policy",
   description:
     "Read the StitchByte Cancellation and Refund Policy to understand project cancellation, milestones, refunds, and service terms.",
   alternates: {

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!match) {
     return {
-      title: "Premium Digital Agency | StitchByte",
+      title: "Premium Digital Agency",
       description: "StitchByte is a premier custom software, SEO, and digital marketing agency serving global clients.",
     };
   }
@@ -22,15 +22,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (match.type === "city") {
     const { city } = match;
-    titleText = `Digital Marketing & Software Agency in ${city.name} | StitchByte`;
+    titleText = `Digital Marketing & Software Agency in ${city.name}`;
     descText = `Looking for a top digital marketing, web development, and SEO agency in ${city.name}? StitchByte delivers high-performance custom solutions tailored for ${city.name} businesses.`;
   } else if (match.type === "service-city") {
     const { service, city } = match;
-    titleText = `${service.name} in ${city.name} | Best ${service.name} ${city.name} - StitchByte`;
+    titleText = `${service.name} in ${city.name} | Best ${service.name} ${city.name}`;
     descText = `Looking for the best ${service.name} in ${city.name}? StitchByte delivers premium custom solutions designed to address ${city.name} market challenges and drive growth.`;
   } else if (match.type === "service-national") {
     const { service, locationName } = match;
-    titleText = `${service.name} | Best ${service.name} in ${locationName} - StitchByte`;
+    titleText = `${service.name} | Best ${service.name} in ${locationName}`;
     descText = `Looking for a premier ${service.name} in ${locationName}? StitchByte delivers high-performance custom software and marketing solutions designed to drive growth.`;
   }
 

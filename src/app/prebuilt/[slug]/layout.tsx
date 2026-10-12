@@ -24,7 +24,7 @@ export async function generateMetadata(
 
     if (!product) {
         return {
-            title: "Product Not Found | StitchByte",
+            title: "Product Not Found",
             robots: { index: false },
         };
     }
@@ -32,7 +32,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/prebuilt/${slug}`;
 
     return {
-        title: `${product.name} | Prebuilt Software Solutions by StitchByte`,
+        title: `${product.name} | Prebuilt Software Solutions`,
         description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,

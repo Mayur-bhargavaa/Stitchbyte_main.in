@@ -12,13 +12,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!item) {
     return {
-      title: "Automation System | StitchByte",
+      title: "Automation System",
       description: "Explore our intelligent automation and AI systems at StitchByte.",
     };
   }
 
   return {
-    title: `${item.title} — Video Walkthrough & Architecture | StitchByte`,
+    title: `${item.title} — Video Walkthrough & Architecture`,
     description: item.shortDescription,
     alternates: {
       canonical: `https://stitchbyte.in/automation/${item.slug}`,

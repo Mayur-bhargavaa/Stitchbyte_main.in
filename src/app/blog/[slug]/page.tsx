@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { blogSeoTitle } from "@/lib/blog-seo-titles";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -76,7 +77,7 @@ export async function generateMetadata(
 
     if (!blog) {
         return {
-            title: "Article Not Found | StitchByte Blog",
+            title: "Article Not Found",
             robots: { index: false },
         };
     }
@@ -84,7 +85,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/blog/${blog.slug}`;
 
     return {
-        title: `${blog.title} | StitchByte Blog`,
+        title: blogSeoTitle(blog.slug, blog.title),
         description: blog.excerpt || `Read ${blog.title} on the StitchByte blog.`,
         authors: [{ name: blog.author }],
         keywords: blog.tags?.join(", "),
