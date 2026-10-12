@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
   // 301 redirects — fix Google Search Console 404 errors
   async redirects() {
     return [
+      // ── Canonical host: www → apex (301). Only matches the www host and the target is
+      // the apex host, so it cannot loop. Requires the proxy to forward the original Host header.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.stitchbyte.in" }],
+        destination: "https://stitchbyte.in/:path*",
+        permanent: true,
+      },
+
       // ── Old numeric blog IDs → /blog ──────────────────────────────────────
       // Covers: /blog/4, /blog/5, /blog/6, /blog/8, /blog/9, /blog/10 etc.
       {
