@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "AI & Workflow Automation Services",
   description:
-    "Scale your business operations with StitchByte intelligent automation. Custom AI agents, WhatsApp business workflows, CRM integrations, and automated pipelines.",
+    "Scale your operations with StitchByte intelligent automation: custom AI agents, WhatsApp business workflows, CRM integrations and automated pipelines.",
   keywords: [
     "AI automation",
     "workflow automation",
