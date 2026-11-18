@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Restaurant Management System in Alwar | StitchByte",
+  title: "Restaurant Management System in Alwar",
   description:
     "Launch your restaurant online with StitchByte's restaurant management system featuring QR-based menus, real-time ordering, and merchant dashboards.",
   alternates: {

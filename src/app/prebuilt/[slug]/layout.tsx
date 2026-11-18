@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -24,7 +25,7 @@ export async function generateMetadata(
 
     if (!product) {
         return {
-            title: "Product Not Found | StitchByte",
+            title: "Product Not Found",
             robots: { index: false },
         };
     }
@@ -32,14 +33,14 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/prebuilt/${slug}`;
 
     return {
-        title: `${product.name} | Prebuilt Software Solutions by StitchByte`,
-        description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
+        title: withBrand(`${product.name} | Prebuilt Software Solutions`),
+        description: metaDescription(product.description) || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
             title: `${product.name} — Prebuilt by StitchByte`,
-            description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
+            description: metaDescription(product.description) || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
@@ -48,7 +49,7 @@ export async function generateMetadata(
         twitter: {
             card: "summary_large_image",
             title: `${product.name} — Prebuilt by StitchByte`,
-            description: product.description || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
+            description: metaDescription(product.description) || `View features and live demo of ${product.name} — ready to deploy software by StitchByte.`,
             images: [product.image || "/og-image.png"],
         },
     };

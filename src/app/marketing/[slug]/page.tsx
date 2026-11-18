@@ -1,87 +1,30 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { 
   ArrowLeft, 
   ArrowRight, 
   CheckCircle2, 
-  Loader2, 
   AlertTriangle, 
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { getMarketingStudyStrict, getMarketingStudies } from "@/lib/content";
 
-interface MarketingCaseStudy {
-  id: string;
-  slug: string;
-  brand: string;
-  industry: string;
-  category: "performance" | "seo";
-  summary: string;
-  highlights: string[];
-  goal: string;
-  approach: string;
-  result: string;
-  outcomeMetrics: string[];
-  companySize?: string;
-  businessModel?: string;
-  targetAudience?: string;
-  problem?: string;
-  objectives?: string[];
-  solutionDetails?: string;
-  challenges?: string;
-  implementationProcess?: string;
-  resultsMetrics?: string[];
-  visualProof?: string[];
-  testimonialQuote?: string;
-  testimonialAuthor?: string;
-  testimonialDesignation?: string;
-  businessImpact?: string;
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const studies = await getMarketingStudies();
+  return studies.map((s) => ({ slug: s.slug }));
 }
 
-export default function MarketingCaseStudyDetailPage() {
-  const { slug } = useParams();
-  const [study, setStudy] = useState<MarketingCaseStudy | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+export default async function MarketingCaseStudyDetailPage(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
+  const study = await getMarketingStudyStrict(slug);
 
-  useEffect(() => {
-    const loadStudy = async () => {
-      if (!slug || typeof slug !== "string") return;
-      setLoading(true);
-      setError("");
-      try {
-        const response = await fetch(`/api/marketing-case-studies/${slug}`);
-        const data = await response.json();
-        if (response.ok && data.success && data.study) {
-          setStudy(data.study);
-        } else {
-          setError(data.error || "Case study not found.");
-        }
-      } catch {
-        setError("Failed to load case study.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadStudy();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white text-gray-900">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-[60vh] gap-3 text-gray-400">
-          <Loader2 className="w-5 h-5 animate-spin" />
-          <span className="font-mono text-xs tracking-wider uppercase">Loading case study...</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !study) {
+  if (!study) {
     notFound();
   }
 
@@ -95,6 +38,11 @@ export default function MarketingCaseStudyDetailPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 selection:bg-emerald-500/20">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "All Work", path: "/work" },
+        { name: `${study.brand} Case Study`, path: `/marketing/${study.slug}` },
+      ])} />
       {/* Global Grid Background */}
       <div
         className="fixed inset-0 z-0 pointer-events-none"

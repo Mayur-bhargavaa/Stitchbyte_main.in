@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import CustomProject from "@/models/CustomProject";
@@ -6,7 +7,13 @@ import CustomProject from "@/models/CustomProject";
 const BASE_URL = "https://stitchbyte.in";
 
 // ── Check if project exists ──────────────────────────────────────────────────
-async function checkProjectExists(slug: string) {
+// Route params can arrive URL-encoded (slugs like "watch:-stream,-play-&-chat"), so decode first.
+function decodeSlug(raw: string) {
+    try { return decodeURIComponent(raw); } catch { return raw; }
+}
+
+async function checkProjectExists(rawSlug: string) {
+    const slug = decodeSlug(rawSlug);
     try {
         await connectDB();
         const project = await CustomProject.findOne({ slug, isActive: true }).select("title description").lean() as { title: string; description?: string } | null;
@@ -20,12 +27,13 @@ async function checkProjectExists(slug: string) {
 export async function generateMetadata(
     { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-    const { slug } = await params;
+    const { slug: rawSlug } = await params;
+    const slug = decodeSlug(rawSlug);
     const project = await checkProjectExists(slug);
 
     if (!project) {
         return {
-            title: "Project Not Found | StitchByte",
+            title: "Project Not Found",
             robots: { index: false },
         };
     }
@@ -33,14 +41,14 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/customized/${slug}`;
 
     return {
-        title: `${project.title} | Custom Software Case Study - StitchByte`,
-        description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+        title: withBrand(`${project.title} | Custom Software Case Study`),
+        description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
             title: project.title,
-            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+            description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
@@ -49,7 +57,7 @@ export async function generateMetadata(
         twitter: {
             card: "summary_large_image",
             title: project.title,
-            description: project.description || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
+            description: metaDescription(project.description) || `Case study detailing how StitchByte designed and built the custom digital platform ${project.title}.`,
             images: ["/og-image.png"],
         },
     };

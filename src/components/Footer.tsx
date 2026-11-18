@@ -73,7 +73,7 @@ export default function Footer() {
                             <span>info</span><span>&#64;</span><span>stitchbyte&#46;in</span>
                         </a>
                         <p className="text-gray-500 text-xs mb-6 leading-relaxed">
-                            Based in Alwar, Rajasthan (Delhi NCR) — Operating Exclusively from Alwar
+                            Based in Alwar, Rajasthan, India
                         </p>
 
                         <form onSubmit={handleSubscribe} className="space-y-2">

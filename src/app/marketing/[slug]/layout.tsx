@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { metaDescription, withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import MarketingCaseStudy from "@/models/MarketingCaseStudy";
@@ -25,7 +26,7 @@ export async function generateMetadata(
 
     if (!study) {
         return {
-            title: "Case Study Not Found | StitchByte",
+            title: "Case Study Not Found",
             robots: { index: false },
         };
     }
@@ -33,14 +34,14 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/marketing/${slug}`;
 
     return {
-        title: `${study.brand} Case Study | StitchByte Marketing`,
-        description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
+        title: withBrand(`${study.brand} Marketing Case Study`),
+        description: metaDescription(study.summary) || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
         alternates: {
             canonical: canonicalUrl,
         },
         openGraph: {
             title: `${study.brand} Case Study`,
-            description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
+            description: metaDescription(study.summary) || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
             url: canonicalUrl,
             siteName: "StitchByte",
             type: "website",
@@ -49,7 +50,7 @@ export async function generateMetadata(
         twitter: {
             card: "summary_large_image",
             title: `${study.brand} Case Study`,
-            description: study.summary || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
+            description: metaDescription(study.summary) || `Marketing case study detailing the strategy, optimization, and ROI results for ${study.brand} by StitchByte.`,
             images: ["/og-image.png"],
         },
     };

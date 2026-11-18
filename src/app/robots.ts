@@ -11,7 +11,6 @@ export default function robots(): MetadataRoute.Robots {
                     '/restaurant/admin/',
                     '/restaurant/merchant/',
                     '/restaurant/offline',
-                    '/_next/static/media/',  // Block font/asset files from being indexed
                 ],
             },
             // Allow AI search crawlers explicitly for AI search visibility

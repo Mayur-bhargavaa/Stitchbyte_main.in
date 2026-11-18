@@ -107,7 +107,7 @@ export default async function SlugPage({ params }: PageProps) {
     const localFaqs = [
       {
         q: `Do you have a physical office in ${city.name}?`,
-        a: `StitchByte is based in and operates exclusively out of Alwar, Rajasthan (Delhi NCR). However, we serve clients in ${city.name} seamlessly through dedicated online collaboration tools, regular video consultations, and transparent project tracking dashboards.`
+        a: `StitchByte is based in and operates exclusively out of Alwar, Rajasthan. However, we serve clients in ${city.name} seamlessly through dedicated online collaboration tools, regular video consultations, and transparent project tracking dashboards.`
       },
       {
         q: `What local industries in ${city.name} do you specialize in?`,

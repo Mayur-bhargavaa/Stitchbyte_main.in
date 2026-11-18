@@ -1,4 +1,7 @@
 import { Metadata } from "next";
+import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
+import { metaDescription, withBrand } from "@/lib/seo";
+import { blogSeoTitle } from "@/lib/blog-seo-titles";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -76,7 +79,7 @@ export async function generateMetadata(
 
     if (!blog) {
         return {
-            title: "Article Not Found | StitchByte Blog",
+            title: "Article Not Found",
             robots: { index: false },
         };
     }
@@ -84,8 +87,8 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/blog/${blog.slug}`;
 
     return {
-        title: `${blog.title} | StitchByte Blog`,
-        description: blog.excerpt || `Read ${blog.title} on the StitchByte blog.`,
+        title: withBrand(blogSeoTitle(blog.slug, blog.title)),
+        description: metaDescription(blog.excerpt) || `Read ${blog.title} on the StitchByte blog.`,
         authors: [{ name: blog.author }],
         keywords: blog.tags?.join(", "),
         alternates: {
@@ -162,10 +165,12 @@ export default async function SingleBlogPage(
             <ReadingProgressBar />
 
             {/* JSON-LD — rendered server-side, visible to Googlebot */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <JsonLd data={jsonLd} />
+            <JsonLd data={breadcrumbJsonLd([
+                { name: "Home", path: "/" },
+                { name: "Blog", path: "/blog" },
+                { name: blog.title, path: `/blog/${blog.slug}` },
+            ])} />
 
             {/* Modern StitchByte Grid Background */}
             <div
@@ -242,7 +247,7 @@ export default async function SingleBlogPage(
                                 {blog.author.slice(0, 2).toUpperCase()}
                             </div>
                             <div>
-                                <h3 className="text-sm font-bold text-gray-900">{blog.author}</h3>
+                                <p className="text-sm font-bold text-gray-900">{blog.author}</p>
                                 <p className="text-xs text-gray-500">StitchByte Engineering & Research</p>
                             </div>
                         </div>
@@ -303,12 +308,15 @@ export default async function SingleBlogPage(
                 ) : blog.coverImage && blog.coverImage !== "" ? (
                     <figure className="mb-12 rounded-3xl overflow-hidden border border-gray-200/80 bg-neutral-100/40 shadow-xs max-w-5xl">
                         <div className="w-full flex items-center justify-center p-2 sm:p-4 md:p-6 bg-gradient-to-b from-neutral-50 to-neutral-100/30">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
+                            {/* Above-the-fold cover: intrinsic size reserves space; CSS (w-full h-auto) keeps the look. */}
+                            <Image
                                 src={blog.coverImage}
                                 alt={blog.title}
+                                width={1200}
+                                height={675}
+                                sizes="(max-width: 1024px) 100vw, 1024px"
+                                priority
                                 className="w-full h-auto max-h-[600px] object-contain rounded-2xl mx-auto"
-                                loading="eager"
                             />
                         </div>
                     </figure>

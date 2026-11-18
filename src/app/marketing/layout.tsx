@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SEO & Marketing Services in Alwar | StitchByte",
+  title: "SEO & Marketing Services in Alwar",
   description:
     "Explore Stitchbyte marketing case studies across performance marketing and SEO, with real growth outcomes for digital businesses.",
   alternates: {
     canonical: "https://stitchbyte.in/marketing",
   },
   openGraph: {
-    title: "Marketing Case Studies | Performance Marketing & SEO - Stitchbyte",
+    title: "Marketing Case Studies | Performance Marketing & SEO - StitchByte",
     description:
       "Explore Stitchbyte marketing case studies across performance marketing and SEO, with real growth outcomes for digital businesses.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Marketing Case Studies | Performance Marketing & SEO - Stitchbyte",
+    title: "Marketing Case Studies | Performance Marketing & SEO - StitchByte",
     description:
       "Explore Stitchbyte marketing case studies across performance marketing and SEO, with real growth outcomes for digital businesses.",
     images: ["/og-image.png"],

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { withBrand } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import connectDB from "@/lib/mongoose";
 import JobPosition from "@/models/JobPosition";
@@ -41,14 +42,14 @@ export async function generateMetadata(
 
     if (!job) {
         return {
-            title: "Career Opportunity Not Found | StitchByte",
+            title: "Career Opportunity Not Found",
             robots: { index: false },
         };
     }
 
     if (!job.isActive) {
         return {
-            title: `${job.title} (Closed) | StitchByte`,
+            title: `${job.title} (Closed)`,
             robots: { index: false },
         };
     }
@@ -56,7 +57,7 @@ export async function generateMetadata(
     const canonicalUrl = `${BASE_URL}/careers/${id}`;
 
     return {
-        title: `${job.title} | Careers at StitchByte`,
+        title: withBrand(`${job.title} | Careers`),
         description: `Apply for the ${job.title} position at StitchByte. Join our growing team in Alwar, Rajasthan.`,
         alternates: {
             canonical: canonicalUrl,
@@ -71,7 +72,7 @@ export async function generateMetadata(
         },
         twitter: {
             card: "summary_large_image",
-            title: `${job.title} | Careers at StitchByte`,
+            title: `${job.title} | Careers`,
             description: `Apply for the ${job.title} position at StitchByte.`,
             images: ["/og-image.png"],
         },

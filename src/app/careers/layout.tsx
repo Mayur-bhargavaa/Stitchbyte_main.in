@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Careers | Join Our Alwar Digital Agency | StitchByte",
+  title: "Careers | Join Our Alwar Digital Agency",
   description:
     "Join Stitchbyte and build impactful SEO, digital presence, web development, and UX/UI solutions for growing businesses.",
   alternates: {
     canonical: "https://stitchbyte.in/careers",
   },
   openGraph: {
-    title: "Careers at Stitchbyte | Build SEO, Web & UX/UI Products",
+    title: "Careers at StitchByte | Build SEO, Web & UX/UI Products",
     description:
       "Join Stitchbyte and build impactful SEO, digital presence, web development, and UX/UI solutions for growing businesses.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Careers at Stitchbyte | Build SEO, Web & UX/UI Products",
+    title: "Careers at StitchByte | Build SEO, Web & UX/UI Products",
     description:
       "Join Stitchbyte and build impactful SEO, digital presence, web development, and UX/UI solutions for growing businesses.",
     images: ["/og-image.png"],

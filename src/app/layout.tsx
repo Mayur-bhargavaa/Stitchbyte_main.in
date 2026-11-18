@@ -4,9 +4,11 @@ import "./globals.css";
 import ChatbotVisibility from "@/components/ChatbotVisibility";
 import TrackingProvider from "@/components/TrackingProvider";
 import CookieConsent from "@/components/CookieConsent";
+import ContactClickTracker from "@/components/ContactClickTracker";
 import { Suspense } from "react";
 import Script from "next/script";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import JsonLd from "@/components/JsonLd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +23,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://stitchbyte.in"),
   title: {
-    default: "Stitchbyte | Custom Software & Digital Agency",
-    template: "%s | Stitchbyte",
+    default: "StitchByte | Custom Software & Digital Agency",
+    template: "%s | StitchByte",
   },
   description:
     "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
@@ -82,7 +84,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://stitchbyte.in",
     siteName: "Stitchbyte",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
     description:
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: [
@@ -96,7 +98,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
     description:
       "Stitchbyte is a premier software development agency building high-performance web applications, mobile apps, custom AI solutions, and SEO campaigns.",
     images: ["/og-image.png"],
@@ -115,7 +117,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Stitchbyte | Custom Software & Digital Agency",
+    title: "StitchByte | Custom Software & Digital Agency",
   },
   formatDetection: {
     telephone: true,
@@ -139,6 +141,42 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
+// Read at build time (NEXT_PUBLIC_*). No fallback ID: without it, no pixel is rendered.
+const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID?.trim();
+
+// Pixel bootstrap. idJs is a JS expression for the pixel ID.
+const pixelScript = (idJs: string) => `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              
+              var fbConsent = 'revoke';
+              try {
+                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
+                  fbConsent = 'grant';
+                }
+              } catch (e) {}
+              
+              fbq('consent', fbConsent);
+              fbq('init', ${idJs});
+              fbq('track', 'PageView');
+              
+              window.addEventListener('cookieConsentChanged', function() {
+                try {
+                  var updatedFb = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'grant' : 'revoke';
+                  fbq('consent', updatedFb);
+                } catch (e) {}
+              });
+            `;
+
+// With no build-time ID the pixel ID is fetched from the admin-managed settings at runtime.
+const pixelRuntimeScript = `fetch('/api/tracking-config').then(function(r){return r.json()}).then(function(c){if(!c||!c.pixelId)return;${pixelScript("c.pixelId")}}).catch(function(){});`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -150,7 +188,7 @@ export default function RootLayout({
     "@type": "Organization",
     "@id": "https://stitchbyte.in/#organization",
     "name": "Stitchbyte",
-    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Alwar", "Stitch Delhi NCR"],
+    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Alwar"],
     "url": "https://stitchbyte.in",
     "logo": "https://stitchbyte.in/logo-stitchbyte.png",
     "slogan": "Let's Build Something Extraordinary together",
@@ -300,32 +338,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         {/* Local Business Schema */}
-        <Script
-          id="local-business-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
-          }}
-        />
+        <JsonLd id="local-business-schema" data={localBusinessSchema} />
         {/* Organization Schema */}
-        <Script
-          id="organization-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
+        <JsonLd id="organization-schema" data={organizationSchema} />
         {/* WebSite Schema */}
-        <Script
-          id="website-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteSchema),
-          }}
-        />
+        <JsonLd id="website-schema" data={websiteSchema} />
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
@@ -341,14 +358,7 @@ export default function RootLayout({
           }}
         />
         {/* Services Schema */}
-        <Script
-          id="services-schema"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(serviceSchema),
-          }}
-        />
+        <JsonLd id="services-schema" data={serviceSchema} />
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
@@ -393,39 +403,12 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Facebook Pixel */}
+        {/* Facebook Pixel: build-time ID if set, otherwise the ID saved in admin Integrations */}
         <Script
           id="fb-pixel"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              
-              var fbConsent = 'revoke';
-              try {
-                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
-                  fbConsent = 'grant';
-                }
-              } catch (e) {}
-              
-              fbq('consent', fbConsent);
-              fbq('init', '${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}');
-              fbq('track', 'PageView');
-              
-              window.addEventListener('cookieConsentChanged', function() {
-                try {
-                  var updatedFb = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'grant' : 'revoke';
-                  fbq('consent', updatedFb);
-                } catch (e) {}
-              });
-            `,
+            __html: fbPixelId ? pixelScript(JSON.stringify(fbPixelId)) : pixelRuntimeScript,
           }}
         />
       </head>
@@ -442,20 +425,23 @@ export default function RootLayout({
           />
         </noscript>
         {/* Facebook Pixel (noscript) */}
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FB_PIXEL_ID || "1234567890"}&ev=PageView&noscript=1`}
-            alt=""
-          />
-        </noscript>
+        {fbPixelId && (
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              src={`https://www.facebook.com/tr?id=${fbPixelId}&ev=PageView&noscript=1`}
+              alt=""
+            />
+          </noscript>
+        )}
         {children}
         <BreadcrumbSchema />
         <ChatbotVisibility />
         <Suspense fallback={null}>
           <TrackingProvider />
+          <ContactClickTracker />
           <CookieConsent />
         </Suspense>
       </body>

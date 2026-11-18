@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Our Digital Portfolio | Stitchbyte",
+  title: "Our Digital Portfolio",
   description:
     "Explore all Stitchbyte work across Marketing, SEO, UI/UX, Prebuilt products, and Customized projects.",
   alternates: {
     canonical: "https://stitchbyte.in/work",
   },
   openGraph: {
-    title: "Our Digital Portfolio | Stitchbyte",
+    title: "Our Digital Portfolio | StitchByte",
     description:
       "Explore all Stitchbyte work across Marketing, SEO, UI/UX, Prebuilt products, and Customized projects.",
     type: "website",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Our Digital Portfolio | Stitchbyte",
+    title: "Our Digital Portfolio | StitchByte",
     description:
       "Explore all Stitchbyte work across Marketing, SEO, UI/UX, Prebuilt products, and Customized projects.",
     images: ["/og-image.png"],

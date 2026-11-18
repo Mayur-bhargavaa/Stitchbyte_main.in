@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription, withBrand } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { AUTOMATION_ITEMS } from "@/data/automation-items";
 
@@ -12,20 +13,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!item) {
     return {
-      title: "Automation System | StitchByte",
+      title: "Automation System",
       description: "Explore our intelligent automation and AI systems at StitchByte.",
     };
   }
 
   return {
-    title: `${item.title} — Video Walkthrough & Architecture | StitchByte`,
-    description: item.shortDescription,
+    title: withBrand(`${item.title} — Video Walkthrough & Architecture`),
+    description: metaDescription(item.shortDescription),
     alternates: {
       canonical: `https://stitchbyte.in/automation/${item.slug}`,
     },
     openGraph: {
       title: `${item.title} — Video Walkthrough | StitchByte`,
-      description: item.shortDescription,
+      description: metaDescription(item.shortDescription),
       url: `https://stitchbyte.in/automation/${item.slug}`,
       type: "video.other",
       images: [

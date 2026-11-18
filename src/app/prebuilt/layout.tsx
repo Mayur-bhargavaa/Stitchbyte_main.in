@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Prebuilt SaaS Solutions in Alwar | StitchByte",
+  title: "Prebuilt SaaS Solutions in Alwar",
   description:
     "Explore Stitchbyte prebuilt solutions for faster digital launches with modern web development, SEO-ready foundations, and user-friendly UX/UI.",
   alternates: {
     canonical: "https://stitchbyte.in/prebuilt",
   },
   openGraph: {
-    title: "Prebuilt Solutions | Fast Launch Websites & Apps - Stitchbyte",
+    title: "Prebuilt Solutions | Fast Launch Websites & Apps - StitchByte",
     description:
       "Explore Stitchbyte prebuilt solutions for faster digital launches with modern web development, SEO-ready foundations, and user-friendly UX/UI.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prebuilt Solutions | Fast Launch Websites & Apps - Stitchbyte",
+    title: "Prebuilt Solutions | Fast Launch Websites & Apps - StitchByte",
     description:
       "Explore Stitchbyte prebuilt solutions for faster digital launches with modern web development, SEO-ready foundations, and user-friendly UX/UI.",
     images: ["/og-image.png"],

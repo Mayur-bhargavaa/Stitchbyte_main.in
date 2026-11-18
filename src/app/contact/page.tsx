@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { newEventId, hasMarketingConsent, trackMeta } from "@/lib/meta-events";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -51,6 +52,7 @@ export default function ContactPage() {
         ? `[Subject: ${formData.subject}] ${formData.message}`
         : formData.message;
 
+      const eventId = newEventId();
       const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,12 +62,15 @@ export default function ContactPage() {
           email: formData.email || undefined,
           message: messageBody,
           tracking,
+          eventId,
+          marketingConsent: hasMarketingConsent(),
         }),
       });
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to submit enquiry. Please try again.");
 
+      trackMeta("Lead", eventId, { source: "contact_form" });
       setSent(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
       setTimeout(() => setSent(false), 5000);
@@ -98,7 +103,7 @@ export default function ContactPage() {
     {
       icon: MapPin,
       label: "Location",
-      value: "Alwar, Rajasthan, Delhi NCR",
+      value: "Alwar, Rajasthan, India",
       href: "#",
     },
   ];
@@ -232,7 +237,7 @@ export default function ContactPage() {
                   <feature.icon className={`w-5 h-5 ${feature.iconColor}`} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">{feature.title}</h3>
+                  <h2 className="font-semibold text-gray-900 mb-1">{feature.title}</h2>
                   <p className="text-sm text-gray-500 leading-relaxed">{feature.description}</p>
                 </div>
               </div>

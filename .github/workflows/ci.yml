@@ -47,6 +47,8 @@ jobs:
           CLOUDINARY_API_KEY: "12345"
           CLOUDINARY_API_SECRET: "dummy_secret"
           AUTH_TRUST_HOST: "true"
+          # No real database in CI: strict loaders return empty instead of failing the build check
+          CI_NO_DB: "1"
         run: npm run build
 
   deploy:
@@ -80,6 +82,8 @@ jobs:
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
           AUTH_TRUST_HOST: ${{ secrets.AUTH_TRUST_HOST }}
+          # NEXT_PUBLIC_* values are baked into the build, so they must be set here (not only on the server)
+          NEXT_PUBLIC_FB_PIXEL_ID: ${{ secrets.NEXT_PUBLIC_FB_PIXEL_ID }}
         run: npm run build
 
       - name: Upload Build Files
