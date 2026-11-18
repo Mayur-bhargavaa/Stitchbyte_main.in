@@ -4,6 +4,7 @@ import "./globals.css";
 import ChatbotVisibility from "@/components/ChatbotVisibility";
 import TrackingProvider from "@/components/TrackingProvider";
 import CookieConsent from "@/components/CookieConsent";
+import ContactClickTracker from "@/components/ContactClickTracker";
 import { Suspense } from "react";
 import Script from "next/script";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
@@ -143,6 +144,39 @@ export const viewport: Viewport = {
 // Read at build time (NEXT_PUBLIC_*). No fallback ID: without it, no pixel is rendered.
 const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID?.trim();
 
+// Pixel bootstrap. idJs is a JS expression for the pixel ID.
+const pixelScript = (idJs: string) => `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              
+              var fbConsent = 'revoke';
+              try {
+                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
+                  fbConsent = 'grant';
+                }
+              } catch (e) {}
+              
+              fbq('consent', fbConsent);
+              fbq('init', ${idJs});
+              fbq('track', 'PageView');
+              
+              window.addEventListener('cookieConsentChanged', function() {
+                try {
+                  var updatedFb = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'grant' : 'revoke';
+                  fbq('consent', updatedFb);
+                } catch (e) {}
+              });
+            `;
+
+// With no build-time ID the pixel ID is fetched from the admin-managed settings at runtime.
+const pixelRuntimeScript = `fetch('/api/tracking-config').then(function(r){return r.json()}).then(function(c){if(!c||!c.pixelId)return;${pixelScript("c.pixelId")}}).catch(function(){});`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -154,7 +188,7 @@ export default function RootLayout({
     "@type": "Organization",
     "@id": "https://stitchbyte.in/#organization",
     "name": "Stitchbyte",
-    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Alwar", "Stitch Delhi NCR"],
+    "alternateName": ["Stitch", "Stitch Byte", "Stitch Agency", "Stitch Alwar"],
     "url": "https://stitchbyte.in",
     "logo": "https://stitchbyte.in/logo-stitchbyte.png",
     "slogan": "Let's Build Something Extraordinary together",
@@ -369,43 +403,14 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Facebook Pixel — rendered only when NEXT_PUBLIC_FB_PIXEL_ID is set */}
-        {fbPixelId && (
+        {/* Facebook Pixel: build-time ID if set, otherwise the ID saved in admin Integrations */}
         <Script
           id="fb-pixel"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              
-              var fbConsent = 'revoke';
-              try {
-                if (localStorage.getItem('stitchbyte_cookie_consent') === 'accepted') {
-                  fbConsent = 'grant';
-                }
-              } catch (e) {}
-              
-              fbq('consent', fbConsent);
-              fbq('init', '${fbPixelId}');
-              fbq('track', 'PageView');
-              
-              window.addEventListener('cookieConsentChanged', function() {
-                try {
-                  var updatedFb = localStorage.getItem('stitchbyte_cookie_consent') === 'accepted' ? 'grant' : 'revoke';
-                  fbq('consent', updatedFb);
-                } catch (e) {}
-              });
-            `,
+            __html: fbPixelId ? pixelScript(JSON.stringify(fbPixelId)) : pixelRuntimeScript,
           }}
         />
-        )}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -436,6 +441,7 @@ export default function RootLayout({
         <ChatbotVisibility />
         <Suspense fallback={null}>
           <TrackingProvider />
+          <ContactClickTracker />
           <CookieConsent />
         </Suspense>
       </body>

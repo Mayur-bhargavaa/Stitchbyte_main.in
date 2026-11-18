@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @source "../**/*.{js,ts,jsx,tsx,mdx}";
+/* Product gradients are stored in the database, so Tailwind can't see them in source. Keep in sync with prebuilt_products.gradient. */
+@source inline("bg-gradient-to-br from-{violet-600,blue-600,blue-700,emerald-500,gray-900} to-{indigo-700,blue-800,indigo-900,teal-700,slate-700,purple-800}");
 
 :root {
   --background: #ffffff;

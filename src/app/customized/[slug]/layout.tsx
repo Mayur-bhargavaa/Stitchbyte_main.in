@@ -7,7 +7,13 @@ import CustomProject from "@/models/CustomProject";
 const BASE_URL = "https://stitchbyte.in";
 
 // ── Check if project exists ──────────────────────────────────────────────────
-async function checkProjectExists(slug: string) {
+// Route params can arrive URL-encoded (slugs like "watch:-stream,-play-&-chat"), so decode first.
+function decodeSlug(raw: string) {
+    try { return decodeURIComponent(raw); } catch { return raw; }
+}
+
+async function checkProjectExists(rawSlug: string) {
+    const slug = decodeSlug(rawSlug);
     try {
         await connectDB();
         const project = await CustomProject.findOne({ slug, isActive: true }).select("title description").lean() as { title: string; description?: string } | null;
@@ -21,7 +27,8 @@ async function checkProjectExists(slug: string) {
 export async function generateMetadata(
     { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-    const { slug } = await params;
+    const { slug: rawSlug } = await params;
+    const slug = decodeSlug(rawSlug);
     const project = await checkProjectExists(slug);
 
     if (!project) {

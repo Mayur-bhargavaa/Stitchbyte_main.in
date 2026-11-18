@@ -984,11 +984,11 @@ export default function LandingPage() {
         <Navbar />
 
         {/* Hero Section - Matching Reference Screenshot */}
-        <section className="relative min-h-0 sm:min-h-[85vh] lg:min-h-[90vh] flex flex-col items-center justify-center px-4 pt-20 sm:pt-32 pb-8 sm:pb-16 overflow-hidden">
+        <section className="relative min-h-0 sm:min-h-[85vh] lg:min-h-[90vh] flex flex-col items-center justify-center px-4 pt-20 sm:pt-28 pb-8 sm:pb-16 overflow-hidden">
           <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto text-center w-full">
             
             {/* Team Portrait Image with smooth bottom fade */}
-            <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl flex justify-center -mb-2 sm:-mb-4 md:-mb-6">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md flex justify-center -mb-2 sm:-mb-3">
               <Image
                 src="/stitchbyte-team.png"
                 alt="Stitchbyte Founders & Team"
@@ -1004,27 +1004,95 @@ export default function LandingPage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.08] mb-6 sm:mb-8">
-              Build your Startup <br />
-              with Stitchbyte
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-5 sm:mb-6">
+              Build Your Digital Business.
+              <br className="hidden sm:block" />{" "}
+              Grow Your Customers.
+              <br className="hidden sm:block" />{" "}
+              Automate Your Operations.
             </h1>
 
+            <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
+              Stitchbyte helps growing businesses build high-converting digital experiences, generate demand, and automate repetitive operations with modern technology and AI.
+            </p>
+
             {/* Call to Action Buttons */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-              <a
-                href="#apps"
-                className="px-7 sm:px-8 py-3 sm:py-3.5 bg-black text-white text-sm md:text-base font-medium rounded-full hover:bg-neutral-800 transition-all shadow-sm hover:shadow"
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6 w-full sm:w-auto">
+              <Link
+                href="/free-website-audit"
+                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-black text-white text-sm md:text-base font-medium rounded-full hover:bg-neutral-800 transition-all shadow-sm hover:shadow"
               >
-                Let&apos;s Explore
-              </a>
+                Get Free Growth Audit
+              </Link>
               <Link
                 href="/contact"
-                className="px-7 sm:px-8 py-3 sm:py-3.5 bg-white text-gray-950 text-sm md:text-base font-medium rounded-full border border-gray-200/90 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm hover:shadow"
+                className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-white text-gray-950 text-sm md:text-base font-medium rounded-full border border-gray-200/90 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm hover:shadow"
               >
-                Contact Us
+                Book a Strategy Call
               </Link>
             </div>
+            <a
+              href="https://wa.me/919461330819?text=Hi%20Stitchbyte%2C%20I%20want%20to%20talk%20to%20an%20expert."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-gray-600 hover:text-gray-950 underline underline-offset-4"
+            >
+              Talk to an Expert on WhatsApp
+            </a>
 
+          </div>
+        </section>
+
+
+        {/* Build / Grow / Automate */}
+        <section className="py-16 sm:py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 text-center mb-3">
+              Build. Grow. Automate.
+            </h2>
+            <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
+              One team for your website, your customer acquisition and the operations behind them.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Build",
+                  text: "Websites, Shopify and WordPress stores, custom software and UI/UX designed to turn visitors into enquiries.",
+                  links: [["Prebuilt software", "/prebuilt"], ["Custom software", "/customized"]],
+                  cta: ["Get Free Website Audit", "/free-website-audit"],
+                },
+                {
+                  title: "Grow",
+                  text: "SEO, Meta Ads and digital marketing focused on qualified enquiries, not just traffic.",
+                  links: [["Marketing services", "/marketing"], ["Case studies", "/work"]],
+                  cta: ["Get Free Meta Ads Audit", "/meta-ads-audit"],
+                },
+                {
+                  title: "Automate",
+                  text: "AI agents, WhatsApp and CRM automation that handle follow-ups and repetitive work for your team.",
+                  links: [["Automation solutions", "/automation"]],
+                  cta: ["Get Free Automation Audit", "/free-automation-audit"],
+                },
+              ].map((c) => (
+                <div key={c.title} className="flex flex-col p-7 rounded-3xl border border-gray-200 bg-gray-50/60">
+                  <h3 className="text-2xl font-bold text-gray-950 mb-3">{c.title}</h3>
+                  <p className="text-gray-600 leading-relaxed mb-5">{c.text}</p>
+                  <ul className="space-y-1.5 mb-6 text-sm">
+                    {c.links.map(([label, href]) => (
+                      <li key={href}>
+                        <Link href={href} className="text-gray-700 hover:text-gray-950 underline underline-offset-4">{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href={c.cta[1]}
+                    className="mt-auto inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-colors"
+                  >
+                    {c.cta[0]}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -1555,7 +1623,7 @@ export default function LandingPage() {
                 </h2>
 
                 <p className="text-slate-500 text-sm sm:text-base mb-8 max-w-md leading-relaxed font-normal">
-                  A transparent, four-stage process refined over hundreds of successful deployments.
+                  A transparent, four-stage process we follow on every project.
                 </p>
 
                 {/* Realistic 3D Pedestal Laptop Mockup Scene */}

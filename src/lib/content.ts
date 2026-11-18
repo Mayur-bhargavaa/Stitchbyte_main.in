@@ -87,6 +87,23 @@ export const getMarketingStudies = cache(async (): Promise<MarketingStudyData[]>
     }
 });
 
+/**
+ * Strict variants: rethrow DB errors instead of returning []/null.
+ * Used by ISR pages so a transient DB failure during regeneration keeps serving the
+ * last good page (Next.js behaviour) instead of caching an empty list or a 404 for an hour.
+ */
+export const getMarketingStudiesStrict = cache(async (): Promise<MarketingStudyData[]> => {
+    await connectDB();
+    const docs = await MarketingCaseStudy.find({ isActive: true }).sort({ order: 1, createdAt: -1 }).lean();
+    return plain<MarketingStudyData[]>(docs);
+});
+
+export const getMarketingStudyStrict = cache(async (slug: string): Promise<MarketingStudyData | null> => {
+    await connectDB();
+    const doc = await MarketingCaseStudy.findOne({ slug, isActive: true }).lean();
+    return doc ? plain<MarketingStudyData>(doc) : null;
+});
+
 export const getMarketingStudy = cache(async (slug: string): Promise<MarketingStudyData | null> => {
     try {
         await connectDB();

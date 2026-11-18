@@ -1,11 +1,13 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import {
     ArrowRight,
+    ArrowUpRight,
     Smartphone,
     Globe,
     Users,
@@ -23,37 +25,21 @@ import {
     Calendar,
     Building,
     Sparkles,
-    Loader2,
-    LucideIcon
+    Check,
+    Code2,
+    Rocket,
+    BadgeCheck,
+    MessageCircle,
+    ChevronDown,
+    LucideIcon,
 } from "lucide-react";
 
-// Icon mapping for dynamic rendering from MongoDB
 const iconMap: Record<string, LucideIcon> = {
-    Smartphone,
-    Globe,
-    Users,
-    BarChart3,
-    CreditCard,
-    Truck,
-    Store,
-    QrCode,
-    Bell,
-    FileText,
-    Layers,
-    GraduationCap,
-    Stethoscope,
-    Home,
-    Calendar,
-    Building,
-    Sparkles
+    Smartphone, Globe, Users, BarChart3, CreditCard, Truck, Store, QrCode,
+    Bell, FileText, Layers, GraduationCap, Stethoscope, Home, Calendar, Building, Sparkles,
 };
+const getIcon = (name: string): LucideIcon => iconMap[name] || Sparkles;
 
-// Helper function to get icon component
-const getIcon = (iconName: string): LucideIcon => {
-    return iconMap[iconName] || Smartphone;
-};
-
-// Interface for MongoDB product data
 interface ProductHighlight {
     icon: string;
     label: string;
@@ -73,223 +59,210 @@ export interface Product {
     offerings?: { description: string }[];
     images?: string[];
     category?: string;
+    demoLink?: string;
 }
 
-// Marquee text items
-const marqueeItems = ["Launch Faster", "SEO-Ready Foundation", "Build Trust Online", "Convert More Users"];
+const WHATSAPP = "https://wa.me/919461330819";
+const waLink = (text: string) => `${WHATSAPP}?text=${encodeURIComponent(text)}`;
+
+const categoryLabel = (c: string) =>
+    c === "All" ? c : c.toLowerCase() === "saas" ? "SaaS" : c.toLowerCase() === "ecommerce" ? "E-commerce" : c.charAt(0).toUpperCase() + c.slice(1);
+
+const getProductFeatures = (product: Product): string[] => {
+    if (product.offerings && product.offerings.length > 0) {
+        return product.offerings.slice(0, 3).map((o) => o.description);
+    }
+    return [
+        `Launch your ${product.name.toLowerCase()} with a ready-to-use solution built for speed, trust, and growth.`,
+        "Start with an SEO-friendly structure and conversion-focused experience to improve digital visibility.",
+        "Manage everything from one platform with integrated apps and admin controls.",
+    ];
+};
+
+const toNumber = (v?: string) => {
+    const n = parseInt((v || "").replace(/[^\d]/g, ""), 10);
+    return Number.isFinite(n) ? n : 0;
+};
+const savingPercent = (p: Product) => {
+    const price = toNumber(p.price);
+    const orig = toNumber(p.originalPrice);
+    return price > 0 && orig > price ? Math.round(((orig - price) / orig) * 100) : 0;
+};
+
+const benefits = [
+    { icon: Code2, title: "100% source code", text: "You own the code. One-time payment, no per-seat or monthly licence." },
+    { icon: Rocket, title: "Deploy in 48 hours", text: "We set it up on your domain and hosting so you can start selling or serving quickly." },
+    { icon: BadgeCheck, title: "Lifetime licence", text: "Use it for as long as your business runs." },
+];
+
+const steps = [
+    { n: "01", title: "Pick a solution", text: "Open the live demo and try the user and admin sides yourself." },
+    { n: "02", title: "Talk to us", text: "Tell us your brand, domain and what you want changed. We reply on WhatsApp." },
+    { n: "03", title: "We deploy and hand over", text: "We launch it on your domain and give you the source code and admin access." },
+];
+
+const faqs = [
+    {
+        q: "Do I really get the source code?",
+        a: "Yes. Every prebuilt solution includes the full source code with a one-time payment and a lifetime licence.",
+    },
+    {
+        q: "How fast can it go live?",
+        a: "We aim to deploy within 48 hours of confirming your requirements, domain and hosting details.",
+    },
+    {
+        q: "Can I see it before I buy?",
+        a: "Yes. Every product has a live demo. Open it from the card, then message us if you want a walkthrough.",
+    },
+    {
+        q: "What if I need changes or something different?",
+        a: "Tell us what you need. We also build fully customized software, so we can adapt a prebuilt product or build from scratch.",
+    },
+];
 
 export default function PrebuiltClient({ products }: { products: Product[] }) {
-    const loading = false;
-    const error: string | null = null;
+    const [category, setCategory] = useState("All");
+    const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-    // Generate feature texts from product data
-    const getProductFeatures = (product: Product): string[] => {
-        // Use offerings descriptions if available, otherwise use default features
-        if (product.offerings && product.offerings.length > 0) {
-            return product.offerings.slice(0, 3).map(o => o.description);
-        }
-        return [
-            `Launch your ${product.name.toLowerCase()} with a ready-to-use solution built for speed, trust, and growth.`,
-            `Start with an SEO-friendly structure and conversion-focused experience to improve digital visibility.`,
-            `Manage everything from one platform with integrated apps and admin controls for better user journeys.`
-        ];
-    };
+    const categories = useMemo(() => {
+        const set = new Set<string>();
+        products.forEach((p) => p.category && set.add(p.category));
+        return ["All", ...Array.from(set)];
+    }, [products]);
+
+    const visible = category === "All" ? products : products.filter((p) => p.category === category);
 
     return (
-        <div className="min-h-screen bg-white text-gray-900">
-            {/* Navigation */}
+        <div className="min-h-screen bg-white text-gray-900 pb-20 sm:pb-0">
             <Navbar />
 
-            {/* Hero Section - White Theme with Modern Grid */}
-            <section className="relative min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 pt-32 pb-24 overflow-hidden">
-                {/* Modern Grid Background */}
+            {/* HERO */}
+            <section className="relative overflow-hidden px-6 pt-32 pb-16 sm:pt-40 sm:pb-20">
                 <div
                     className="absolute inset-0 z-0"
                     style={{
-                        backgroundImage: `
-                            linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '60px 60px'
+                        backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px)`,
+                        backgroundSize: "60px 60px",
                     }}
                 />
-
-                {/* Larger Grid Overlay */}
-                <div
-                    className="absolute inset-0 z-0"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '240px 240px'
-                    }}
-                />
-
-                {/* Decorative Corner Elements */}
-                <div className="absolute top-20 left-10 w-40 h-40">
-                    <div className="w-full h-full border border-gray-200 rounded-3xl rotate-12 opacity-40" />
-                    <div className="absolute top-4 left-4 w-full h-full border border-gray-300 rounded-3xl rotate-12 opacity-30" />
-                </div>
-                <div className="absolute bottom-32 right-10 w-32 h-32">
-                    <div className="w-full h-full border border-gray-200 rounded-full opacity-40" />
-                    <div className="absolute top-3 left-3 w-full h-full border border-gray-300 rounded-full opacity-30" />
-                </div>
-                <div className="absolute top-1/3 right-20 w-4 h-4 bg-gray-900 rounded-full opacity-20" />
-                <div className="absolute top-1/2 left-16 w-3 h-3 bg-gray-900 rounded-full opacity-15" />
-                <div className="absolute bottom-1/3 right-1/4 w-2 h-2 bg-gray-900 rounded-full opacity-10" />
-
-                {/* Main Content */}
-                <div className="relative z-10 text-center max-w-4xl">
-                    {/* Badge */}
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-8 border border-gray-200">
+                <div className="relative z-10 max-w-4xl mx-auto text-center">
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6 border border-gray-200">
                         <Sparkles className="w-4 h-4" />
-                        Ready-to-Deploy Marketing + Product Solutions
+                        Ready-made software, your brand
                     </span>
-
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-950 text-center leading-[1.1] mb-6">
-                        Prebuilt Saas Software for
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-gray-950 leading-[1.1] mb-5">
+                        Prebuilt SaaS software.
                         <br />
-                        Startups
+                        <span className="text-gray-500">Live in 48 hours. You own the code.</span>
                     </h1>
-
-                    <p className="text-base sm:text-lg md:text-xl text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed mb-10 text-center">
-                        Skip the long wait and high costs. Our prebuilt platforms help you go digital faster without compromising on quality.
+                    <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
+                        Skip months of development and the agency price tag. Pick a production-ready platform, try the live demo, and we launch it on your domain.
                     </p>
-
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
                         <Link
                             href="#products"
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-all hover:shadow-xl hover:-translate-y-0.5"
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-all hover:shadow-xl"
                         >
-                            Explore Products
+                            Browse Solutions
                             <ArrowRight className="w-4 h-4" />
                         </Link>
-                        <Link
-                            href="/contact"
+                        <a
+                            href={waLink("Hi StitchByte, I want to know more about your prebuilt software.")}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 font-medium rounded-full border-2 border-gray-200 hover:border-gray-900 transition-all"
                         >
-                            Contact Us
-                        </Link>
+                            <MessageCircle className="w-4 h-4" />
+                            Talk to an Expert on WhatsApp
+                        </a>
                     </div>
-                </div>
-
-                {/* Scrolling Marquee */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gray-900 py-4 overflow-hidden">
-                    <div className="flex animate-marquee whitespace-nowrap">
-                        {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
-                            <span key={i} className="mx-8 text-lg font-medium text-white flex items-center gap-3">
-                                <span className="w-2 h-2 bg-white rounded-full" />
-                                {item}
-                            </span>
+                    <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-600">
+                        {["One-time payment", "100% source code", "Lifetime licence"].map((t) => (
+                            <li key={t} className="inline-flex items-center gap-1.5">
+                                <Check className="w-4 h-4 text-emerald-600" />
+                                {t}
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                 </div>
             </section>
 
-            {/* Products Section - White Background, Black Text */}
-            <section id="products" className="py-24 bg-white">
+            {/* PRODUCTS */}
+            <section id="products" className="py-16 bg-white scroll-mt-20">
                 <div className="max-w-6xl mx-auto px-6">
-                    {/* Section Header */}
-                    <div className="text-center mb-20">
-                        <span className="inline-block px-4 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full mb-6">
-                            SaaS Products
-                        </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-950 text-center mb-4">
-                            Explore Our{' '}
-                            {loading ? (
-                                <span className="animate-pulse inline-block w-8 h-8 bg-gray-200 rounded-lg translate-y-1"></span>
-                            ) : (
-                                products.length
-                            )}{' '}
-                            Categories
-                        </h2>
-                        <p className="text-base sm:text-lg text-gray-500 font-normal max-w-2xl mx-auto leading-relaxed text-center">
-                            Choose ready-to-deploy solutions designed to attract, engage, and convert users across industries.
-                        </p>
+                    <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
+                        <div>
+                            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-2">
+                                Choose your solution
+                            </h2>
+                            <p className="text-gray-500">
+                                {products.length} ready-to-deploy platforms. Open any live demo before you decide.
+                            </p>
+                        </div>
+                        {categories.length > 2 && (
+                            <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter by category">
+                                {categories.map((c) => (
+                                    <button
+                                        key={c}
+                                        role="tab"
+                                        aria-selected={category === c}
+                                        onClick={() => setCategory(c)}
+                                        className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                                            category === c
+                                                ? "bg-gray-900 text-white border-gray-900"
+                                                : "bg-white text-gray-600 border-gray-200 hover:border-gray-400"
+                                        }`}
+                                    >
+                                        {categoryLabel(c)}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
-                    {/* Loading State */}
-                    {loading && (
-                        <div className="flex items-center justify-center py-20">
-                            <Loader2 className="w-12 h-12 text-gray-400 animate-spin" />
+                    {visible.length === 0 ? (
+                        <div className="text-center py-16 bg-white rounded-3xl border border-gray-200">
+                            <p className="text-gray-500 mb-4">New solutions are on the way. Tell us what you need and we will build it.</p>
+                            <Link href="/contact" className="inline-flex px-6 py-3 bg-gray-900 text-white rounded-full font-medium">
+                                Contact Us
+                            </Link>
                         </div>
-                    )}
-
-                    {/* Error State */}
-                    {error && !loading && (
-                        <div className="text-center py-20">
-                            <p className="text-gray-500">{error}</p>
-                            <button
-                                onClick={() => window.location.reload()}
-                                className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-full"
-                            >
-                                Retry
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Product Cards */}
-                    {!loading && !error && (
-                        <div className="space-y-32">
-                            {products.map((product, index) => {
+                    ) : (
+                        <div className="space-y-24 sm:space-y-32">
+                            {visible.map((product, index) => {
+                                const saving = savingPercent(product);
+                                const image = product.images?.[0];
                                 const features = getProductFeatures(product);
+                                const flip = index % 2 === 1;
                                 return (
-                                    <div
-                                        key={product.id}
-                                        className={`grid md:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
-                                    >
-                                        {/* Product Preview Card */}
-                                        <div className={`${index % 2 === 1 ? 'md:order-2' : ''} w-full`}>
+                                    <article key={product.id} className="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
+                                        {/* Preview: left on even rows, right on odd rows */}
+                                        <div className={`w-full ${flip ? "md:order-2" : ""}`}>
                                             <div className="bg-gray-50/80 rounded-[32px] p-5 sm:p-7 aspect-[4/3] flex items-center justify-center overflow-hidden border border-gray-200/40 shadow-sm">
-                                                <div className="bg-white rounded-[24px] p-3 sm:p-4 shadow-lg border border-gray-100/80 w-full h-full flex flex-col justify-between">
-                                                    {/* Browser Chrome Header */}
+                                                <div className="bg-white rounded-[24px] p-3 sm:p-4 shadow-lg border border-gray-100/80 w-full h-full flex flex-col">
                                                     <div className="bg-gray-50/80 border-b border-gray-100/80 px-3 py-2 flex items-center justify-between select-none rounded-t-xl mb-3">
                                                         <div className="flex gap-1.5">
                                                             <div className="w-2 h-2 rounded-full bg-red-400/80" />
                                                             <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
                                                             <div className="w-2 h-2 rounded-full bg-green-400/80" />
                                                         </div>
-                                                        <div className="h-4.5 w-32 bg-white border border-gray-100 rounded-md text-[8px] font-mono text-gray-400 flex items-center justify-center">
+                                                        <div className="h-5 w-36 bg-white border border-gray-100 rounded-md text-[9px] font-mono text-gray-400 flex items-center justify-center">
                                                             {product.id}.stitchbyte.in
                                                         </div>
                                                         <div className="w-6" />
                                                     </div>
-                                                    
-                                                    {/* Image Container / Preview Area */}
-                                                    <div className="relative flex-1 w-full bg-white flex items-center justify-center overflow-hidden rounded-lg border border-gray-100">
-                                                        {product.images && product.images.length > 0 && product.images[0] ? (
+                                                    <div className="relative flex-1 w-full bg-white overflow-hidden rounded-lg border border-gray-100">
+                                                        {image ? (
                                                             <Image
-                                                                src={product.images[0]}
-                                                                alt={product.name}
+                                                                src={image}
+                                                                alt={`${product.name} screenshot`}
                                                                 fill
                                                                 className="object-cover object-top"
                                                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                                                onError={(e) => {
-                                                                    (e.target as HTMLImageElement).style.display = 'none';
-                                                                }}
                                                             />
                                                         ) : (
-                                                            <div className={`absolute inset-0 ${product.gradient || 'bg-gradient-to-br from-indigo-500 to-violet-600'} p-6 flex flex-col justify-between text-white`}>
-                                                                <div>
-                                                                    <span className="text-[10px] font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded">
-                                                                        {product.category || 'Saas'}
-                                                                    </span>
-                                                                    <h4 className="text-sm font-bold mt-2 leading-tight">{product.name}</h4>
-                                                                    <p className="text-[10px] text-white/80 line-clamp-2 mt-1 leading-normal">{product.tagline}</p>
-                                                                </div>
-                                                                
-                                                                <div className="grid grid-cols-2 gap-1.5 w-full mt-2">
-                                                                    {product.highlights && product.highlights.slice(0, 2).map((highlight) => {
-                                                                        const IconComponent = getIcon(highlight.icon);
-                                                                        return (
-                                                                            <div key={highlight.label} className="bg-white/20 backdrop-blur-sm rounded-lg p-1.5 text-center">
-                                                                                <IconComponent className="w-3.5 h-3.5 text-white mx-auto mb-0.5" />
-                                                                                <span className="text-[8px] text-white/90 leading-tight block truncate">{highlight.label}</span>
-                                                                            </div>
-                                                                        );
-                                                                    })}
-                                                                </div>
+                                                            <div className={`absolute inset-0 ${product.gradient || "bg-gradient-to-br from-indigo-500 to-violet-600"} flex items-center justify-center`}>
+                                                                <span className="text-white/90 font-bold text-xl px-6 text-center">{product.name}</span>
                                                             </div>
                                                         )}
                                                     </div>
@@ -297,151 +270,192 @@ export default function PrebuiltClient({ products }: { products: Product[] }) {
                                             </div>
                                         </div>
 
-                                        {/* Product Info */}
-                                        <div className={`${index % 2 === 1 ? 'md:order-1' : ''}`}>
-                                            <h3 className="text-3xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+                                        {/* Info */}
+                                        <div className={flip ? "md:order-1" : ""}>
+                                            <div className="flex flex-wrap items-center gap-2 mb-3">
+                                                {product.category && (
+                                                    <span className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wider bg-gray-100 text-gray-600 rounded-full">
+                                                        {categoryLabel(product.category)}
+                                                    </span>
+                                                )}
+                                                {saving > 0 && !product.comingSoon && (
+                                                    <span className="px-3 py-1 text-xs font-bold bg-emerald-600 text-white rounded-full">
+                                                        {saving}% off
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <h3 className="text-3xl font-bold text-gray-900 mb-2" style={{ fontFamily: "Georgia, serif" }}>
                                                 {product.name}
                                             </h3>
+                                            <p className="text-gray-500 mb-6">{product.tagline}</p>
 
-                                            {/* Numbered Features */}
-                                            <div className="space-y-6 mb-8">
+                                            <div className="space-y-5 mb-8">
                                                 {features.map((feature, i) => (
                                                     <div key={i} className="flex gap-4">
                                                         <span className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">
-                                                            {String(i + 1).padStart(2, '0')}
+                                                            {String(i + 1).padStart(2, "0")}
                                                         </span>
                                                         <p className="text-gray-600 leading-relaxed">{feature}</p>
                                                     </div>
                                                 ))}
                                             </div>
 
-                                            {/* CTA Button */}
+                                            {product.price && !product.comingSoon && (
+                                                <div className="flex items-baseline gap-2 mb-6">
+                                                    <span className="text-xs uppercase tracking-wider text-gray-400">From</span>
+                                                    <span className="text-3xl font-bold text-gray-900">{product.price}</span>
+                                                    {product.originalPrice && (
+                                                        <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
+                                                    )}
+                                                </div>
+                                            )}
+
                                             {product.comingSoon ? (
-                                                <button
-                                                    disabled
-                                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-500 rounded-full font-medium cursor-not-allowed"
+                                                <a
+                                                    href={waLink(`Hi StitchByte, notify me when ${product.name} is ready.`)}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-full font-medium hover:bg-gray-200 transition-colors"
                                                 >
-                                                    Coming Soon
-                                                </button>
+                                                    Coming soon. Get notified
+                                                </a>
                                             ) : (
-                                                <Link
-                                                    href={`/prebuilt/${product.id}`}
-                                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
-                                                >
-                                                    Explore Solution
-                                                    <ArrowRight className="w-4 h-4" />
-                                                </Link>
+                                                <div className="flex flex-wrap gap-3">
+                                                    <Link
+                                                        href={`/prebuilt/${product.id}`}
+                                                        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+                                                    >
+                                                        Explore Solution
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </Link>
+                                                    {product.demoLink && (
+                                                        <a
+                                                            href={product.demoLink}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-1.5 px-6 py-3 border border-gray-300 text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors"
+                                                        >
+                                                            Live Demo
+                                                            <ArrowUpRight className="w-4 h-4" />
+                                                        </a>
+                                                    )}
+                                                </div>
                                             )}
                                         </div>
-                                    </div>
+                                    </article>
                                 );
                             })}
-                        </div>
-                    )}
-
-                    {/* Empty State - when no products */}
-                    {!loading && !error && products.length === 0 && (
-                        <div className="py-20">
-                            {/* Animated Empty State */}
-                            <div className="relative max-w-md mx-auto">
-                                {/* Floating animated icons */}
-                                <div className="relative h-48 flex items-center justify-center">
-                                    {/* Central pulsing circle */}
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-32 h-32 bg-gray-100 rounded-full animate-pulse" />
-                                        <div className="absolute w-24 h-24 bg-gray-200 rounded-full animate-ping opacity-20" />
-                                    </div>
-
-                                    {/* Floating cards */}
-                                    <div className="absolute top-0 left-1/4 w-16 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '0ms', animationDuration: '2s' }}>
-                                        <div className="p-2">
-                                            <div className="w-8 h-1.5 bg-gray-200 rounded mb-1" />
-                                            <div className="w-6 h-1 bg-gray-100 rounded" />
-                                        </div>
-                                    </div>
-
-                                    <div className="absolute top-4 right-1/4 w-14 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '300ms', animationDuration: '2.5s' }}>
-                                        <div className="p-2">
-                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
-                                            <div className="w-4 h-1 bg-gray-100 rounded" />
-                                        </div>
-                                    </div>
-
-                                    <div className="absolute bottom-4 left-1/3 w-12 h-10 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.2s' }}>
-                                        <div className="p-2">
-                                            <div className="w-5 h-1.5 bg-gray-200 rounded" />
-                                        </div>
-                                    </div>
-
-                                    <div className="absolute bottom-0 right-1/3 w-14 h-12 bg-white border border-gray-200 rounded-xl shadow-lg animate-bounce" style={{ animationDelay: '900ms', animationDuration: '1.8s' }}>
-                                        <div className="p-2">
-                                            <div className="w-6 h-1.5 bg-gray-200 rounded mb-1" />
-                                            <div className="w-8 h-1 bg-gray-100 rounded" />
-                                        </div>
-                                    </div>
-
-                                    {/* Center icon */}
-                                    <div className="relative z-10 w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center shadow-xl">
-                                        <Sparkles className="w-8 h-8 text-white animate-pulse" />
-                                    </div>
-                                </div>
-
-                                {/* Text content */}
-                                <div className="text-center mt-8">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Products Yet</h3>
-                                    <p className="text-gray-500 mb-6">We're working on amazing prebuilt solutions. Check back soon!</p>
-
-                                    {/* Animated progress bar */}
-                                    <div className="w-48 h-1.5 bg-gray-100 rounded-full mx-auto overflow-hidden">
-                                        <div className="h-full bg-gray-900 rounded-full" style={{
-                                            animation: 'loading-bar 2s ease-in-out infinite'
-                                        }} />
-                                    </div>
-                                    <p className="text-xs text-gray-400 mt-3">Coming soon...</p>
-                                </div>
-                            </div>
-
-                            {/* CSS for loading bar animation */}
-                            <style jsx>{`
-                                @keyframes loading-bar {
-                                    0% { width: 0%; margin-left: 0; }
-                                    50% { width: 60%; margin-left: 20%; }
-                                    100% { width: 0%; margin-left: 100%; }
-                                }
-                            `}</style>
                         </div>
                     )}
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-24 bg-gray-50">
-                <div className="max-w-4xl mx-auto px-6 text-center">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                        Ready to Launch Your Prebuilt Software?
+            {/* BENEFITS */}
+            <section className="py-20 bg-white">
+                <div className="max-w-6xl mx-auto px-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 text-center mb-12">
+                        Why buy prebuilt instead of building from scratch
                     </h2>
-                    <p className="text-lg text-gray-600 mb-10">
-                        Get started with our prebuilt solutions and launch your business faster.
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {benefits.map(({ icon: Icon, title, text }) => (
+                            <div key={title} className="p-6 rounded-2xl border border-gray-200 bg-gray-50/60">
+                                <div className="w-11 h-11 rounded-xl bg-gray-900 text-white flex items-center justify-center mb-4">
+                                    <Icon className="w-5 h-5" />
+                                </div>
+                                <h3 className="font-bold text-gray-900 mb-1">{title}</h3>
+                                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* HOW IT WORKS */}
+            <section className="py-20 bg-gray-900 text-white">
+                <div className="max-w-5xl mx-auto px-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-12">How it works</h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {steps.map((s) => (
+                            <div key={s.n}>
+                                <span className="text-5xl font-bold text-white/20">{s.n}</span>
+                                <h3 className="text-xl font-bold mt-2 mb-2">{s.title}</h3>
+                                <p className="text-white/60 leading-relaxed">{s.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ */}
+            <section className="py-20 bg-white">
+                <div className="max-w-3xl mx-auto px-6">
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 text-center mb-10">
+                        Common questions
+                    </h2>
+                    <div className="space-y-3">
+                        {faqs.map((f, i) => (
+                            <div key={f.q} className="border border-gray-200 rounded-2xl overflow-hidden">
+                                <button
+                                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                                    aria-expanded={openFaq === i}
+                                    className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 font-medium text-gray-900"
+                                >
+                                    {f.q}
+                                    <ChevronDown className={`w-5 h-5 shrink-0 text-gray-400 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                                </button>
+                                {openFaq === i && <p className="px-5 pb-5 text-gray-600 leading-relaxed">{f.a}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* FINAL CTA */}
+            <section className="py-20 bg-gray-50">
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">
+                        Not sure which one fits your business?
+                    </h2>
+                    <p className="text-lg text-gray-600 mb-8">
+                        Tell us what you are building. We will point you to the right solution, or build something custom.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a
+                            href={waLink("Hi StitchByte, can you help me choose the right prebuilt software?")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
+                        >
+                            <MessageCircle className="w-4 h-4" />
+                            Talk to an Expert on WhatsApp
+                        </a>
                         <Link
                             href="/contact"
-                            className="px-8 py-4 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
+                            className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 font-medium rounded-full border border-gray-300 hover:bg-gray-100 transition-colors"
                         >
-                            Contact Us
+                            Get a Quote
                         </Link>
                         <Link
-                            href="/"
-                            className="px-8 py-4 bg-white text-gray-900 font-medium rounded-full border border-gray-200 hover:bg-gray-50 transition-colors"
+                            href="/customized"
+                            className="inline-flex items-center justify-center px-8 py-4 text-gray-700 font-medium hover:text-gray-950 transition-colors"
                         >
-                            Back to Home
+                            Need custom software?
                         </Link>
                     </div>
                 </div>
             </section>
 
-            {/* Shared Footer Component */}
             <Footer />
+
+            {/* Sticky mobile CTA (right padding leaves room for the floating WhatsApp bubble) */}
+            <div className="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-gray-200 p-3 pr-20">
+                <Link
+                    href="/contact"
+                    className="flex items-center justify-center w-full py-3 bg-gray-900 text-white rounded-full font-medium text-sm"
+                >
+                    Get a Quote
+                </Link>
+            </div>
         </div>
     );
 }

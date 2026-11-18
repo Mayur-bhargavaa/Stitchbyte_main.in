@@ -49,6 +49,13 @@ export default function TrackingProvider() {
                 trackingData = { ...trackingData, ...params };
             }
 
+            // Meta ad click id: kept for Conversions API matching (Meta appends it to ad links)
+            const fbclid = searchParams?.get('fbclid');
+            if (fbclid && fbclid !== trackingData.fbclid) {
+                trackingData.fbclid = fbclid;
+                trackingData.fbclidAt = Date.now();
+            }
+
             // Capture external Referrer
             if (!trackingData.referrer || trackingData.referrer === "") {
                 const referrer = document.referrer;

@@ -9,7 +9,7 @@ import {
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd, { breadcrumbJsonLd } from "@/components/JsonLd";
-import { getMarketingStudy, getMarketingStudies } from "@/lib/content";
+import { getMarketingStudyStrict, getMarketingStudies } from "@/lib/content";
 
 export const revalidate = 3600;
 
@@ -22,7 +22,7 @@ export default async function MarketingCaseStudyDetailPage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const study = await getMarketingStudy(slug);
+  const study = await getMarketingStudyStrict(slug);
 
   if (!study) {
     notFound();

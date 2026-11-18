@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
       title: "Premium Digital Agency",
       description: "StitchByte is a premier custom software, SEO, and digital marketing agency serving global clients.",
+      robots: { index: false, follow: true },
     };
   }
 
@@ -34,7 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     descText = `Looking for a premier ${service.name} in ${locationName}? StitchByte delivers high-performance custom software and marketing solutions designed to drive growth.`;
   }
 
+  // Templated city/service pages stay out of search results until each has unique, hand-written content.
+  // Hand-written pages live at their own routes (e.g. /website-development-company-in-jaipur).
   return {
+    robots: { index: false, follow: true },
     title: titleText,
     description: descText,
     alternates: {
