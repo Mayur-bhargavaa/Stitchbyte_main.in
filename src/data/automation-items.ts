@@ -14,12 +14,10 @@ export interface AutomationItem {
     description: string;
   }[];
   businessBenefits: {
-    stat: string;
     label: string;
     description: string;
   }[];
   techStack: string[];
-  metric: string;
   useCases: string[];
 }
 
@@ -30,20 +28,19 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     title: "Autonomous AI Agents",
     tagline: "Custom LLMs & Intelligent Triage",
     shortDescription:
-      "Trained on your private documentation and business SOPs to handle customer inquiries, qualify inbound leads, and resolve queries 24/7 with zero hallucinations.",
+      "Trained on your private documentation and business SOPs to handle customer inquiries, qualify inbound leads, and resolve queries 24/7.",
     fullDescription:
       "Autonomous AI Agents are custom-engineered conversational and operational units powered by state-of-the-art Large Language Models (OpenAI GPT-4o, Google Gemini, and Anthropic Claude). Unlike generic chatbots that regurgitate canned responses, our agents use Retrieval-Augmented Generation (RAG) coupled with vector databases to reference your exact business guidelines, technical manuals, pricing tiers, and past interaction history. They resolve routine questions instantly, gather lead details, perform qualification scoring, and smoothly escalate complex inquiries to your human sales or support team with complete conversation summaries.",
     videoUrl:
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728230/stitchbyte/blogs/sfvcj6wmonfra3tezpr6.mp4",
     videoPoster: "/process-discovery.jpg",
     videoDuration: "1:20 Walkthrough",
-    metric: "92% automated query resolution",
     features: [
       "Retrieval-Augmented Generation (RAG) with high-speed vector embeddings",
-      "Context-aware multi-turn conversations in English, Hindi, and 40+ global languages",
+      "Context-aware multi-turn conversations in English, Hindi, and other languages",
       "Real-time human escalation handoff with conversation summary pings to Slack/CRM",
       "Direct integration with OpenAI, Claude, and Gemini API endpoints",
-      "Strict system guardrails ensuring zero hallucinations or unauthorized disclosures",
+      "System guardrails designed to keep answers within your approved content",
       "Self-updating knowledge base connected directly to your Notion or Google Docs",
     ],
     architectureSteps: [
@@ -70,24 +67,20 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     ],
     businessBenefits: [
       {
-        stat: "92%",
-        label: "Query Resolution",
-        description: "Routine customer support and sales questions resolved without human intervention.",
+        label: "Routine Query Handling",
+        description: "Handles routine customer support and sales questions, and passes complex ones to your team.",
       },
       {
-        stat: "< 3s",
         label: "Instant Response",
-        description: "Zero waiting queue for inbound prospects, boosting conversion probability by 5x.",
+        description: "No waiting queue for inbound prospects: every enquiry gets a reply right away.",
       },
       {
-        stat: "24/7",
-        label: "Global Availability",
-        description: "Continuous operation across every time zone without shift scheduling costs.",
+        label: "Always Available",
+        description: "Continuous operation across every time zone without shift scheduling.",
       },
       {
-        stat: "70%",
-        label: "Support Cost Reduction",
-        description: "Allows your core team to focus strictly on closing qualified high-value deals.",
+        label: "Team Focus",
+        description: "Lets your core team focus on closing qualified, high-value deals.",
       },
     ],
     techStack: [
@@ -118,7 +111,6 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728136/stitchbyte/blogs/g3mhltvai7bjp2qtyg32.mp4",
     videoPoster: "/process-dev.jpg",
     videoDuration: "1:45 Demo",
-    metric: "< 3 sec average response time",
     features: [
       "Official Meta WhatsApp Cloud API integration with green-tick verification support",
       "Automated lead capture & instant booking confirmations with custom QR codes",
@@ -151,24 +143,20 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     ],
     businessBenefits: [
       {
-        stat: "98%",
-        label: "Open Rate",
-        description: "WhatsApp notifications deliver unmatched engagement compared to traditional 20% email open rates.",
+        label: "Direct Channel",
+        description: "Notifications and follow-ups reach customers on the app they already use every day.",
       },
       {
-        stat: "3.5x",
-        label: "Higher Conversion",
-        description: "Instant WhatsApp follow-ups convert leads significantly faster than delayed phone calls.",
+        label: "Lead Follow-Up",
+        description: "Instant WhatsApp follow-ups reach leads sooner than delayed phone calls.",
       },
       {
-        stat: "100%",
-        label: "Meta Compliant",
-        description: "Built strictly on official APIs to protect your business number from bans or spam penalties.",
+        label: "Official APIs",
+        description: "Built on the official WhatsApp Business APIs, in line with Meta's policies.",
       },
       {
-        stat: "0 min",
-        label: "Downtime",
-        description: "Serverless webhooks scale elastically to handle high-volume marketing surges effortlessly.",
+        label: "Scales With Demand",
+        description: "Serverless webhooks scale to handle high-volume marketing surges.",
       },
     ],
     techStack: [
@@ -191,14 +179,13 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     title: "CRM & Pipeline Automation",
     tagline: "Zero Data Silos Across Tools",
     shortDescription:
-      "Connect your landing pages, ads, and lead forms directly to HubSpot, Zoho, Google Sheets, and Slack channels in real time with zero manual copy-pasting.",
+      "Connect your landing pages, ads, and lead forms directly to HubSpot, Zoho, Google Sheets, and Slack channels in real time without manual copy-pasting.",
     fullDescription:
       "Fragmented data across spreadsheets, advertising accounts, and emails wastes valuable sales hours and causes leads to slip through the cracks. Our CRM & Pipeline Automation architecture unifies your inbound ecosystem. The instant a prospect fills out a website form, schedules an audit, or engages with a campaign, their profile is normalized, tagged with UTM attribution data, scored for purchase intent, and routed to the right sales executive with instant mobile alerts.",
     videoUrl:
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728283/stitchbyte/blogs/tx54dycgk1b8iy5jewoj.mp4",
     videoPoster: "/process-launch.jpg",
     videoDuration: "1:15 Overview",
-    metric: "100% elimination of manual entry",
     features: [
       "Instant webhook dispatch for every lead submission across all web assets",
       "Multi-channel notifications across Slack, Discord, Telegram, and Email",
@@ -231,24 +218,20 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     ],
     businessBenefits: [
       {
-        stat: "100%",
-        label: "Zero Lost Leads",
+        label: "Redundant Capture",
         description: "Every inquiry is captured redundantly across primary database and backup cloud storage.",
       },
       {
-        stat: "15 hrs",
-        label: "Saved Per Week",
+        label: "Less Manual Work",
         description: "Eliminates repetitive data export, copy-pasting, and spreadsheet formatting across teams.",
       },
       {
-        stat: "Real-Time",
         label: "Instant Alerts",
-        description: "Sales representatives are alerted within seconds while lead interest is at its absolute peak.",
+        description: "Sales representatives are alerted as soon as a new lead comes in.",
       },
       {
-        stat: "Full",
         label: "Attribution Insight",
-        description: "Clearly see which ad campaign generated each paying customer down to the exact rupee.",
+        description: "Clearly see which ad campaign generated each paying customer.",
       },
     ],
     techStack: [
@@ -278,7 +261,6 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728346/stitchbyte/blogs/f2sksk826vsm1iiyx41n.mp4",
     videoPoster: "/process-design.jpg",
     videoDuration: "2:05 Walkthrough",
-    metric: "15x faster than manual bookkeeping",
     features: [
       "Intelligent field extraction (line items, HSN/SAC codes, tax, GSTIN, totals)",
       "Automated mathematical reconciliation against existing purchase orders",
@@ -301,7 +283,7 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       {
         title: "Validation & Arithmetic Checks",
         description:
-          "Line item sums are verified against invoice totals and tax calculations to guarantee accounting accuracy.",
+          "Line item sums are verified against invoice totals and tax calculations to help catch accounting errors.",
       },
       {
         title: "ERP Ledger Insertion",
@@ -311,24 +293,20 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     ],
     businessBenefits: [
       {
-        stat: "15x",
-        label: "Processing Speed",
-        description: "Invoices processed in 10 seconds compared to 5-10 minutes of manual keyboard entry.",
+        label: "Automatic Processing",
+        description: "Invoices are processed automatically instead of being keyed in by hand.",
       },
       {
-        stat: "99.8%",
-        label: "Extraction Accuracy",
-        description: "Eliminates typos, transposed decimal numbers, and missed supplier discount terms.",
+        label: "Fewer Data-Entry Errors",
+        description: "Reduces typos, transposed decimal numbers, and missed supplier discount terms.",
       },
       {
-        stat: "80%",
-        label: "Labor Cost Savings",
-        description: "Enables accounting teams to transition from data keyers to strategic financial analysts.",
+        label: "Team Focus",
+        description: "Lets accounting teams move from data entry to financial analysis.",
       },
       {
-        stat: "Zero",
-        label: "Backlog",
-        description: "Instantly process batches of hundreds of vendor bills during month-end closing without delays.",
+        label: "Batch Processing",
+        description: "Processes batches of vendor bills during month-end closing.",
       },
     ],
     techStack: [
@@ -358,14 +336,13 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728230/stitchbyte/blogs/sfvcj6wmonfra3tezpr6.mp4",
     videoPoster: "/process-dev.jpg",
     videoDuration: "1:30 Architecture",
-    metric: "99.99% webhook delivery guarantee",
     features: [
       "Serverless background workers with automatic exponential backoff retries",
       "Cryptographic webhook verification (Razorpay, Stripe, Shopify, Cashfree)",
       "Real-time event streaming via WebSocket / Server-Sent Events (SSE)",
       "Centralized error telemetry and alerting via Sentry and Slack pings",
       "Complete REST & GraphQL endpoint scaffolding with automated OpenAPI specs",
-      "100% full source code ownership deployed to your private AWS/GCP/Vercel infra",
+      "Full source code ownership deployed to your private AWS/GCP/Vercel infra",
     ],
     architectureSteps: [
       {
@@ -386,29 +363,25 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       {
         title: "Egress & Idempotent Sync",
         description:
-          "Data is delivered to destination APIs with idempotency keys ensuring transactions never execute twice.",
+          "Data is delivered to destination APIs with idempotency keys to help prevent transactions from executing twice.",
       },
     ],
     businessBenefits: [
       {
-        stat: "99.99%",
-        label: "Delivery Uptime",
-        description: "Zero dropped orders or lost customer transactions even during peak server load.",
+        label: "Reliable Delivery",
+        description: "Built to avoid dropped orders or lost transactions, including during peak server load.",
       },
       {
-        stat: "0",
-        label: "Vendor Lock-In",
+        label: "Your Own Infrastructure",
         description: "Clean TypeScript and Python microservices hosted on your own cloud accounts.",
       },
       {
-        stat: "Sub-50ms",
-        label: "Execution Latency",
-        description: "Blazing fast serverless edge execution keeping client applications responsive.",
+        label: "Fast Execution",
+        description: "Serverless edge execution keeps client applications responsive.",
       },
       {
-        stat: "Infinite",
-        label: "Customizability",
-        description: "Unlimited freedom to build custom workflows that standard SaaS tools cannot handle.",
+        label: "Custom Workflows",
+        description: "Build custom workflows that standard SaaS tools cannot handle.",
       },
     ],
     techStack: [
@@ -438,7 +411,6 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       "https://res.cloudinary.com/dp1fwjv9e/video/upload/v1787728136/stitchbyte/blogs/g3mhltvai7bjp2qtyg32.mp4",
     videoPoster: "/process-launch.jpg",
     videoDuration: "1:40 Walkthrough",
-    metric: "3.2x higher lead-to-call conversion",
     features: [
       "Server-side Meta Conversions API (CAPI) implementation bypassing ad blockers",
       "Google Ads Offline Conversion Tracking (OCT) sync for closed deals",
@@ -456,7 +428,7 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
       {
         title: "Server-Side Dispatch (CAPI / OCT)",
         description:
-          "Events are forwarded directly to Meta and Google servers with 100% event match quality scores.",
+          "Events are forwarded directly to Meta and Google servers to improve event match quality.",
       },
       {
         title: "Dynamic Retargeting Sequences",
@@ -471,24 +443,20 @@ export const AUTOMATION_ITEMS: AutomationItem[] = [
     ],
     businessBenefits: [
       {
-        stat: "35%",
-        label: "Lower Ad CPA",
-        description: "Accurate server-side conversion signals help ad algorithms find high-intent buyers faster.",
+        label: "Better Conversion Signals",
+        description: "Accurate server-side conversion signals help ad algorithms find high-intent buyers.",
       },
       {
-        stat: "+40%",
         label: "Event Match Quality",
-        description: "Recovers lost conversion attribution caused by iOS privacy updates and browser ad-blockers.",
+        description: "Helps recover conversion attribution lost to iOS privacy updates and browser ad-blockers.",
       },
       {
-        stat: "Automated",
-        label: "Review Ingestion",
-        description: "Consistently collects 5-star Google and site reviews without sales reps manually asking.",
+        label: "Review Collection",
+        description: "Collects Google and site reviews without sales reps manually asking.",
       },
       {
-        stat: "Real-Time",
         label: "ROI Transparency",
-        description: "Daily automated insights so leadership knows exact marketing returns every morning.",
+        description: "Daily automated insights so leadership can see marketing returns each morning.",
       },
     ],
     techStack: [

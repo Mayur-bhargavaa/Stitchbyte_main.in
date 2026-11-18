@@ -1,5 +1,6 @@
 "use client";
 
+import StrategyCallLink from "@/components/StrategyCallLink";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
@@ -899,7 +900,7 @@ export default function LandingPage() {
       title: "Advanced SEO",
       subtitle: "SEO Strategy",
       isLive: false,
-      description: "Commanding the first page of search results with surgical keyword targeting and technical expertise.",
+      description: "Helping your business show up for the searches your customers make, with keyword targeting and technical SEO.",
       href: "/marketing",
       number: "02",
       image: "/tailored-seo.jpg",
@@ -1024,12 +1025,11 @@ export default function LandingPage() {
               >
                 Get Free Growth Audit
               </Link>
-              <Link
-                href="/contact"
+              <StrategyCallLink
                 className="w-full sm:w-auto px-7 sm:px-8 py-3.5 bg-white text-gray-950 text-sm md:text-base font-medium rounded-full border border-gray-200/90 hover:border-gray-300 hover:bg-gray-50 transition-all shadow-sm hover:shadow"
               >
                 Book a Strategy Call
-              </Link>
+              </StrategyCallLink>
             </div>
             <a
               href="https://wa.me/919461330819?text=Hi%20Stitchbyte%2C%20I%20want%20to%20talk%20to%20an%20expert."

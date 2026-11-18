@@ -432,37 +432,6 @@ export default async function SlugPage({ params }: PageProps) {
             </div>
           </section>
 
-          {/* 5. Case Study Section */}
-          <section className="py-24 bg-slate-50/40 border-b border-gray-100">
-            <div className="max-w-5xl mx-auto px-6">
-              <div className="text-center mb-16 space-y-4">
-                <span className="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 text-purple-700 text-xs font-bold uppercase tracking-wider rounded-full border border-purple-100">
-                  <TrendingUp className="w-3.5 h-3.5 text-purple-500" />
-                  Case Study
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                  {caseStudy.title}
-                </h2>
-              </div>
-              <div className="bg-white border border-gray-200 rounded-[2.5rem] p-8 sm:p-12 space-y-8">
-                <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-100">
-                  <div className="space-y-3">
-                    <span className="text-xs font-bold text-rose-600 uppercase tracking-widest">The Challenge</span>
-                    <p className="text-gray-600 text-sm leading-relaxed">{caseStudy.challenge}</p>
-                  </div>
-                  <div className="space-y-3 md:pl-8">
-                    <span className="text-xs font-bold text-purple-600 uppercase tracking-widest">Our Strategy</span>
-                    <p className="text-gray-600 text-sm leading-relaxed">{caseStudy.strategy}</p>
-                  </div>
-                  <div className="space-y-3 md:pl-8">
-                    <span className="text-xs font-bold text-emerald-650 uppercase tracking-widest">The Results</span>
-                    <p className="text-gray-600 text-sm leading-relaxed">{caseStudy.result}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* 6. Execution Process */}
           <section className="py-24 max-w-7xl mx-auto px-6 border-b border-gray-100">
             <div className="text-center mb-16 space-y-4">
@@ -551,26 +520,6 @@ export default async function SlugPage({ params }: PageProps) {
                   </div>
                 ))}
               </div>
-            </div>
-          </section>
-
-          {/* 10. Testimonials */}
-          <section className="py-24 max-w-7xl mx-auto px-6 border-b border-gray-100">
-            <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-                Trusted by Businesses in {targetCityName}
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {testimonials.map((test, i) => (
-                <div key={i} className="p-8 bg-white border border-gray-200 rounded-[2rem] flex flex-col justify-between space-y-6">
-                  <p className="text-gray-600 text-sm italic leading-relaxed">{test.quote}</p>
-                  <div>
-                    <h4 className="font-bold text-gray-950">{test.author}</h4>
-                    <p className="text-xs text-gray-500">{test.role}, {test.company}</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </section>
 
