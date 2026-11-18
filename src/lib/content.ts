@@ -92,13 +92,19 @@ export const getMarketingStudies = cache(async (): Promise<MarketingStudyData[]>
  * Used by ISR pages so a transient DB failure during regeneration keeps serving the
  * last good page (Next.js behaviour) instead of caching an empty list or a 404 for an hour.
  */
+// CI_NO_DB=1 is set only by the CI build check, which has no real database. It must never be set
+// for the deploy build or on the server, otherwise a real outage would be baked in as an empty page.
+const ciNoDb = () => process.env.CI_NO_DB === "1";
+
 export const getMarketingStudiesStrict = cache(async (): Promise<MarketingStudyData[]> => {
+    if (ciNoDb()) return [];
     await connectDB();
     const docs = await MarketingCaseStudy.find({ isActive: true }).sort({ order: 1, createdAt: -1 }).lean();
     return plain<MarketingStudyData[]>(docs);
 });
 
 export const getMarketingStudyStrict = cache(async (slug: string): Promise<MarketingStudyData | null> => {
+    if (ciNoDb()) return null;
     await connectDB();
     const doc = await MarketingCaseStudy.findOne({ slug, isActive: true }).lean();
     return doc ? plain<MarketingStudyData>(doc) : null;

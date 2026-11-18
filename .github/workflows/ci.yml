@@ -47,6 +47,8 @@ jobs:
           CLOUDINARY_API_KEY: "12345"
           CLOUDINARY_API_SECRET: "dummy_secret"
           AUTH_TRUST_HOST: "true"
+          # No real database in CI: strict loaders return empty instead of failing the build check
+          CI_NO_DB: "1"
         run: npm run build
 
   deploy:
