@@ -63,7 +63,7 @@ After one deploy, Meta and email settings can be changed in the admin under **In
 
 - How is the admin panel deployed today (manual `git pull` on the VM, or another way)?
 - Screenshots of the restyled admin (login, dashboard, /enquiries, /products/new) so I can fix visual problems. I only type-checked the redesign and have not seen it render.
-- Strategy Call booking link.
+- Strategy Call booking link: paste it on the admin Integrations page (Booking link card).
 - Business Launch System (₹39,999): what is included, and is the 7-day delivery feasible?
 - How audits are delivered (PDF, call, or something else).
 

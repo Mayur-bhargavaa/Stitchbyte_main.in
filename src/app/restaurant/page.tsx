@@ -246,8 +246,8 @@ export default function RestaurantLanding() {
                 Why Choose QR Restaurant?
               </h2>
               <p className="text-white/60 mb-8 leading-relaxed">
-                Join hundreds of restaurants that have modernized their ordering process 
-                and improved customer satisfaction.
+                Modernize your restaurant ordering process
+                and give your customers a simpler way to order.
               </p>
               <Link
                 href="/restaurant/signin"

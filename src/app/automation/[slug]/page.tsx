@@ -152,7 +152,6 @@ export default function AutomationDetailPage() {
               <span>
                 Demonstrating production workflow for <strong className="text-white">{item.title}</strong>
               </span>
-              <span className="text-emerald-400 font-semibold">{item.metric}</span>
             </div>
           </div>
         </section>
@@ -317,15 +316,12 @@ export default function AutomationDetailPage() {
               {/* Business Outcomes Stats */}
               <div className="rounded-3xl bg-neutral-900 text-white p-6 sm:p-7 shadow-md">
                 <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                  Expected ROI
+                  Key benefits
                 </span>
                 <div className="mt-4 grid grid-cols-2 gap-4">
                   {item.businessBenefits.map((ben, idx) => (
                     <div key={idx} className="border-t border-neutral-800 pt-3">
-                      <div className="text-2xl font-bold tracking-tight text-white">
-                        {ben.stat}
-                      </div>
-                      <div className="text-xs font-medium text-neutral-300 mt-0.5">
+                      <div className="text-sm font-semibold tracking-tight text-white">
                         {ben.label}
                       </div>
                     </div>
@@ -380,11 +376,6 @@ export default function AutomationDetailPage() {
                   </p>
                 </div>
                 <div className="pt-4 border-t border-neutral-100 mt-5 space-y-2.5">
-                  <div className="flex items-center">
-                    <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full">
-                      ⚡ {other.metric}
-                    </span>
-                  </div>
                   <div className="flex items-center justify-between text-xs font-semibold text-neutral-900 group-hover:text-neutral-700 pt-1">
                     <span className="inline-flex items-center gap-1.5">
                       <Play className="w-3.5 h-3.5 fill-current" />

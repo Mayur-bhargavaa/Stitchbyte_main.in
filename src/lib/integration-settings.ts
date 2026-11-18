@@ -21,6 +21,8 @@ export interface IntegrationSettings {
   reminderAfterMinutes: number;
   remindersEnabled: boolean;
   followUpsEnabled: boolean;
+  /** Public booking link for the "Book a Strategy Call" buttons. Empty = buttons go to /contact. */
+  strategyCallUrl: string;
 }
 
 const CACHE_MS = 60_000;
@@ -91,6 +93,7 @@ export async function getIntegrationSettings(opts: { fresh?: boolean } = {}): Pr
     reminderAfterMinutes: num(values.reminderAfterMinutes, e.REMINDER_AFTER_MINUTES, 5),
     remindersEnabled: flag(values.remindersEnabled),
     followUpsEnabled: flag(values.followUpsEnabled),
+    strategyCallUrl: pick(values.strategyCallUrl, undefined),
   };
   cache = { at: Date.now(), value };
   return value;

@@ -47,7 +47,6 @@ const automationCapabilities = [
       "Human escalation handoff when high-touch sales is needed",
       "Direct integration with OpenAI, Claude, and Gemini APIs",
     ],
-    metric: "92% automated query resolution",
   },
   {
     id: "whatsapp",
@@ -62,7 +61,6 @@ const automationCapabilities = [
       "Interactive menu buttons, list pickers, and media flows",
       "Two-way team inbox synchronization",
     ],
-    metric: "< 3 sec average response time",
   },
   {
     id: "crm-sync",
@@ -77,7 +75,6 @@ const automationCapabilities = [
       "Automatic lead scoring, tagging, and rep routing",
       "Deduplication and data formatting pipelines",
     ],
-    metric: "100% elimination of manual entry",
   },
   {
     id: "docs",
@@ -92,7 +89,6 @@ const automationCapabilities = [
       "Direct sync to ERPs, accounting software, and databases",
       "High-accuracy fallback and validation rules",
     ],
-    metric: "15x faster than manual bookkeeping",
   },
   {
     id: "custom-apis",
@@ -107,7 +103,6 @@ const automationCapabilities = [
       "Custom analytics logging and health alerting",
       "Full source code ownership on your cloud accounts",
     ],
-    metric: "99.99% webhook delivery guarantee",
   },
   {
     id: "growth",
@@ -122,7 +117,6 @@ const automationCapabilities = [
       "Cart abandonment and re-engagement WhatsApp sequences",
       "Automated performance reporting summaries delivered to Slack",
     ],
-    metric: "3.2x higher lead-to-call conversion",
   },
 ];
 
@@ -299,11 +293,6 @@ export default function AutomationPage() {
                   </ul>
                 </div>
                 <div className="pt-4 border-t border-neutral-100 mt-5 space-y-3">
-                  <div className="flex items-center">
-                    <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-3 py-1 rounded-full">
-                      ⚡ {cap.metric}
-                    </span>
-                  </div>
                   <div className="w-full flex items-center justify-between py-2.5 px-4 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 text-white text-xs font-medium transition-colors shadow-xs">
                     <span className="inline-flex items-center gap-1.5">
                       <Play className="w-3.5 h-3.5 fill-current" />
